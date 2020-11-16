@@ -28,16 +28,15 @@ const options = ['Option 1', 'Option 2'];
 
 export default function UserInput() {
   const [value, setValue] = React.useState(options[0]);
+  const [uploadedFile, setUploadedFile] = React.useState('');
 
   const [shoppingBagItems, setShoppingBagItems] = React.useState([]);
   const [COLLECTION,setCOLLECTION] = useState([
     { id: uuid(), label: "Promoter1" },
   ]);
 
-  const [COLLECTION2] = useState([
+  const [COLLECTION2,setCOLLECTION2] = useState([
     { id: uuid(), label: "genbank1" },
-    { id: uuid(), label: "sbol1" },
-    { id: uuid(), label: "fasta1" }
   ]);
 
   const valueHandleChange = (newValue) => {
@@ -55,6 +54,17 @@ export default function UserInput() {
       console.log({ id: uuid(), label: value})
       console.log(COLLECTION)
   },[value]);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    if (!(uploadedFile)) {return}
+    setCOLLECTION2(state => [
+        ...COLLECTION2,
+        { id: uuid(), label: uploadedFile}
+      ])
+      console.log({ id: uuid(), label: uploadedFile})
+      console.log(COLLECTION2)
+  },[uploadedFile]);
 
   const onShopItemDelete = (itemid) => {
     console.log(itemid)
@@ -98,6 +108,7 @@ export default function UserInput() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div style={{ padding: 20 }}>
+        {uploadedFile}
         <Grid
           container
           direction="row"
@@ -114,7 +125,9 @@ export default function UserInput() {
               options={options}/>
           </Grid>
           <Grid item xs={12} md={6}>
-            <CustomPartLinker items={COLLECTION2}/>
+            <CustomPartLinker 
+            items={COLLECTION2}
+            setUploadedFile={setUploadedFile}/>
           </Grid>
           <Grid item xs={12}>
             <Plasmid 

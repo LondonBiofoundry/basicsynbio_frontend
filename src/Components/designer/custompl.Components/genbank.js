@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
-import {DropzoneArea} from 'material-ui-dropzone'
+import {DropzoneAreaBase} from 'material-ui-dropzone'
 
 class DropzoneAreaExample extends Component{
   constructor(props){
     super(props);
     this.state = {
-      files: []
+      files: [],
+      setUploadedFile: props.setUploadedFile
     };
   }
   handleChange(files){
+    console.log(files)
     this.setState({
       files: files
     });
@@ -16,8 +18,10 @@ class DropzoneAreaExample extends Component{
   render(){
     return (
         <div style={{marginTop: '10px'}}>
-            <DropzoneArea
-            onChange={this.handleChange.bind(this)}
+            <DropzoneAreaBase
+              onAdd={(fileObjs) => this.state.setUploadedFile(fileObjs[0].file.name)}
+              onDelete={(fileObj) => console.log('Removed File:', fileObj)}
+              onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
             />
         </div>
     )

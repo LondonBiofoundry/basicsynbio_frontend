@@ -30,7 +30,6 @@ const useStyles = makeStyles({
 export default function CustomPartLinker(props) {
   const classes = useStyles();
   
-  const [COLLECTION2] = React.useState(props.items);
   const [method, setMethod] = React.useState('Genbank');
 
   const handleMethod = (event, newMethod) => {
@@ -67,9 +66,9 @@ export default function CustomPartLinker(props) {
         <Typography className={classes.pos} color="textSecondary">
           Upload your {method} file
         </Typography>
-        {method==='Genbank'?<Genbank />:<div />}
-        {method==='Fasta'?<Fasta />:<div />}
-        {method==='SBOL'?<SBOL/>:<div />}
+        {method==='Genbank'?<Genbank setUploadedFile={props.setUploadedFile}/>:<div />}
+        {method==='Fasta'?<Fasta setUploadedFile={props.setUploadedFile}/>:<div />}
+        {method==='SBOL'?<SBOL setUploadedFile={props.setUploadedFile}/>:<div />}
         <div style={{ paddingTop: 8 }}>
         <Grid
           container
@@ -90,7 +89,7 @@ export default function CustomPartLinker(props) {
         </Grid>
         </div>
         <h2>Parts Custom</h2>
-        <Shop items={COLLECTION2} />
+        <Shop items={props.items} />
       </CardContent>
     </Card>
   );
