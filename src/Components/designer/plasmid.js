@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 import ShoppingBag from './plasmid.Components/shoppingbag';
+import BagItemModal from './plasmid.Components/bagitemmodal';
 
 const useStyles = makeStyles({
   root: {
@@ -23,8 +24,21 @@ const useStyles = makeStyles({
 });
 
 export default function StandardPartLinker(props) {
-  console.log('bag',props.items)
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+  const [clickedID, setClickedID] = useState('');
+  const [clickedLabel, setClickedLabel] = useState('');
+
+  const handleClickOpen = (itemid,itemlabel) => {
+    setClickedID(itemid)
+    setClickedLabel(itemlabel)
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -54,9 +68,15 @@ export default function StandardPartLinker(props) {
             <ShoppingBag
             items={props.items}
             onShopItemDelete={props.onShopItemDelete}
+            openDialog={handleClickOpen}
             />
         </div>
       </CardContent>
+      <BagItemModal 
+      open={open} 
+      handleClose={handleClose}
+      itemlabel={clickedLabel}
+      itemid={clickedID}/>
     </Card>
   );
 }

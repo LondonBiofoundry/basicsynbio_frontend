@@ -4,17 +4,11 @@ import {Droppable, Draggable } from "react-beautiful-dnd";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles, useTheme } from '@material-ui/core/styles';  
-import { Grid, Icon } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import CancelIcon from '@material-ui/icons/Cancel';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import IconButton from '@material-ui/core/IconButton';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -85,7 +79,7 @@ export default function ShoppingBag(props) {
                             </Typography>
                           </CardContent>
                           <div className={classes.controls}>
-                            <IconButton aria-label="view" color='primary'>
+                            <IconButton onClick={() => {props.openDialog(item.id,item.label)}} aria-label="view" color='primary'>
                               <InsertPhotoIcon className={classes.playIcon}/>
                             </IconButton>
                             <IconButton onClick={() => {props.onShopItemDelete(item.id)}} aria-label="delete" color='secondary'>
