@@ -8,6 +8,7 @@ import CustomPartLinker from './custompl';
 import Plasmid from './plasmid';
 
 import "./styles.css";
+//import ShoppingBag from './plasmid.Components/shoppingbag';
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -55,6 +56,13 @@ export default function UserInput() {
       console.log(COLLECTION)
   },[value]);
 
+  const onShopItemDelete = (itemid) => {
+    console.log(itemid)
+    let filteredArray = shoppingBagItems.filter(item => item.id !== itemid)
+    console.log('filter',filteredArray)
+    setShoppingBagItems(filteredArray);
+  }
+
 
   const onDragEnd = React.useCallback(
     result => {
@@ -84,7 +92,7 @@ export default function UserInput() {
           break;
       }
     },
-    [setShoppingBagItems,COLLECTION,COLLECTION2]
+    [setShoppingBagItems,COLLECTION,COLLECTION2,shoppingBagItems]
   );
 
   return (
@@ -109,7 +117,9 @@ export default function UserInput() {
             <CustomPartLinker items={COLLECTION2}/>
           </Grid>
           <Grid item xs={12}>
-            <Plasmid items={shoppingBagItems}/>
+            <Plasmid 
+            items={shoppingBagItems}
+            onShopItemDelete={onShopItemDelete}/>
           </Grid>
         </Grid>
       </div>

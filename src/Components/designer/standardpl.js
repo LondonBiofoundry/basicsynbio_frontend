@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 export default function StandardPartLinker(props) {
   //const [COLLECTION] = React.useState(props.items);
-  console.log('standardpl',props.items)
+  //console.log('standardpl',props.items)
   const classes = useStyles();
 
   return (

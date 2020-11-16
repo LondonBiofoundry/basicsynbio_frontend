@@ -4,10 +4,17 @@ import {Droppable, Draggable } from "react-beautiful-dnd";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';  
+import { Grid, Icon } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import CancelIcon from '@material-ui/icons/Cancel';
+import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
     root: {
       width: 200,
+      height: 100,
       padding:10,
       display: 'flex',
     },
@@ -42,13 +49,45 @@ export default function ShoppingBag(props) {
                     <li
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      {...provided.dragHandleProps}
                       style={provided.draggableProps.style}
                     >
                       <Card className={classes.root}>
-                        <CardContent>
-                        {item.label}
-                        </CardContent>
+                      <CardContent>
+                      <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item {...provided.dragHandleProps}>
+                          <Avatar className={classes.green}>
+                            <AssignmentIcon />
+                          </Avatar>
+                        </Grid>
+                        <Grid item>
+                          {item.label}
+                        </Grid>
+                        <Grid item>
+                          <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="flex-end"
+                          >
+                            <Grid>
+                              <IconButton color="primary">
+                                <InsertPhotoIcon color="primary" />
+                              </IconButton>
+                            </Grid>
+                            <Grid item>
+                              <IconButton onClick = {() => {props.onShopItemDelete(item.id);}} color="secondary">
+                                <CancelIcon color="secondary"/>
+                              </IconButton>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      </CardContent>
                       </Card>
                     </li>
                   )}

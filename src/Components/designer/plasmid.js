@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 export default function StandardPartLinker(props) {
-  const [shoppingBagItems] = React.useState(props.items);
+  console.log('bag',props.items)
   const classes = useStyles();
 
   return (
@@ -51,7 +51,10 @@ export default function StandardPartLinker(props) {
         </Typography>
         <div className="hello">
           <h1>Parts List</h1>
-            <ShoppingBag items={shoppingBagItems} />
+            <ShoppingBag
+            items={props.items}
+            onShopItemDelete={props.onShopItemDelete}
+            />
         </div>
       </CardContent>
     </Card>
