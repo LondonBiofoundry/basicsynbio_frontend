@@ -3,19 +3,21 @@ import {Droppable, Draggable } from "react-beautiful-dnd";
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { makeStyles } from '@material-ui/core/styles';  
+import { makeStyles, useTheme } from '@material-ui/core/styles';  
 import { Grid, Icon } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import CancelIcon from '@material-ui/icons/Cancel';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import IconButton from '@material-ui/core/IconButton';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-      width: 200,
-      height: 100,
-      padding:10,
       display: 'flex',
     },
     bullet: {
@@ -34,10 +36,31 @@ const useStyles = makeStyles({
       display:'flex',
       justify:"center"
     },
-  });
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    cover: {
+      width: 100,
+    },
+    controls: {
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+    },
+    playIcon: {
+      height: 20,
+      width: 20,
+    },
+  }))
 
 export default function ShoppingBag(props) {
     const classes = useStyles();
+    const theme = useTheme();
 
     return (
         <Droppable droppableId="BAG" direction='horizontal'>
@@ -52,42 +75,29 @@ export default function ShoppingBag(props) {
                       style={provided.draggableProps.style}
                     >
                       <Card className={classes.root}>
-                      <CardContent>
-                      <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
-                      >
-                        <Grid item {...provided.dragHandleProps}>
-                          <Avatar className={classes.green}>
-                            <AssignmentIcon />
-                          </Avatar>
-                        </Grid>
-                        <Grid item>
-                          {item.label}
-                        </Grid>
-                        <Grid item>
-                          <Grid
-                            container
-                            direction="column"
-                            justify="center"
-                            alignItems="flex-end"
-                          >
-                            <Grid>
-                              <IconButton color="primary">
-                                <InsertPhotoIcon color="primary" />
-                              </IconButton>
-                            </Grid>
-                            <Grid item>
-                              <IconButton onClick = {() => {props.onShopItemDelete(item.id);}} color="secondary">
-                                <CancelIcon color="secondary"/>
-                              </IconButton>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      </CardContent>
+                        <div className={classes.details}>
+                          <CardContent className={classes.content} {...provided.dragHandleProps}>
+                            <Typography component="h5" variant="h5">
+                              {item.label}
+                            </Typography>
+                            <Typography variant="subtitle1" color="textSecondary">
+                              {item.label}
+                            </Typography>
+                          </CardContent>
+                          <div className={classes.controls}>
+                            <IconButton aria-label="view" color='primary'>
+                              <InsertPhotoIcon className={classes.playIcon}/>
+                            </IconButton>
+                            <IconButton onClick={() => {props.onShopItemDelete(item.id)}} aria-label="delete" color='secondary'>
+                              <CancelIcon className={classes.playIcon}/>
+                            </IconButton>
+                          </div>
+                        </div>
+                        <CardMedia
+                          className={classes.cover}
+                          image={process.env.PUBLIC_URL + 'homeimg.svg'}
+                          title="Live from space album cover"
+                        />
                       </Card>
                     </li>
                   )}
