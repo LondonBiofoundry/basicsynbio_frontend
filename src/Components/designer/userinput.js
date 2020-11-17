@@ -47,23 +47,19 @@ export default function UserInput() {
 
   useEffect(() => {
     // Update the document title using the browser API
-    setCOLLECTION(state => [
-        ...COLLECTION,
+    setCOLLECTION(C => [
+        ...C,
         { id: uuid(), label: value}
       ])
-      console.log({ id: uuid(), label: value})
-      console.log(COLLECTION)
-  },[value]);
+  },[setValue,value]);
 
   useEffect(() => {
     // Update the document title using the browser API
     if (!(uploadedFile)) {return}
-    setCOLLECTION2(state => [
-        ...COLLECTION2,
+    setCOLLECTION2(C => [
+        ...C,
         { id: uuid(), label: uploadedFile}
       ])
-      console.log({ id: uuid(), label: uploadedFile})
-      console.log(COLLECTION2)
   },[uploadedFile]);
 
   const onShopItemDelete = (itemid) => {
@@ -102,7 +98,7 @@ export default function UserInput() {
           break;
       }
     },
-    [setShoppingBagItems,COLLECTION,COLLECTION2,shoppingBagItems]
+    [setShoppingBagItems,COLLECTION,COLLECTION2]
   );
 
   return (

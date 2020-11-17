@@ -3,7 +3,7 @@ import {Droppable, Draggable } from "react-beautiful-dnd";
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { makeStyles, useTheme } from '@material-ui/core/styles';  
+import { makeStyles } from '@material-ui/core/styles';  
 import CancelIcon from '@material-ui/icons/Cancel';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import IconButton from '@material-ui/core/IconButton';
@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ShoppingBag(props) {
     const classes = useStyles();
-    const theme = useTheme();
 
     return (
         <Droppable droppableId="BAG" direction='horizontal'>
