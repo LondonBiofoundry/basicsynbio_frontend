@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const useStyles = makeStyles({
   SeqVizDiv: {
     width:'1000px',
-    height:'500px'
+    height:'200px'
   }
 });
 
