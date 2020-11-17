@@ -108,7 +108,6 @@ export default function UserInput() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div style={{ padding: 20 }}>
-        {uploadedFile}
         <Grid
           container
           direction="row"

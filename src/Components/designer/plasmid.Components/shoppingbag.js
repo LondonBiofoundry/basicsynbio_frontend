@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
       flex: '1 0 auto',
     },
     cover: {
-      width: 100,
+      width: 130,
     },
     controls: {
       display: 'flex',
@@ -89,7 +89,7 @@ export default function ShoppingBag(props) {
                         </div>
                         <CardMedia
                           className={classes.cover}
-                          image={process.env.PUBLIC_URL + 'homeimg.svg'}
+                          image={process.env.PUBLIC_URL + 'part.svg'}
                           title="Live from space album cover"
                         />
                       </Card>

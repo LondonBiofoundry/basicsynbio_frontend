@@ -16,6 +16,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-spring": "^8.0.27",
+    "seqviz": "^3.0.23",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
