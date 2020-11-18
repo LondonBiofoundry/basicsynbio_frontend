@@ -2,13 +2,65 @@ import { Grid } from '@material-ui/core';
 import React, {useState, useEffect} from 'react';
 import { v4 as uuid } from "uuid";
 import { DragDropContext} from "react-beautiful-dnd";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import BuildRoundedIcon from '@material-ui/icons/BuildRounded';
+import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
+import DoneAllRoundedIcon from '@material-ui/icons/DoneAllRounded';
+import { green } from '@material-ui/core/colors';
+import { orange } from '@material-ui/core/colors';
+import { brown } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
 
 import StandardPartLinker from './standardpl';
 import CustomPartLinker from './custompl';
 import Plasmid from './plasmid';
 
 import "./styles.css";
-//import ShoppingBag from './plasmid.Components/shoppingbag';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+  FAB: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    left: theme.spacing(2),
+  },
+  FABitem: {
+    marginRight: theme.spacing(1),
+  },
+  FABitemgreen: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.common.white,
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[600],
+    },
+  },
+  FABitemorange: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.common.white,
+    backgroundColor: brown[900],
+    '&:hover': {
+      backgroundColor: orange[600],
+    },
+  }
+}));
+
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -27,6 +79,7 @@ const options = ['Option 1', 'Option 2'];
 
 
 export default function UserInput() {
+  const classes = useStyles();
   const [value, setValue] = React.useState(options[0]);
   const [uploadedFile, setUploadedFile] = React.useState('');
 
@@ -128,6 +181,34 @@ export default function UserInput() {
             <Plasmid 
             items={shoppingBagItems}
             onShopItemDelete={onShopItemDelete}/>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          spacing={3}
+        >
+          <Grid item>
+            <div className={classes.FAB}>
+              <Fab className={classes.FABitem} variant="extended" color="primary" aria-label="add">
+                <VisibilityRoundedIcon className={classes.extendedIcon}/>
+                Visualise
+              </Fab>
+              <Fab className={classes.FABitemgreen} variant="extended" aria-label="edit">
+                <DoneAllRoundedIcon className={classes.extendedIcon}/>
+                Validate
+              </Fab>
+              <Fab className={classes.FABitem} variant="extended" color="secondary">
+                <BuildRoundedIcon className={classes.extendedIcon} />
+                View Current Build
+              </Fab>
+              <Fab className={classes.FABitem} variant="extended" color="secondary" aria-label="like">
+                <AddIcon className={classes.extendedIcon}/>
+                Add to Build
+              </Fab>
+            </div>
           </Grid>
         </Grid>
       </div>
