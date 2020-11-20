@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import StandardPartLinker from './standardpl';
 import CustomPartLinker from './custompl';
 import Plasmid from './plasmid';
+import ViewBuild from './userinput.Components/viewbuild';
 
 import "./styles.css";
 
@@ -61,8 +62,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 const reorder = (list, startIndex, endIndex) => {
   const [removed] = list.splice(startIndex, 1);
   list.splice(endIndex, 0, removed);
@@ -77,20 +76,29 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
 
 const options = ['Option 1', 'Option 2'];
 
-
 export default function UserInput() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(options[0]);
-  const [uploadedFile, setUploadedFile] = React.useState('');
-
-  const [shoppingBagItems, setShoppingBagItems] = React.useState([]);
+  const [value, setValue] = useState(options[0]);
+  const [uploadedFile, setUploadedFile] = useState('');
+  const [shoppingBagItems, setShoppingBagItems] = useState([]);
+  const [currentBuild,setCurrentBuild] = useState([]);
   const [COLLECTION,setCOLLECTION] = useState([
     { id: uuid(), label: "Promoter1" },
   ]);
-
   const [COLLECTION2,setCOLLECTION2] = useState([
     { id: uuid(), label: "genbank1" },
   ]);
+
+  //View Build Functions
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const valueHandleChange = (newValue) => {
     let filteredArray = COLLECTION.filter(item => item.label !== value)
@@ -122,6 +130,17 @@ export default function UserInput() {
     setShoppingBagItems(filteredArray);
   }
 
+  const onAddToBuild = () => {
+    console.log('shopping bag items',shoppingBagItems)
+    console.log('build',currentBuild)
+    setCurrentBuild(C => [
+      ...C,
+      {id: uuid(), buildItems:shoppingBagItems}
+    ])
+    setShoppingBagItems([])
+    console.log('shopping bag items',shoppingBagItems)
+    console.log('build',currentBuild)
+  }
 
   const onDragEnd = React.useCallback(
     result => {
@@ -160,7 +179,6 @@ export default function UserInput() {
         <Grid
           container
           direction="row"
-          //justify="center"
           alignItems="stretch"
           spacing={3}
           padding="40px"
@@ -192,19 +210,31 @@ export default function UserInput() {
         >
           <Grid item>
             <div className={classes.FAB}>
-              <Fab className={classes.FABitem} variant="extended" color="primary" aria-label="add">
+              <Fab className={classes.FABitem} variant="extended" color="primary" aria-label="visualise">
                 <VisibilityRoundedIcon className={classes.extendedIcon}/>
                 Visualise
               </Fab>
-              <Fab className={classes.FABitemgreen} variant="extended" aria-label="edit">
+              <Fab className={classes.FABitemgreen} variant="extended" aria-label="Validate">
                 <DoneAllRoundedIcon className={classes.extendedIcon}/>
                 Validate
               </Fab>
-              <Fab className={classes.FABitem} variant="extended" color="secondary">
+              <Fab 
+              onClick={handleClickOpen}
+              className={classes.FABitem} 
+              variant="extended" 
+              color="secondary">
                 <BuildRoundedIcon className={classes.extendedIcon} />
                 View Current Build
               </Fab>
-              <Fab className={classes.FABitem} variant="extended" color="secondary" aria-label="like">
+              <ViewBuild 
+              open={open}
+              handleClose={handleClose}/>
+              <Fab
+              onClick={onAddToBuild}
+              className={classes.FABitem} 
+              variant="extended" 
+              color="secondary" 
+              aria-label="add">
                 <AddIcon className={classes.extendedIcon}/>
                 Add to Build
               </Fab>
