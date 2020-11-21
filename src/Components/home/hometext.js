@@ -50,7 +50,7 @@ export default function HomeText(props){
                     <div className={classes.mybutton}>
                         <Link style={navStyle} to='/designer'>
                             <ColorButton  size="large" variant="contained">
-                                Get started
+                                Go to designer
                             </ColorButton>
                         </Link>
                     </div>
