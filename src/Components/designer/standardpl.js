@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-import Chip from './standardpl.Components/standardchip';
+import Chip from './standardpl.Components/chip';
 import StandardPartLinkerSearch from './standardpl.Components/standardpartsearch';
 import Shop from './standardpl.Components/shop';
 

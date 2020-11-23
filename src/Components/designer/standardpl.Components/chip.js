@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +5,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { makeStyles } from '@material-ui/core/styles';
+import fetch from 'cross-fetch';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -21,26 +21,73 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CheckboxesTags() {
+function sleep(delay = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, delay);
+    });
+  }
+
+export default function Chip() {
   const classes = useStyles();
+  
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const loading = open && options.length === 0;
+
+  React.useEffect(() => {
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
+
+    (async () => {
+      const response = await fetch('http://127.0.0.1:5000/collections/names');
+      await sleep(1e3); // For demo purposes.
+      const myresponse = await response.json();
+      console.log(myresponse)
+
+      if (active) {
+        setOptions(myresponse.data);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
 
   return (
     <div className={classes.root}>
       <Autocomplete
       multiple
-      id="checkboxes-tags-demo"
-      options={top100Films}
+      open={open}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      getOptionLabel={(option) => option}
+      options={options}
+      loading={loading}
       disableCloseOnSelect
-      getOptionLabel={(option) => option.title}
       renderOption={(option, { selected }) => (
         <React.Fragment>
+        {loading ? <CircularProgress color="inherit" size={20} /> : null}
           <Checkbox
             icon={icon}
             checkedIcon={checkedIcon}
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.title}
+          {option}
         </React.Fragment>
       )}
       style={{ width: '100%' }}
@@ -51,19 +98,3 @@ export default function CheckboxesTags() {
     </div>
   );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: 'BPROMOTERS_PARTS_00000'},
-  { title: 'BPROMOTERS_PARTS_00001'},
-  { title: 'BPROMOTERS_PARTS_00002'},
-  { title: 'BPROMOTERS_PARTS_00003'},
-  { title: 'BLINKERS_LINKERS_00000'},
-  { title: 'BLINKERS_LINKERS_00001'},
-  { title: 'BLINKERS_LINKERS_00002'},
-  { title: 'BLINKERS_LINKERS_00003'},
-  { title: 'BPARTS_PARTS_00000'},
-  { title: 'BPARTS_PARTS_00001'},
-  { title: 'BPARTS_PARTS_00002'},
-  { title: 'BPARTS_PARTS_00003'},
-];
