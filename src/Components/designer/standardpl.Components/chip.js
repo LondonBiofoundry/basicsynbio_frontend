@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -29,7 +29,6 @@ function sleep(delay = 0) {
 
 export default function Chip(props) {
   const classes = useStyles();
-  
   const [open, setOpen] = React.useState(false);
   const loading = open && props.CollectionOptions.length === 0;
 
@@ -65,6 +64,9 @@ export default function Chip(props) {
   return (
     <div className={classes.root}>
       <Autocomplete
+      onChange={(event, newValue) => {
+        props.setCollectionSelected(newValue);
+      }}
       multiple
       open={open}
       onOpen={() => {

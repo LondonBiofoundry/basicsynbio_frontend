@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StandardPartLinkerSearch(props) {
   const classes = useStyles();
-
-  //const [value, setValue] = React.useState(options[0]);
   const [inputValue, setInputValue] = React.useState('');
 
   return (

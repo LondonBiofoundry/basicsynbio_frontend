@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import Chip from './standardpl.Components/chip';
+import PartSeach from './standardpl.Components/partsearch';
 import StandardPartLinkerSearch from './standardpl.Components/standardpartsearch';
 import Shop from './standardpl.Components/shop';
 
@@ -26,7 +27,9 @@ const useStyles = makeStyles({
 
 export default function StandardPartLinker(props) {
   const classes = useStyles();
+  const [CollectionSelected,setCollectionSelected]=useState([])
   const [CollectionOptions, setCollectionOptions] = useState([]);
+  const [partOptions, setPartOptions] = useState([]);
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -34,14 +37,24 @@ export default function StandardPartLinker(props) {
         <Typography className={classes.title}>
             Standard Part Linker from Collection
         </Typography>
-        <Chip CollectionOptions={CollectionOptions} setCollectionOptions={setCollectionOptions}/>
+        <Chip
+          setCollectionSelected={setCollectionSelected}
+          CollectionOptions={CollectionOptions} 
+          setCollectionOptions={setCollectionOptions}/>
         <Typography className={classes.pos}>
           The below search options are actively changed to the objects inside the collections selected above, you must select atleast 1 object before continuing to search
         </Typography>
         <Typography className={classes.title} color="textSecondary" style={{paddingTop:'10px'}}>
             Search for Part
         </Typography>
-        <StandardPartLinkerSearch value={props.value} onChangeValue={props.onChangeValue} options={props.options}/>
+        <PartSeach 
+        CollectionSelected={CollectionSelected}
+        partOptions={partOptions}
+        setPartOptions={setPartOptions}/>
+        <StandardPartLinkerSearch 
+          value={props.value} 
+          onChangeValue={props.onChangeValue} 
+          options={props.options}/>
         <h2>Parts</h2>
         <Shop items={props.items} />
       </CardContent>
