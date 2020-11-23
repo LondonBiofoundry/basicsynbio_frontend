@@ -47,14 +47,12 @@ export default function StandardPartLinker(props) {
         <Typography className={classes.title} color="textSecondary" style={{paddingTop:'10px'}}>
             Search for Part
         </Typography>
-        <PartSeach 
-        CollectionSelected={CollectionSelected}
-        partOptions={partOptions}
-        setPartOptions={setPartOptions}/>
-        <StandardPartLinkerSearch 
+        <PartSeach
           value={props.value} 
-          onChangeValue={props.onChangeValue} 
-          options={props.options}/>
+          onChangeValue={props.onChangeValue}
+          CollectionSelected={CollectionSelected}
+          partOptions={partOptions}
+          setPartOptions={setPartOptions}/>
         <h2>Parts</h2>
         <Shop items={props.items} />
       </CardContent>

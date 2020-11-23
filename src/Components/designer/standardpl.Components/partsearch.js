@@ -6,8 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export default function PartSearch(props) {
-  console.log('collection options',props.CollectionOptions)
-  //const [options, setOptions] = useState([]);
+  const [inputValue, setInputValue] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const loading = open && props.partOptions.length === 0;
 
@@ -19,6 +18,9 @@ export default function PartSearch(props) {
     }
 
     (async () => {
+      if ((props.CollectionSelected.length)===0){
+        setOpen(false)
+      }
       const response = await fetch('http://127.0.0.1:5000/collections/allitems');
       const myresponse = await response.json();
       var mergedArray = []
@@ -46,15 +48,21 @@ export default function PartSearch(props) {
     if (!open) {
       props.setPartOptions([]);
     }
-    if ((props.CollectionSelected.length)===0){
-      props.setPartOptions([]);
-    }
-  }, [open,props.CollectionSelected]);
+  }, [open]);
 
   return (
     <Autocomplete
       id="asynchronous-demo"
       style={{ width: '100%' }}
+      value={props.value}
+        onChange={(event, newValue) => {
+          //setValue(newValue);
+          props.onChangeValue(newValue)
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -69,7 +77,7 @@ export default function PartSearch(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Asynchronous"
+          label="Select Part"
           variant="outlined"
           InputProps={{
             ...params.InputProps,
