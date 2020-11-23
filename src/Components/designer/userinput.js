@@ -101,7 +101,7 @@ export default function UserInput() {
   };
 
   const valueHandleChange = (newValue) => {
-    let filteredArray = COLLECTION.filter(item => item.label !== value)
+    let filteredArray = COLLECTION.filter(item => item.label !== value.id)
     setCOLLECTION(filteredArray);
     setValue(newValue);    
   };
@@ -111,7 +111,7 @@ export default function UserInput() {
     if(value!==null){
       setCOLLECTION(C => [
         ...C,
-        { id: uuid(), label: value}
+        { id: uuid(), label: value.id}
       ])
     }
   },[setValue,value]);

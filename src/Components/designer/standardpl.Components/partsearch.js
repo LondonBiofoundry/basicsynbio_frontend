@@ -21,7 +21,7 @@ export default function PartSearch(props) {
       if ((props.CollectionSelected.length)===0){
         setOpen(false)
       }
-      const response = await fetch('http://127.0.0.1:5000/collections/allitems');
+      const response = await fetch('http://127.0.0.1:5000/collections/seqincluded');
       const myresponse = await response.json();
       var mergedArray = []
 
@@ -56,7 +56,6 @@ export default function PartSearch(props) {
       style={{ width: '100%' }}
       value={props.value}
         onChange={(event, newValue) => {
-          //setValue(newValue);
           props.onChangeValue(newValue)
         }}
         inputValue={inputValue}
@@ -70,8 +69,8 @@ export default function PartSearch(props) {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option === value}
-      getOptionLabel={(option) => option}
+      getOptionSelected={(option, value) => option.id === value.label}
+      getOptionLabel={(option) => option.id}
       options={props.partOptions}
       loading={loading}
       renderInput={(params) => (
