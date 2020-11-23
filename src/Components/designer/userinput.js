@@ -108,10 +108,12 @@ export default function UserInput() {
 
   useEffect(() => {
     // Update the document title using the browser API
-    setCOLLECTION(C => [
+    if(value!==null){
+      setCOLLECTION(C => [
         ...C,
         { id: uuid(), label: value}
       ])
+    }
   },[setValue,value]);
 
   useEffect(() => {
