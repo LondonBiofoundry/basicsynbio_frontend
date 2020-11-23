@@ -78,7 +78,7 @@ export default function ShoppingBag(props) {
                             </Typography>
                           </CardContent>
                           <div className={classes.controls}>
-                            <IconButton onClick={() => {props.openDialog(item.id,item.label,item.seq)}} aria-label="view" color='primary'>
+                            <IconButton onClick={() => {props.openDialog(item.id,item.label,item.seq,item.collection)}} aria-label="view" color='primary'>
                               <InsertPhotoIcon className={classes.playIcon}/>
                             </IconButton>
                             <IconButton onClick={() => {props.onShopItemDelete(item.id)}} aria-label="delete" color='secondary'>

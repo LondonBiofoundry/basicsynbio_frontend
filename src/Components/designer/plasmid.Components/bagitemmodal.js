@@ -35,17 +35,16 @@ export default function BagItemModal(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{props.itemid}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{props.itemlabel}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {props.itemlabel}
+            the selected part is from the collection: {props.itemcollection}
           </DialogContentText>
           <div className={classes.SeqVizDiv}>
             <SeqViz
               name="J23100"
               seq={props.itemseq}
               viewer='linear'
-              annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
           />
           </div>
         </DialogContent>
