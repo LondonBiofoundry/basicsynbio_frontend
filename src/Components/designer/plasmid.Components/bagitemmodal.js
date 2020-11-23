@@ -43,7 +43,7 @@ export default function BagItemModal(props) {
           <div className={classes.SeqVizDiv}>
             <SeqViz
               name="J23100"
-              seq="TTGACGGCTAGCTCAGTCCTAGGTACAGTGCTAGC"
+              seq={props.itemseq}
               viewer='linear'
               annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
           />

@@ -29,10 +29,12 @@ export default function StandardPartLinker(props) {
   const [open, setOpen] = useState(false);
   const [clickedID, setClickedID] = useState('');
   const [clickedLabel, setClickedLabel] = useState('');
+  const [clickedSeq, setClickedSeq] = useState('');
 
-  const handleClickOpen = (itemid,itemlabel) => {
+  const handleClickOpen = (itemid,itemlabel,itemseq) => {
     setClickedID(itemid)
     setClickedLabel(itemlabel)
+    setClickedSeq(itemseq)
     setOpen(true);
   };
 
@@ -76,7 +78,8 @@ export default function StandardPartLinker(props) {
       open={open} 
       handleClose={handleClose}
       itemlabel={clickedLabel}
-      itemid={clickedID}/>
+      itemid={clickedID}
+      itemseq={clickedSeq}/>
     </Card>
   );
 }
