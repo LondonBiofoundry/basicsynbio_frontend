@@ -80,9 +80,7 @@ export default function UserInput() {
   const [uploadedFile, setUploadedFile] = useState('');
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
   const [currentBuild,setCurrentBuild] = useState([]);
-  const [COLLECTION,setCOLLECTION] = useState([
-    { id: uuid(), label: "Promoter1", seq:'A'},
-  ]);
+  const [COLLECTION,setCOLLECTION] = useState([]);
   const [COLLECTION2,setCOLLECTION2] = useState([
     { id: uuid(), label: "genbank1", seq:'A'},
   ]);
@@ -111,8 +109,9 @@ export default function UserInput() {
     if(value!==null && value.id!=='' ){
       setCOLLECTION(C => [
         ...C,
-        { id: uuid(), label: value.id, seq: value.seq}
+        { id: uuid(), label: value.id, seq: value.seq, collection: value.collection}
       ])
+      console.log(value)
     }
   },[setValue,value]);
 

@@ -30,6 +30,7 @@ export default function PartSearch(props) {
         console.log('key',key)
         if(props.CollectionSelected.includes(key)){
             for (let item of value) {
+                item.collection = key
                 mergedArray.push(item)
             }
         }
