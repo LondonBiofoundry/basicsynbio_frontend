@@ -74,19 +74,17 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
   return destination;
 };
 
-const options = ['Option 1', 'Option 2'];
-
 export default function UserInput() {
   const classes = useStyles();
-  const [value, setValue] = useState(options[0]);
+  const [value, setValue] = useState({id:'',seq:''});
   const [uploadedFile, setUploadedFile] = useState('');
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
   const [currentBuild,setCurrentBuild] = useState([]);
   const [COLLECTION,setCOLLECTION] = useState([
-    { id: uuid(), label: "Promoter1" },
+    { id: uuid(), label: "Promoter1", seq:'A'},
   ]);
   const [COLLECTION2,setCOLLECTION2] = useState([
-    { id: uuid(), label: "genbank1" },
+    { id: uuid(), label: "genbank1", seq:'A'},
   ]);
 
   //View Build Functions
@@ -101,17 +99,19 @@ export default function UserInput() {
   };
 
   const valueHandleChange = (newValue) => {
-    let filteredArray = COLLECTION.filter(item => item.label !== value.id)
-    setCOLLECTION(filteredArray);
-    setValue(newValue);    
+    if(newValue!==null){
+      let filteredArray = COLLECTION.filter(item => item.label !== value.id)
+      setCOLLECTION(filteredArray);
+      setValue(newValue);  
+    }  
   };
 
   useEffect(() => {
     // Update the document title using the browser API
-    if(value!==null){
+    if(value!==null && value.id!=='' ){
       setCOLLECTION(C => [
         ...C,
-        { id: uuid(), label: value.id}
+        { id: uuid(), label: value.id, seq: value.seq}
       ])
     }
   },[setValue,value]);
@@ -189,8 +189,7 @@ export default function UserInput() {
             <StandardPartLinker 
               items={COLLECTION}
               value={value}
-              onChangeValue={valueHandleChange}
-              options={options}/>
+              onChangeValue={valueHandleChange} />
           </Grid>
           <Grid item xs={12} md={6}>
             <CustomPartLinker 
