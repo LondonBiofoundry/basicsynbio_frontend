@@ -62,16 +62,20 @@ const useRowStyles = makeStyles({
                 <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
+                    <TableCell>Index/position</TableCell>
                     <TableCell>partname</TableCell>
+                    <TableCell>Collection</TableCell>
                     <TableCell>ID</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.buildItems.map((assemblyitems) => (
+                  {row.buildItems.map((assemblyitems,index) => (
                     <TableRow key={assemblyitems.id}>
+                      <TableCell>{index+1}</TableCell>
                       <TableCell component="th" scope="row">
                         {assemblyitems.label}
                       </TableCell>
+                      <TableCell>{assemblyitems.collection}</TableCell>
                       <TableCell>{assemblyitems.id}</TableCell>
                     </TableRow>
                   ))}
