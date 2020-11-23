@@ -32,13 +32,6 @@ const useRowStyles = makeStyles({
     },
   });
   
-  function createData(name, length) {
-    return {
-      name,
-      length,
-    };
-  }
-  
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
@@ -53,9 +46,11 @@ const useRowStyles = makeStyles({
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.name}
+            {row.id}
           </TableCell>
-          <TableCell align="right">{row.length}</TableCell>
+          <TableCell align="right" scope="row">
+            {row.buildItems.length}
+          </TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -71,13 +66,6 @@ const useRowStyles = makeStyles({
       </React.Fragment>
     );
   }
-
-  
-  const rows = [
-    createData('1', 4),
-    createData('2', 8),
-    createData('3', 10),
-  ];
 
 export default function ViewBuild(props) {
   return (
@@ -101,8 +89,8 @@ export default function ViewBuild(props) {
             </TableRow>
             </TableHead>
             <TableBody>
-            {rows.map((row) => (
-                <Row key={row.name} row={row} />
+            {props.rows.map((row) => (
+                <Row key={row.id} row={row} />
             ))}
             </TableBody>
         </Table>

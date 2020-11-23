@@ -226,7 +226,8 @@ export default function UserInput() {
                 <BuildRoundedIcon className={classes.extendedIcon} />
                 View Current Build
               </Fab>
-              <ViewBuild 
+              <ViewBuild
+              rows={currentBuild}
               open={open}
               handleClose={handleClose}/>
               <Fab
