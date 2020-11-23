@@ -76,6 +76,7 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
 
 export default function UserInput() {
   const classes = useStyles();
+  const [assemblyID,setAssemblyID] = useState('')
   const [value, setValue] = useState({id:'',seq:''});
   const [uploadedFile, setUploadedFile] = useState('');
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
@@ -134,10 +135,18 @@ export default function UserInput() {
   const onAddToBuild = () => {
     console.log('shopping bag items',shoppingBagItems)
     console.log('build',currentBuild)
-    setCurrentBuild(C => [
-      ...C,
-      {id: uuid(), buildItems:shoppingBagItems}
-    ])
+    if (assemblyID!==''){
+      setCurrentBuild(C => [
+        ...C,
+        {id: assemblyID, buildItems:shoppingBagItems}
+      ])
+      setAssemblyID('')
+    } else {
+      setCurrentBuild(C => [
+        ...C,
+        {id: uuid(), buildItems:shoppingBagItems}
+      ])
+    }
     setShoppingBagItems([])
     console.log('shopping bag items',shoppingBagItems)
     console.log('build',currentBuild)
@@ -196,7 +205,9 @@ export default function UserInput() {
             setUploadedFile={setUploadedFile}/>
           </Grid>
           <Grid item xs={12}>
-            <Plasmid 
+            <Plasmid
+            assemblyID={assemblyID}
+            setAssemblyID={setAssemblyID}
             items={shoppingBagItems}
             onShopItemDelete={onShopItemDelete}/>
           </Grid>

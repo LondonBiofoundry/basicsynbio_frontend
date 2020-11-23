@@ -59,9 +59,9 @@ export default function StandardPartLinker(props) {
             </Typography>
           </Grid>
           <Grid item xs={3}>
-          <form>
-            <TextField id="outlined-basic" label="ID" variant='outlined'/>
-          </form>
+            <TextField 
+            value={props.assemblyID}
+            onChange={(e) => props.setAssemblyID(e.target.value)} id="outlined-basic" label="ID" variant='outlined'/>
           </Grid>
         </Grid>
         <Typography className={classes.pos}>

@@ -59,6 +59,24 @@ const useRowStyles = makeStyles({
                 <Typography variant="h6" gutterBottom component="div">
                   History
                 </Typography>
+                <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>partname</TableCell>
+                    <TableCell>ID</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.buildItems.map((assemblyitems) => (
+                    <TableRow key={assemblyitems.id}>
+                      <TableCell component="th" scope="row">
+                        {assemblyitems.label}
+                      </TableCell>
+                      <TableCell>{assemblyitems.id}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
               </Box>
             </Collapse>
           </TableCell>
