@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -25,9 +25,8 @@ const useStyles = makeStyles({
 
 
 export default function StandardPartLinker(props) {
-  //const [COLLECTION] = React.useState(props.items);
-  //console.log('standardpl',props.items)
   const classes = useStyles();
+  const [CollectionOptions, setCollectionOptions] = useState([]);
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -35,7 +34,7 @@ export default function StandardPartLinker(props) {
         <Typography className={classes.title}>
             Standard Part Linker from Collection
         </Typography>
-        <Chip />
+        <Chip CollectionOptions={CollectionOptions} setCollectionOptions={setCollectionOptions}/>
         <Typography className={classes.pos}>
           The below search options are actively changed to the objects inside the collections selected above, you must select atleast 1 object before continuing to search
         </Typography>

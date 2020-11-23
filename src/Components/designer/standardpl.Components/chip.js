@@ -27,12 +27,11 @@ function sleep(delay = 0) {
     });
   }
 
-export default function Chip() {
+export default function Chip(props) {
   const classes = useStyles();
   
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = open && options.length === 0;
+  const loading = open && props.CollectionOptions.length === 0;
 
   React.useEffect(() => {
     let active = true;
@@ -48,7 +47,7 @@ export default function Chip() {
       console.log(myresponse)
 
       if (active) {
-        setOptions(myresponse.data);
+        props.setCollectionOptions(myresponse.data);
       }
     })();
 
@@ -59,7 +58,7 @@ export default function Chip() {
 
   React.useEffect(() => {
     if (!open) {
-      setOptions([]);
+      props.setCollectionOptions([]);
     }
   }, [open]);
 
@@ -75,7 +74,7 @@ export default function Chip() {
         setOpen(false);
       }}
       getOptionLabel={(option) => option}
-      options={options}
+      options={props.CollectionOptions}
       loading={loading}
       disableCloseOnSelect
       renderOption={(option, { selected }) => (
