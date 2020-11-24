@@ -58,7 +58,9 @@ export default function Designer() {
                 setCurrentBuild={setCurrentBuild}
               />;
       case 1:
-        return <Export />;
+        return <Export 
+                currentBuild={currentBuild}
+              />;
       default:
         return 'Unknown stepIndex';
     }

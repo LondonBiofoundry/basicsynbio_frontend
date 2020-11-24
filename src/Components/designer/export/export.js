@@ -16,8 +16,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Export() {
+export default function Export(props) {
   const classes = useStyles();
+  var downloadURL = 'http://127.0.0.1:5000/buildcsvs?build='+JSON.stringify(props.currentBuild);
 
   return (
     <Card className={classes.root}>
@@ -32,9 +33,11 @@ export default function Export() {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Download Csv's
-        </Button>
+        <a href={downloadURL} download>
+            <Button size="small" color="primary">
+                Download Csv's
+            </Button>
+        </a>
         <Button size="small" color="primary">
           Learn More
         </Button>
