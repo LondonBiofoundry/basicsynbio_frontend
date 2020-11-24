@@ -5,8 +5,10 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import UserInput from '../Components/designer/userinput';
 import { Grid } from '@material-ui/core';
+
+import UserInput from '../Components/designer/userinput/userinput';
+import Export from '../Components/designer/export/export'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +35,7 @@ function getStepContent(stepIndex) {
     case 0:
       return <UserInput />;
     case 1:
-      return 'Export / View assembly';
+      return <Export />;
     default:
       return 'Unknown stepIndex';
   }
