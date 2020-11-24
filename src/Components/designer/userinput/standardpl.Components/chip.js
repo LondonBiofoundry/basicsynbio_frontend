@@ -21,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, delay);
-    });
-  }
-
 export default function Chip(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -41,7 +35,6 @@ export default function Chip(props) {
 
     (async () => {
       const response = await fetch('http://127.0.0.1:5000/collections/names');
-      await sleep(1e3); // For demo purposes.
       const myresponse = await response.json();
       console.log(myresponse)
 
