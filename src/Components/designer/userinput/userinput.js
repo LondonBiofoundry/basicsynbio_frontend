@@ -74,13 +74,13 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
   return destination;
 };
 
-export default function UserInput() {
+export default function UserInput(props) {
   const classes = useStyles();
   const [assemblyID,setAssemblyID] = useState('')
   const [value, setValue] = useState({id:'',seq:''});
   const [uploadedFile, setUploadedFile] = useState('');
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
-  const [currentBuild,setCurrentBuild] = useState([]);
+  //const [currentBuild,setCurrentBuild] = useState([]);
   const [COLLECTION,setCOLLECTION] = useState([]);
   const [COLLECTION2,setCOLLECTION2] = useState([
     { id: uuid(), label: "genbank1", seq:'A'},
@@ -134,22 +134,22 @@ export default function UserInput() {
 
   const onAddToBuild = () => {
     console.log('shopping bag items',shoppingBagItems)
-    console.log('build',currentBuild)
+    console.log('build',props.currentBuild)
     if (assemblyID!==''){
-      setCurrentBuild(C => [
+      props.setCurrentBuild(C => [
         ...C,
         {id: assemblyID, buildItems:shoppingBagItems}
       ])
       setAssemblyID('')
     } else {
-      setCurrentBuild(C => [
+      props.setCurrentBuild(C => [
         ...C,
         {id: uuid(), buildItems:shoppingBagItems}
       ])
     }
     setShoppingBagItems([])
     console.log('shopping bag items',shoppingBagItems)
-    console.log('build',currentBuild)
+    console.log('build',props.currentBuild)
   }
 
   const onDragEnd = React.useCallback(
@@ -238,7 +238,7 @@ export default function UserInput() {
                 View Current Build
               </Fab>
               <ViewBuild
-              rows={currentBuild}
+              rows={props.currentBuild}
               open={open}
               handleClose={handleClose}/>
               <Fab

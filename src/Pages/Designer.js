@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -30,19 +30,11 @@ function getSteps() {
   return ['Design your Constructs or Assemblies', 'Export or View the Constructs Assemblies'];
 }
 
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return <UserInput />;
-    case 1:
-      return <Export />;
-    default:
-      return 'Unknown stepIndex';
-  }
-}
-
 export default function Designer() {
   const classes = useStyles();
+
+  const [currentBuild,setCurrentBuild] = useState([]);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
@@ -57,6 +49,20 @@ export default function Designer() {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  function getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return <UserInput 
+                currentBuild={currentBuild}
+                setCurrentBuild={setCurrentBuild}
+              />;
+      case 1:
+        return <Export />;
+      default:
+        return 'Unknown stepIndex';
+    }
+  }
 
   return (
     <div className={classes.root}>
