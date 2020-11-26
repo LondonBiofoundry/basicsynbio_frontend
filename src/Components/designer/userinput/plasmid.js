@@ -55,7 +55,7 @@ export default function StandardPartLinker(props) {
         >
           <Grid item xs={3}>
             <Typography className={classes.title}>
-              Plasmid Designer:
+              Assembly Designer:
             </Typography>
           </Grid>
           <Grid item xs={3}>

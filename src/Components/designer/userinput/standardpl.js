@@ -45,7 +45,7 @@ export default function StandardPartLinker(props) {
           The below search options are actively changed to the objects inside the collections selected above, you must select atleast 1 object before continuing to search
         </Typography>
         <Typography className={classes.title} color="textSecondary" style={{paddingTop:'10px'}}>
-            Search for Part
+            Search for Part/Linker
         </Typography>
         <PartSeach
           value={props.value} 
@@ -53,7 +53,7 @@ export default function StandardPartLinker(props) {
           CollectionSelected={CollectionSelected}
           partOptions={partOptions}
           setPartOptions={setPartOptions}/>
-        <h2>Parts</h2>
+        <h2>Part/Linker</h2>
         <Shop items={props.items} />
       </CardContent>
     </Card>
