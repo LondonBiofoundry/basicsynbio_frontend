@@ -269,6 +269,7 @@ export default function UserInput(props) {
           </Grid>
         </Grid>
         <ValidateAssembly
+        shoppingBagItems={shoppingBagItems}
         open={openValidation}
         handleClose={handleCloseValidation}/>
       </div>

@@ -1,5 +1,4 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,7 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import { SeqViz } from "seqviz";
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+
+import SuccessAnimation from './successlottly';
+import FailAnimation from './faillottly';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -15,6 +18,38 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ValidateAssembly(props) {
+    const [validation, setValidation] = useState('');
+
+    React.useEffect(() => {
+        let active = true;
+    
+        (async () => {
+          console.log(props.shoppingBagItems)
+          const response = await fetch('http://127.0.0.1:5000/validate?build='+JSON.stringify(props.shoppingBagItems));
+          const myresponse = await response.json()
+          setValidation(String(myresponse.result))
+          console.log(myresponse.result)
+        })();
+    
+        return () => {
+          active = false;
+        };
+      }, [props.open]);
+    
+      React.useEffect(() => {
+        if (!props.open) {
+            setValidation('');
+        }
+      }, [props.open]);
+
+    function FailSuccess() {
+        return(
+            validation==='success'?
+            <SuccessAnimation/>:
+            <FailAnimation/>
+        )
+    }
+
   return (
     <div>
       <Dialog
@@ -25,11 +60,28 @@ export default function ValidateAssembly(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Validation</DialogTitle>
+        <DialogTitle 
+        id="alert-dialog-slide-title"
+        style={{textAlign:'center'}}
+        >Validation</DialogTitle>
+        <Divider/>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Result of Validation
-          </DialogContentText>
+        <Grid
+            container
+            direction="row"
+            justify="space-around"
+            alignItems="center"
+            spacing={2}
+            >
+            <Grid item>
+                <FailSuccess />
+            </Grid>
+            <Grid item>
+            <DialogContentText id="alert-dialog-slide-description">
+                Result of Validation: {validation}
+            </DialogContentText>
+            </Grid>            
+        </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose} color="primary">
