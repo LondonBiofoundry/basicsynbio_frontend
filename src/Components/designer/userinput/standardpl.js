@@ -38,6 +38,7 @@ export default function StandardPartLinker(props) {
             Standard Part Linker from Collection
         </Typography>
         <Chip
+          CollectionSelected={CollectionSelected}
           setCollectionSelected={setCollectionSelected}
           CollectionOptions={CollectionOptions} 
           setCollectionOptions={setCollectionOptions}/>
