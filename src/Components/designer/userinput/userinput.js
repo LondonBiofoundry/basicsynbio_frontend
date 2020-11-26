@@ -16,6 +16,7 @@ import StandardPartLinker from './standardpl';
 import CustomPartLinker from './custompl';
 import Plasmid from './plasmid';
 import ViewBuild from './userinput.Components/viewbuild';
+import ValidateAssembly from './userinput.Components/validateassembly';
 
 import "./styles.css";
 
@@ -88,6 +89,16 @@ export default function UserInput(props) {
 
   //View Build Functions
   const [open, setOpen] = useState(false);
+  //Validate Assembly Function
+  const [openValidation, setOpenValidation] = useState(false);
+
+  const handleClickOpenValidation = () => {
+    setOpenValidation(true);
+  };
+
+  const handleCloseValidation = () => {
+    setOpenValidation(false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -225,7 +236,11 @@ export default function UserInput(props) {
                 <VisibilityRoundedIcon className={classes.extendedIcon}/>
                 Visualise
               </Fab>
-              <Fab className={classes.FABitemgreen} variant="extended" aria-label="Validate">
+              <Fab 
+              onClick={handleClickOpenValidation}
+              className={classes.FABitemgreen} 
+              variant="extended" 
+              aria-label="Validate">
                 <DoneAllRoundedIcon className={classes.extendedIcon}/>
                 Validate
               </Fab>
@@ -253,6 +268,9 @@ export default function UserInput(props) {
             </div>
           </Grid>
         </Grid>
+        <ValidateAssembly
+        open={openValidation}
+        handleClose={handleCloseValidation}/>
       </div>
     </DragDropContext>
   );
