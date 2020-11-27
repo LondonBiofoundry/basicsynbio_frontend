@@ -17,6 +17,7 @@ import CustomPartLinker from './custompl';
 import Plasmid from './plasmid';
 import ViewBuild from './userinput.Components/viewbuild';
 import ValidateAssembly from './userinput.Components/validateassembly';
+import SnackbarPopups from './userinput.Components/snackbar';
 
 import "./styles.css";
 
@@ -92,6 +93,7 @@ export default function UserInput(props) {
   //Validate Assembly Function
   const [validated, setValidated]=useState(false)
   const [openValidation, setOpenValidation] = useState(false);
+  const [openValidationMessage,setOpenValidationMessage] = useState(false);
 
   const handleClickOpenValidation = () => {
     setOpenValidation(true);
@@ -108,6 +110,16 @@ export default function UserInput(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const OpenValidationMessage = () => {
+    console.log('validated',validated)
+    setOpenValidationMessage(true);
+    console.log('openmessage',openValidationMessage)
+  }
+
+  const handleCloseValidationMessage = () => {
+    setOpenValidationMessage(false);
+  }
 
   const valueHandleChange = (newValue) => {
     if(newValue!==null){
@@ -144,8 +156,7 @@ export default function UserInput(props) {
   }
 
   const onAddToBuild = () => {
-    console.log('shopping bag items',shoppingBagItems)
-    console.log('build',props.currentBuild)
+    console.log('validated',validated)
     if (assemblyID!==''){
       props.setCurrentBuild(C => [
         ...C,
@@ -159,8 +170,7 @@ export default function UserInput(props) {
       ])
     }
     setShoppingBagItems([])
-    console.log('shopping bag items',shoppingBagItems)
-    console.log('build',props.currentBuild)
+    setValidated(false)
   }
 
   const onDragEnd = React.useCallback(
@@ -261,7 +271,7 @@ export default function UserInput(props) {
               open={open}
               handleClose={handleClose}/>
               <Fab
-              onClick={onAddToBuild}
+              onClick={validated?onAddToBuild:OpenValidationMessage}
               className={classes.FABitem} 
               variant="extended" 
               color="secondary" 
@@ -277,6 +287,9 @@ export default function UserInput(props) {
         shoppingBagItems={shoppingBagItems}
         open={openValidation}
         handleClose={handleCloseValidation}/>
+        <SnackbarPopups
+        open={openValidationMessage}
+        handleClose={handleCloseValidationMessage}/>
       </div>
     </DragDropContext>
   );

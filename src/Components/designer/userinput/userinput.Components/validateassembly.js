@@ -40,12 +40,6 @@ export default function ValidateAssembly(props) {
           active = false;
         };
       }, [props.open]);
-    
-      //React.useEffect(() => {
-      //  if (!props.open) {
-      //      setValidation('');
-      //  }
-      //}, [props.open]);
 
     function FailSuccess() {
         return(
