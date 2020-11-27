@@ -135,7 +135,7 @@ export default function Chip(props) {
       />
       </div>
       <Dialog disableBackdropClick disableEscapeKeyDown open={versionOpen} onClose={handleVersionClose}>
-        <DialogTitle>Fill the form</DialogTitle>
+        <DialogTitle>Select which version of the Collection you would like</DialogTitle>
         <DialogContent>
           <form className={classes.container}>
             <Typography>
