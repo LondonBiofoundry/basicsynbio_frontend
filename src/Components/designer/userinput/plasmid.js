@@ -116,7 +116,7 @@ export default function StandardPartLinker(props) {
           {props.validated?<DisplaySuccess/>:null}
         </Grid>
         <Typography className={classes.pos}>
-          Drag items above to build your plasmid
+          Drag items above to build your Assembly
         </Typography>
         <div className="hello">
           <h1>Parts List</h1>
