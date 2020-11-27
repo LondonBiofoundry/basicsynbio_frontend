@@ -31,13 +31,6 @@ export default function FailAnimation(props) {
       };
 
     function CreateAnimation() {
-      useEffect(()=>{
-        return(
-          <Lottie 
-          options={defaultOptions}
-          />
-        )
-      },[props.open])
       return(
         <Lottie 
         options={defaultOptions}

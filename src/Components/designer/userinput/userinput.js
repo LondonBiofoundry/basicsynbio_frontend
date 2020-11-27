@@ -90,6 +90,7 @@ export default function UserInput(props) {
   //View Build Functions
   const [open, setOpen] = useState(false);
   //Validate Assembly Function
+  const [validated, setValidated]=useState(false)
   const [openValidation, setOpenValidation] = useState(false);
 
   const handleClickOpenValidation = () => {
@@ -137,10 +138,9 @@ export default function UserInput(props) {
   },[uploadedFile]);
 
   const onShopItemDelete = (itemid) => {
-    console.log(itemid)
     let filteredArray = shoppingBagItems.filter(item => item.id !== itemid)
-    console.log('filter',filteredArray)
     setShoppingBagItems(filteredArray);
+    setValidated(false)
   }
 
   const onAddToBuild = () => {
@@ -176,16 +176,19 @@ export default function UserInput(props) {
           setShoppingBagItems(state =>
             reorder(state, source.index, destination.index)
           );
+          setValidated(false)
           break;
         case "SHOP":
           setShoppingBagItems(state =>
             copy(COLLECTION, state, source, destination)
           );
+          setValidated(false)
           break;
         case "SHOP2":
           setShoppingBagItems(state =>
             copy(COLLECTION2, state, source, destination)
           );
+          setValidated(false)
         break;
         default:
           break;
@@ -217,6 +220,7 @@ export default function UserInput(props) {
           </Grid>
           <Grid item xs={12}>
             <Plasmid
+            validated={validated}
             assemblyID={assemblyID}
             setAssemblyID={setAssemblyID}
             items={shoppingBagItems}
@@ -269,6 +273,7 @@ export default function UserInput(props) {
           </Grid>
         </Grid>
         <ValidateAssembly
+        setValidated={setValidated}
         shoppingBagItems={shoppingBagItems}
         open={openValidation}
         handleClose={handleCloseValidation}/>

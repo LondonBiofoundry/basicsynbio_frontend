@@ -28,6 +28,11 @@ export default function ValidateAssembly(props) {
           const response = await fetch('http://127.0.0.1:5000/validate?build='+JSON.stringify(props.shoppingBagItems));
           const myresponse = await response.json()
           setValidation(String(myresponse.result))
+          if (String(myresponse.result)==='success'&&props.validated!=='success'){
+            props.setValidated(true)
+          } else {
+            props.setValidated(false)
+          }
           console.log(myresponse.result)
         })();
     
@@ -36,11 +41,11 @@ export default function ValidateAssembly(props) {
         };
       }, [props.open]);
     
-      React.useEffect(() => {
-        if (!props.open) {
-            setValidation('');
-        }
-      }, [props.open]);
+      //React.useEffect(() => {
+      //  if (!props.open) {
+      //      setValidation('');
+      //  }
+      //}, [props.open]);
 
     function FailSuccess() {
         return(

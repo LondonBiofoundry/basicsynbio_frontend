@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import ShoppingBag from './plasmid.Components/shoppingbag';
 import BagItemModal from './plasmid.Components/bagitemmodal';
 
+import SuccessImg from './plasmid.Components/successLotty';
+
 const useStyles = makeStyles({
   root: {
     minWidth: '100%',
@@ -62,6 +64,18 @@ export default function StandardPartLinker(props) {
             <TextField 
             value={props.assemblyID}
             onChange={(e) => props.setAssemblyID(e.target.value)} id="outlined-basic" label="ID" variant='outlined'/>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-start"
+            >
+              <Grid item>
+                {props.validated?<SuccessImg/>:<div/>}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Typography className={classes.pos}>
