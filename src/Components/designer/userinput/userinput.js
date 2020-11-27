@@ -18,6 +18,7 @@ import Plasmid from './plasmid';
 import ViewBuild from './userinput.Components/viewbuild';
 import ValidateAssembly from './userinput.Components/validateassembly';
 import SnackbarPopups from './userinput.Components/snackbar';
+import VisualiseAssembly from './userinput.Components/visualiseAssembly';
 
 import "./styles.css";
 
@@ -88,12 +89,22 @@ export default function UserInput(props) {
     { id: uuid(), label: "genbank1", seq:'A'},
   ]);
 
+  //Visualise Assembly Function
+  const [openVisualise, setOpenVisualise] = useState(false);
   //View Build Functions
   const [open, setOpen] = useState(false);
   //Validate Assembly Function
   const [validated, setValidated]=useState(false)
   const [openValidation, setOpenValidation] = useState(false);
   const [openValidationMessage,setOpenValidationMessage] = useState(false);
+
+  const handleClickVisualiseOpen = () => {
+    setOpenVisualise(true);
+  };
+
+  const handleVisualiseClose = () => {
+    setOpenVisualise(false);
+  };
 
   const handleClickOpenValidation = () => {
     setOpenValidation(true);
@@ -246,7 +257,12 @@ export default function UserInput(props) {
         >
           <Grid item>
             <div className={classes.FAB}>
-              <Fab className={classes.FABitem} variant="extended" color="primary" aria-label="visualise">
+              <Fab 
+              onClick={validated?handleClickVisualiseOpen:OpenValidationMessage}
+              className={classes.FABitem} 
+              variant="extended" 
+              color="primary" 
+              aria-label="visualise">
                 <VisibilityRoundedIcon className={classes.extendedIcon}/>
                 Visualise
               </Fab>
@@ -290,6 +306,10 @@ export default function UserInput(props) {
         <SnackbarPopups
         open={openValidationMessage}
         handleClose={handleCloseValidationMessage}/>
+        <VisualiseAssembly
+        shoppingBagItems={shoppingBagItems}
+        open={openVisualise}
+        handleClose={handleVisualiseClose}/>
       </div>
     </DragDropContext>
   );
