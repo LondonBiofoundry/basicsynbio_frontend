@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Lottie from 'react-lottie';
 import animationData from './fail/9915-spinner-fail.json';
@@ -17,26 +17,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function FailAnimation() {
+export default function FailAnimation(props) {
 
     const classes = useStyles();
 
     const defaultOptions = {
-        loop: true,
+        loop: false,
         autoplay: true,
         animationData: animationData,
         rendererSettings: {
           preserveAspectRatio: "xMidYMid slice"
         }
       };
+
+    function CreateAnimation() {
+      useEffect(()=>{
+        return(
+          <Lottie 
+          options={defaultOptions}
+          />
+        )
+      },[props.open])
+      return(
+        <Lottie 
+        options={defaultOptions}
+        />
+      )
+    }
     
     return (
       <div className={classes.responsiveImage}>
-        <Lottie 
-          options={defaultOptions}
-          //height={432}
-         // width={786}
-        />
+        <CreateAnimation/>
       </div>
     );
   }

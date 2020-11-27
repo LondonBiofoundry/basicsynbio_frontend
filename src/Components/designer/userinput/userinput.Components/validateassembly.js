@@ -45,8 +45,8 @@ export default function ValidateAssembly(props) {
     function FailSuccess() {
         return(
             validation==='success'?
-            <SuccessAnimation/>:
-            <FailAnimation/>
+            <SuccessAnimation open={props.open}/>:
+            <FailAnimation open={props.open}/>
         )
     }
 
