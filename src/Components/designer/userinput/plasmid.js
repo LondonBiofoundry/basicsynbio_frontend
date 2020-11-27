@@ -46,6 +46,51 @@ export default function StandardPartLinker(props) {
     setOpen(false);
   };
 
+  function Description () {
+    if (props.validated) {
+      return(
+        <Grid item xs={5}>
+          <TextField
+          style={{'width':'100%'}}
+          id="outlined-basic" 
+          label="Description"
+          variant='outlined'/>
+        </Grid>
+      )
+    } else {
+      return(
+        <Grid item xs={6}>
+          <TextField
+          style={{'width':'100%'}}
+          id="outlined-basic" 
+          label="Description"
+          variant='outlined'/>
+        </Grid>
+      )
+    }
+  }
+
+  function DisplaySuccess() {
+    return (
+      <Grid item xs={1}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="flex-start"
+        >
+          <Grid item>
+            <SuccessImg/>
+          </Grid>
+        </Grid>
+      </Grid>
+    )
+  }
+
+  function handleValidation() {
+
+  }
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -54,6 +99,7 @@ export default function StandardPartLinker(props) {
           direction="row"
           justify="flex-start"
           alignItems="center"
+          spacing={2}
         >
           <Grid item xs={3}>
             <Typography className={classes.title}>
@@ -62,21 +108,12 @@ export default function StandardPartLinker(props) {
           </Grid>
           <Grid item xs={3}>
             <TextField 
+            style={{'width':'100%'}}
             value={props.assemblyID}
-            onChange={(e) => props.setAssemblyID(e.target.value)} id="outlined-basic" label="ID" variant='outlined'/>
+            onChange={(e) => props.setAssemblyID(e.target.value)} id="outlined-basic" label="Name" variant='outlined'/>
           </Grid>
-          <Grid item xs={6}>
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="flex-start"
-            >
-              <Grid item>
-                {props.validated?<SuccessImg/>:<div/>}
-              </Grid>
-            </Grid>
-          </Grid>
+          <Description/>
+          {props.validated?<DisplaySuccess/>:null}
         </Grid>
         <Typography className={classes.pos}>
           Drag items above to build your plasmid
