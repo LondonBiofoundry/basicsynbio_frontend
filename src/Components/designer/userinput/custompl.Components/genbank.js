@@ -10,10 +10,10 @@ import { Typography } from '@material-ui/core';
 export default function Genbank(props) {
   async function ValidateFileUpload (dataString, filename){
     console.log(dataString)
-    const response = await fetch('http://127.0.0.1:5000/fileupload/gb?file='+JSON.stringify(dataString));
+    const response = await fetch('http://127.0.0.1:5000/fileupload/genbank?file='+JSON.stringify(dataString));
     const result = await response.json()
     if(result.seq){
-      props.setUploadedFile({seq:result.seq,label:filename,collection:'',type:'file:gb',base64:dataString})
+      props.setUploadedFile({seq:result.seq,label:filename,collection:'',type:'genbank',base64:dataString})
       props.setCatchError('')
     } else {
       props.setCatchError(result.error)

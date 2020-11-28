@@ -10,9 +10,14 @@ import { Typography } from '@material-ui/core';
 export default function Fasta(props) {
   async function ValidateFileUpload (dataString, filename){
     console.log(dataString)
-    const response = await fetch('http://127.0.0.1:5000/fileupload/gb?file='+JSON.stringify(dataString));
+    const response = await fetch('http://127.0.0.1:5000/fileupload/fasta?file='+JSON.stringify(dataString));
     const result = await response.json()
-    props.setUploadedFile({seq:result.seq,label:filename,collection:'',type:'file:gb',base64:dataString})
+    if(result.seq){
+      props.setUploadedFile({seq:result.seq,label:filename,collection:'',type:'fasta',base64:dataString})
+      props.setCatchError('')
+    } else {
+      props.setCatchError(result.error)
+    }
     console.log(result)
   }
   
