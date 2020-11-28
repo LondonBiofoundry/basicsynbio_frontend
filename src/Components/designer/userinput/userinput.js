@@ -81,12 +81,12 @@ export default function UserInput(props) {
   const classes = useStyles();
   const [assemblyID,setAssemblyID] = useState('')
   const [value, setValue] = useState({id:'',seq:''});
-  const [uploadedFile, setUploadedFile] = useState('');
+  const [uploadedFile, setUploadedFile] = useState({id:'',seq:'',label:'',collection:'',type:'',base64:''});
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
   //const [currentBuild,setCurrentBuild] = useState([]);
   const [COLLECTION,setCOLLECTION] = useState([]);
   const [COLLECTION2,setCOLLECTION2] = useState([
-    { id: uuid(), label: "genbank1", seq:'A'},
+    { id: uuid(), label: "genbank1", seq:'A',collection:'', type:'custom', base64:''},
   ]);
 
   //Visualise Assembly Function
@@ -123,9 +123,7 @@ export default function UserInput(props) {
   };
 
   const OpenValidationMessage = () => {
-    console.log('validated',validated)
     setOpenValidationMessage(true);
-    console.log('openmessage',openValidationMessage)
   }
 
   const handleCloseValidationMessage = () => {
@@ -153,10 +151,10 @@ export default function UserInput(props) {
 
   useEffect(() => {
     // Update the document title using the browser API
-    if (!(uploadedFile)) {return}
+    if (uploadedFile.label==='') {return}
     setCOLLECTION2(C => [
         ...C,
-        { id: uuid(), label: uploadedFile}
+        { id: uuid(), label: uploadedFile.label, seq:uploadedFile.seq, collection:'', type:uploadedFile.type, base64:uploadedFile.base64}
       ])
   },[uploadedFile]);
 
