@@ -71,7 +71,9 @@ export default function CustomPartLinker(props) {
         {method==='SBOL'?<SBOL setUploadedFile={props.setUploadedFile}/>:<div />}
         <div style={{ paddingTop: 8 }}>
         </div>
-        <h2>Parts Custom</h2>
+        <Typography className={classes.title} style={{padding:'5px'}}>
+          Custom Part Linker
+        </Typography>
         <Shop items={props.items} />
       </CardContent>
     </Card>

@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     root: {
-      width: 200,
       padding:10,
       display: 'flex',
     },
@@ -28,7 +27,7 @@ export default function Copyable(props) {
     return (
         <Droppable droppableId={props.droppableId} isDropDisabled={true}>
         {(provided, snapshot) => (
-            <ul ref={provided.innerRef} className={props.className} style={{display:'flex'}}>
+            <ul ref={provided.innerRef} className={props.className} style={{display:'flex',flexWrap:'wrap'}}>
             {props.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (

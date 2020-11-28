@@ -54,7 +54,9 @@ export default function StandardPartLinker(props) {
           CollectionSelected={CollectionSelected}
           partOptions={partOptions}
           setPartOptions={setPartOptions}/>
-        <h2>Part/Linker</h2>
+        <Typography className={classes.title} style={{padding:'5px'}}>
+            Standard Part Linker from Collection
+        </Typography>
         <Shop items={props.items} />
       </CardContent>
     </Card>
