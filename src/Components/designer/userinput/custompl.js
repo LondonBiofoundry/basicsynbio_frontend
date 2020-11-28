@@ -31,6 +31,7 @@ export default function CustomPartLinker(props) {
   const classes = useStyles();
   
   const [method, setMethod] = React.useState('Genbank');
+  const [catchError, setCatchError] = React.useState('');
 
   const handleMethod = (event, newMethod) => {
     setMethod(newMethod);
@@ -66,11 +67,12 @@ export default function CustomPartLinker(props) {
         <Typography className={classes.pos} color="textSecondary">
           Upload your {method} file
         </Typography>
-        {method==='Genbank'?<Genbank setUploadedFile={props.setUploadedFile}/>:<div />}
-        {method==='Fasta'?<Fasta setUploadedFile={props.setUploadedFile}/>:<div />}
-        {method==='SBOL'?<SBOL setUploadedFile={props.setUploadedFile}/>:<div />}
+        {method==='Genbank'?<Genbank setUploadedFile={props.setUploadedFile} setCatchError={setCatchError}/>:<div />}
+        {method==='Fasta'?<Fasta setUploadedFile={props.setUploadedFile} setCatchError={setCatchError}/>:<div />}
+        {method==='SBOL'?<SBOL setUploadedFile={props.setUploadedFile} setCatchError={setCatchError}/>:<div />}
         <div style={{ paddingTop: 8 }}>
         </div>
+        {catchError?'Unable to Process : '+ catchError :  ''}
         <Typography className={classes.title} style={{padding:'5px'}}>
           Custom Part Linker
         </Typography>
