@@ -7,12 +7,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import IconButton from '@material-ui/core/IconButton';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import { CardActionArea } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
+      hieght:'100%'
     },
     bullet: {
       display: 'inline-block',
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(0.8)',
     },
     title: {
-      fontSize: 14,
+      fontSize: 12,
     },
     droppableBox: {
       minHeight: '40px',
@@ -47,9 +53,13 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(1),
     },
     playIcon: {
-      height: 20,
-      width: 20,
+      height: 30,
+      width: 30,
     },
+    button: {
+      padding:'5px',
+      paddingTop:'5px'
+    }
   }))
 
 export default function ShoppingBag(props) {
@@ -70,13 +80,14 @@ export default function ShoppingBag(props) {
                       <Card className={classes.root}>
                         <div className={classes.details}>
                           <CardContent className={classes.content} {...provided.dragHandleProps}>
-                            <Typography component="h5" variant="h5">
+                            <Typography component="h5" variant="h6">
                               {item.label}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                              {item.label}
+                              {item.collection?item.collection:'UPLOADED'}
                             </Typography>
                           </CardContent>
+                          <Divider variant='middle'/>
                           <div className={classes.controls}>
                             <IconButton onClick={() => {props.openDialog(item.id,item.label,item.seq,item.collection)}} aria-label="view" color='primary'>
                               <InsertPhotoIcon className={classes.playIcon}/>
@@ -86,11 +97,6 @@ export default function ShoppingBag(props) {
                             </IconButton>
                           </div>
                         </div>
-                        <CardMedia
-                          className={classes.cover}
-                          image={process.env.PUBLIC_URL + 'part.svg'}
-                          title="Live from space album cover"
-                        />
                       </Card>
                     </li>
                   )}
