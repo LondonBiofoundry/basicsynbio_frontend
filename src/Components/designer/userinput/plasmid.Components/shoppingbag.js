@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-      hieght:'100%'
+      hieght:'100%',
     },
     bullet: {
       display: 'inline-block',
@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 12,
     },
     droppableBox: {
-      minHeight: '40px',
+      overflow:'auto',
+      minHeight: '150px',
       padding: '10px',
       border: '3px dashed #777',
       borderRadius: '10px',
