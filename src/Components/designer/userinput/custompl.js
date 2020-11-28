@@ -70,23 +70,6 @@ export default function CustomPartLinker(props) {
         {method==='Fasta'?<Fasta setUploadedFile={props.setUploadedFile}/>:<div />}
         {method==='SBOL'?<SBOL setUploadedFile={props.setUploadedFile}/>:<div />}
         <div style={{ paddingTop: 8 }}>
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-          alignItems="flex-start"
-        >
-          <Grid item>
-            <Button variant="contained" color='Secondary'>
-                Genbank Part
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color='primary'>
-              Process Input
-            </Button>
-          </Grid>
-        </Grid>
         </div>
         <h2>Parts Custom</h2>
         <Shop items={props.items} />

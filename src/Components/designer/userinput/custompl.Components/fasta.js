@@ -2,6 +2,10 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import RootRef from '@material-ui/core/RootRef'
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import UploadIMG from './uploadIMG';
+import { Typography } from '@material-ui/core';
 
 export default function Fasta(props) {
   async function ValidateFileUpload (dataString, filename){
@@ -34,9 +38,25 @@ export default function Fasta(props) {
 
   return(
       <RootRef rootRef={ref}>
-        <Paper {...rootProps}>
+        <Paper {...rootProps} variant='outlined'>
           <input {...getInputProps()} />
-          <p>Drag and drop some files here, or click to select files</p>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            spacing={1}
+            padding={1}
+          >
+            <Grid item>
+              <UploadIMG/>
+            </Grid>
+            <Grid item>
+              <Typography>
+                Drag and drop some files here, or click to select files
+              </Typography>
+            </Grid>
+          </Grid>
         </Paper>
       </RootRef>
     )

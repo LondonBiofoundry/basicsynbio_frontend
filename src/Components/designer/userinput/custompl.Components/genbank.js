@@ -1,31 +1,63 @@
-import React, {Component} from 'react'
-import {DropzoneAreaBase} from 'material-ui-dropzone'
+import React, {useCallback, useEffect, useState} from 'react'
+import {useDropzone} from 'react-dropzone'
+import RootRef from '@material-ui/core/RootRef'
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
-class DropzoneAreaExample extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      files: [],
-      setUploadedFile: props.setUploadedFile
-    };
+import UploadIMG from './uploadIMG';
+import { Typography } from '@material-ui/core';
+
+export default function Genbank(props) {
+  async function ValidateFileUpload (dataString, filename){
+    console.log(dataString)
+    const response = await fetch('http://127.0.0.1:5000/fileupload/gb?file='+JSON.stringify(dataString));
+    const result = await response.json()
+    props.setUploadedFile({seq:result.seq,label:filename,collection:'',type:'file:gb',base64:dataString})
+    console.log(result)
   }
-  handleChange(files){
-    console.log(files)
-    this.setState({
-      files: files
-    });
-  }
-  render(){
-    return (
-        <div style={{marginTop: '10px'}}>
-            <DropzoneAreaBase
-              onAdd={(fileObjs) => this.state.setUploadedFile(fileObjs[0].file.name)}
-              onDelete={(fileObj) => console.log('Removed File:', fileObj)}
-              onAlert={(message, variant) => console.log(`${variant}: ${message}`)}
-            />
-        </div>
+  
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader()
+
+      reader.onabort = () => console.log('file reading was aborted')
+      reader.onerror = () => console.log('file reading has failed')
+      reader.onload = () => {
+        const binaryStr = reader.result
+        const dataString = JSON.stringify(Array.from(new Uint8Array(binaryStr)))
+        const b64string = btoa(dataString)
+        ValidateFileUpload(b64string,file.path)
+      }
+      reader.readAsArrayBuffer(file)
+    })
+  }, [])
+
+  const {getRootProps, getInputProps} = useDropzone({onDrop})
+  const {ref, ...rootProps} = getRootProps()
+
+
+  return(
+      <RootRef rootRef={ref}>
+        <Paper {...rootProps} variant='outlined'>
+          <input {...getInputProps()} />
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            spacing={1}
+            padding={1}
+          >
+            <Grid item>
+              <UploadIMG/>
+            </Grid>
+            <Grid item>
+              <Typography>
+                Drag and drop some files here, or click to select files
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      </RootRef>
     )
-  }
 }
-
-export default DropzoneAreaExample;
