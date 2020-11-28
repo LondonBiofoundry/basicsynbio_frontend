@@ -131,12 +131,22 @@ export default function UserInput(props) {
   }
 
   const valueHandleChange = (newValue) => {
-    if(newValue!==null){
-      let filteredArray = COLLECTION.filter(item => item.label !== value.id)
-      setCOLLECTION(filteredArray);
-      setValue(newValue);  
-    }  
+    setValue(newValue)
   };
+
+  const onDeleteStandardPart = (partlabel) => {
+    if(partlabel!==null){
+      let filteredArray = COLLECTION.filter(item => item.label !== partlabel)
+      setCOLLECTION(filteredArray);
+    }
+  }
+
+  const onDeleteCustomPart = (partlabel) => {
+    if(partlabel!==null){
+      let filteredArray = COLLECTION2.filter(item => item.label !== partlabel)
+      setCOLLECTION2(filteredArray);
+    }
+  }
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -230,12 +240,14 @@ export default function UserInput(props) {
             <StandardPartLinker 
               items={COLLECTION}
               value={value}
-              onChangeValue={valueHandleChange} />
+              onChangeValue={valueHandleChange}
+              onDeleteStandardPart={onDeleteStandardPart}/>
           </Grid>
           <Grid item xs={12} md={6}>
             <CustomPartLinker 
             items={COLLECTION2}
-            setUploadedFile={setUploadedFile}/>
+            setUploadedFile={setUploadedFile}
+            onDeleteCustomPart={onDeleteCustomPart}/>
           </Grid>
           <Grid item xs={12}>
             <Plasmid

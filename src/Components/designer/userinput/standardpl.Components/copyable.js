@@ -3,8 +3,10 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';  
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
     root: {
       padding:10,
       display: 'flex',
@@ -20,14 +22,22 @@ const useStyles = makeStyles({
     pos: {
       marginBottom: 12,
     },
-  });
+    myul:{
+        '& > *': {
+            margin: theme.spacing(0.5),
+          },
+        display:'flex',
+        flexWrap:'wrap',
+    }})
+  );
 
 export default function Copyable(props) {
     const classes = useStyles();
+    
     return (
         <Droppable droppableId={props.droppableId} isDropDisabled={true}>
         {(provided, snapshot) => (
-            <ul ref={provided.innerRef} className={props.className} style={{display:'flex',flexWrap:'wrap'}}>
+            <ul ref={provided.innerRef} className={classes.myul}>
             {props.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (
@@ -36,18 +46,16 @@ export default function Copyable(props) {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        style={provided.draggableProps.style}
-                        className={snapshot.isDragging ? "dragging" : ""}
+                        //style={provided.draggableProps.style}
+                        //className={snapshot.isDragging ? "dragging" : ""}
                     >
-                        <Card className={classes.root}>
-                            <CardContent>
-                                {item.label}
-                            </CardContent>
-                        </Card>
+                        <Chip
+                            className={classes.root}
+                            label={item.label}
+                            onDelete={() => props.onDeleteStandardPart(item.label)}
+                            color="primary"
+                        />
                     </li>
-                    {snapshot.isDragging && (
-                        <li className="react-beatiful-dnd-copy">{item.label}{index}{item.id}</li>
-                    )}
                     </React.Fragment>
                 )}
                 </Draggable>

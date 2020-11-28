@@ -74,7 +74,7 @@ export default function CustomPartLinker(props) {
         <Typography className={classes.title} style={{padding:'5px'}}>
           Custom Part Linker
         </Typography>
-        <Shop items={props.items} />
+        <Shop items={props.items} onDeleteCustomPart={props.onDeleteCustomPart}/>
       </CardContent>
     </Card>
   );

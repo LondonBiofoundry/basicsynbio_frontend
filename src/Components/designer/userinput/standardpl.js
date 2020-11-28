@@ -57,7 +57,9 @@ export default function StandardPartLinker(props) {
         <Typography className={classes.title} style={{padding:'5px'}}>
             Standard Part Linker from Collection
         </Typography>
-        <Shop items={props.items} />
+        <Shop 
+        items={props.items}
+        onDeleteStandardPart={props.onDeleteStandardPart}/>
       </CardContent>
     </Card>
   );
