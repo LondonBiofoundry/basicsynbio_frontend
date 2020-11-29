@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core";
 
-import UserInput from '../Components/designer/userinput/userinput';
-import Export from '../Components/designer/export/export'
+import UserInput from "../Components/designer/userinput/userinput";
+import Export from "../Components/designer/export/export";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    '& > *': {
+    width: "100%",
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
@@ -27,13 +27,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Design your Constructs or Assemblies', 'Export or View the Constructs Assemblies'];
+  return [
+    "Design your Constructs or Assemblies",
+    "Export or View the Constructs Assemblies",
+  ];
 }
 
 export default function Designer() {
   const classes = useStyles();
 
-  const [currentBuild,setCurrentBuild] = useState([]);
+  const [currentBuild, setCurrentBuild] = useState([]);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -53,16 +56,16 @@ export default function Designer() {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <UserInput 
-                currentBuild={currentBuild}
-                setCurrentBuild={setCurrentBuild}
-              />;
+        return (
+          <UserInput
+            currentBuild={currentBuild}
+            setCurrentBuild={setCurrentBuild}
+          />
+        );
       case 1:
-        return <Export 
-                currentBuild={currentBuild}
-              />;
+        return <Export currentBuild={currentBuild} />;
       default:
-        return 'Unknown stepIndex';
+        return "Unknown stepIndex";
     }
   }
 
@@ -78,12 +81,16 @@ export default function Designer() {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
+            <Typography className={classes.instructions}>
+              All steps completed
+            </Typography>
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions}>
+              {getStepContent(activeStep)}
+            </Typography>
             <div style={{ padding: 20 }}>
               <Grid
                 container
@@ -100,8 +107,12 @@ export default function Designer() {
                   >
                     Back
                   </Button>
-                  <Button variant="contained" color="primary" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                  >
+                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
                 </Grid>
               </Grid>

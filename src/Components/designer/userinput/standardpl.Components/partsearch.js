@@ -1,12 +1,11 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import fetch from 'cross-fetch';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import fetch from "cross-fetch";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function PartSearch(props) {
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const loading = open && props.partOptions.length === 0;
 
@@ -18,21 +17,23 @@ export default function PartSearch(props) {
     }
 
     (async () => {
-      if ((props.CollectionSelected.length)===0){
-        setOpen(false)
+      if (props.CollectionSelected.length === 0) {
+        setOpen(false);
       }
-      const response = await fetch('http://127.0.0.1:5000/collections/seqincluded');
+      const response = await fetch(
+        "http://127.0.0.1:5000/collections/seqincluded"
+      );
       const myresponse = await response.json();
-      var mergedArray = []
+      var mergedArray = [];
 
       for (const [key, value] of Object.entries(myresponse)) {
-        console.log('props',props.CollectionSelected)
-        console.log('key',key)
-        if(props.CollectionSelected.includes(key)){
-            for (let item of value) {
-                item.collection = key
-                mergedArray.push(item)
-            }
+        console.log("props", props.CollectionSelected);
+        console.log("key", key);
+        if (props.CollectionSelected.includes(key)) {
+          for (let item of value) {
+            item.collection = key;
+            mergedArray.push(item);
+          }
         }
       }
       if (active) {
@@ -43,7 +44,7 @@ export default function PartSearch(props) {
     return () => {
       active = false;
     };
-  }, [loading,props.CollectionSelected]);
+  }, [loading, props.CollectionSelected]);
 
   React.useEffect(() => {
     if (!open) {
@@ -54,15 +55,15 @@ export default function PartSearch(props) {
   return (
     <Autocomplete
       id="asynchronous-demo"
-      style={{ width: '100%' }}
+      style={{ width: "100%" }}
       value={props.value}
-        onChange={(event, newValue) => {
-          props.onChangeValue(newValue)
-        }}
-        inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
+      onChange={(event, newValue) => {
+        props.onChangeValue(newValue);
+      }}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -83,7 +84,9 @@ export default function PartSearch(props) {
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),

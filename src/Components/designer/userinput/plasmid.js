@@ -1,21 +1,21 @@
-import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
 
-import ShoppingBag from './plasmid.Components/shoppingbag';
-import BagItemModal from './plasmid.Components/bagitemmodal';
+import ShoppingBag from "./plasmid.Components/shoppingbag";
+import BagItemModal from "./plasmid.Components/bagitemmodal";
 
-import SuccessImg from './plasmid.Components/successLotty';
+import SuccessImg from "./plasmid.Components/successLotty";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: '100%',
-    height: '100%',
-    textAlign: 'left'
+    minWidth: "100%",
+    height: "100%",
+    textAlign: "left",
   },
   title: {
     fontSize: 30,
@@ -29,16 +29,16 @@ export default function StandardPartLinker(props) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [clickedID, setClickedID] = useState('');
-  const [clickedLabel, setClickedLabel] = useState('');
-  const [clickedSeq, setClickedSeq] = useState('');
-  const [clickedCollection, setClickedCollection] = useState('');
+  const [clickedID, setClickedID] = useState("");
+  const [clickedLabel, setClickedLabel] = useState("");
+  const [clickedSeq, setClickedSeq] = useState("");
+  const [clickedCollection, setClickedCollection] = useState("");
 
-  const handleClickOpen = (itemid,itemlabel,itemseq,itemcollection) => {
-    setClickedID(itemid)
-    setClickedLabel(itemlabel)
-    setClickedSeq(itemseq)
-    setClickedCollection(itemcollection)
+  const handleClickOpen = (itemid, itemlabel, itemseq, itemcollection) => {
+    setClickedID(itemid);
+    setClickedLabel(itemlabel);
+    setClickedSeq(itemseq);
+    setClickedCollection(itemcollection);
     setOpen(true);
   };
 
@@ -46,27 +46,29 @@ export default function StandardPartLinker(props) {
     setOpen(false);
   };
 
-  function Description () {
+  function Description() {
     if (props.validated) {
-      return(
+      return (
         <Grid item xs={5}>
           <TextField
-          style={{'width':'100%'}}
-          id="outlined-basic" 
-          label="Description"
-          variant='outlined'/>
+            style={{ width: "100%" }}
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+          />
         </Grid>
-      )
+      );
     } else {
-      return(
+      return (
         <Grid item xs={6}>
           <TextField
-          style={{'width':'100%'}}
-          id="outlined-basic" 
-          label="Description"
-          variant='outlined'/>
+            style={{ width: "100%" }}
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+          />
         </Grid>
-      )
+      );
     }
   }
 
@@ -80,16 +82,14 @@ export default function StandardPartLinker(props) {
           alignItems="flex-start"
         >
           <Grid item>
-            <SuccessImg/>
+            <SuccessImg />
           </Grid>
         </Grid>
       </Grid>
-    )
+    );
   }
 
-  function handleValidation() {
-
-  }
+  function handleValidation() {}
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -107,33 +107,38 @@ export default function StandardPartLinker(props) {
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <TextField 
-            style={{'width':'100%'}}
-            value={props.assemblyID}
-            onChange={(e) => props.setAssemblyID(e.target.value)} id="outlined-basic" label="Name" variant='outlined'/>
+            <TextField
+              style={{ width: "100%" }}
+              value={props.assemblyID}
+              onChange={(e) => props.setAssemblyID(e.target.value)}
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+            />
           </Grid>
-          <Description/>
-          {props.validated?<DisplaySuccess/>:null}
+          <Description />
+          {props.validated ? <DisplaySuccess /> : null}
         </Grid>
         <Typography className={classes.pos}>
           Drag items above to build your Assembly
         </Typography>
         <div className="hello">
           <h1>Parts List</h1>
-            <ShoppingBag
+          <ShoppingBag
             items={props.items}
             onShopItemDelete={props.onShopItemDelete}
             openDialog={handleClickOpen}
-            />
+          />
         </div>
       </CardContent>
-      <BagItemModal 
-      open={open} 
-      handleClose={handleClose}
-      itemlabel={clickedLabel}
-      itemid={clickedID}
-      itemseq={clickedSeq}
-      itemcollection={clickedCollection}/>
+      <BagItemModal
+        open={open}
+        handleClose={handleClose}
+        itemlabel={clickedLabel}
+        itemid={clickedID}
+        itemseq={clickedSeq}
+        itemcollection={clickedCollection}
+      />
     </Card>
   );
 }
