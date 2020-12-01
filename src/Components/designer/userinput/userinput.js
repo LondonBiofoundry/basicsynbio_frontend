@@ -94,18 +94,7 @@ export default function UserInput(props) {
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
   //const [currentBuild,setCurrentBuild] = useState([]);
   const [COLLECTION, setCOLLECTION] = useState([]);
-  const [COLLECTION2, setCOLLECTION2] = useState([
-    {
-      id: uuid(),
-      label: "genbank1",
-      seq: "A",
-      collection: "",
-      type: "custom",
-      base64: "",
-      multiple: false,
-      index: null,
-    },
-  ]);
+  const [COLLECTION2, setCOLLECTION2] = useState([]);
 
   //Visualise Assembly Function
   const [openVisualise, setOpenVisualise] = useState(false);
@@ -182,6 +171,7 @@ export default function UserInput(props) {
           base64: null,
           multiple: false,
           index: null,
+          binaryString: value.binaryString,
         },
       ]);
       console.log(value);
@@ -204,6 +194,7 @@ export default function UserInput(props) {
         base64: uploadedFile.base64,
         multiple: uploadedFile.multiple,
         index: uploadedFile.index,
+        binaryString: uploadedFile.binaryString,
       },
     ]);
   }, [uploadedFile]);

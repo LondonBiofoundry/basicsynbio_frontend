@@ -104,8 +104,10 @@ export default function ShoppingBag(props) {
                               item.id,
                               item.label,
                               item.seq,
-                              item.collection
+                              item.collection,
+                              item.binaryString
                             );
+                            console.log(item.binaryString);
                           }}
                           aria-label="view"
                           color="primary"

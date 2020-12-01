@@ -12,7 +12,7 @@ import { Typography } from "@material-ui/core";
 export default function Genbank(props) {
   const { promiseInProgress } = usePromiseTracker();
 
-  async function ValidateFileUpload(dataString, filename, checked) {
+  async function ValidateFileUpload(dataString, filename, checked, binary) {
     console.log(dataString);
     if (checked) {
       console.log("ran", checked);
@@ -33,6 +33,7 @@ export default function Genbank(props) {
             base64: dataString,
             multiple: true,
             index: i,
+            binaryString: binary,
           });
         }
         props.setCatchError("");
@@ -54,6 +55,7 @@ export default function Genbank(props) {
           base64: dataString,
           multiple: false,
           index: null,
+          binaryString: binary,
         });
         props.setCatchError("");
       } else {
@@ -71,12 +73,17 @@ export default function Genbank(props) {
         reader.onerror = () => console.log("file reading has failed");
         reader.onload = () => {
           const binaryStr = reader.result;
-          const dataString = JSON.stringify(
-            Array.from(new Uint8Array(binaryStr))
-          );
+          const uint8 = new Uint8Array(binaryStr);
+          const dataString = JSON.stringify(Array.from(uint8));
           const b64string = btoa(dataString);
+          console.log("data", dataString);
           trackPromise(
-            ValidateFileUpload(b64string, file.path, props.multiplePartLinkers)
+            ValidateFileUpload(
+              b64string,
+              file.path,
+              props.multiplePartLinkers,
+              file
+            )
           );
         };
         reader.readAsArrayBuffer(file);
