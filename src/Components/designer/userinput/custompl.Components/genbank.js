@@ -29,7 +29,7 @@ export default function Genbank(props) {
             seq: result.partsarray[i].seq,
             label: result.partsarray[i].label,
             collection: "",
-            type: "Genbank",
+            type: "genbank",
             base64: dataString,
             multiple: true,
             index: i,
@@ -52,6 +52,8 @@ export default function Genbank(props) {
           collection: "",
           type: "genbank",
           base64: dataString,
+          multiple: false,
+          index: null,
         });
         props.setCatchError("");
       } else {
@@ -104,7 +106,6 @@ export default function Genbank(props) {
           <Grid item>
             <Typography>
               Drag and drop some files here, or click to select files,
-              {String(props.multiplePartLinkers)}
             </Typography>
           </Grid>
         </Grid>
