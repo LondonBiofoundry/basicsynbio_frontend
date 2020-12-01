@@ -54,27 +54,30 @@ export default function StandardPartLinker(props) {
     setOpen(false);
   };
 
+  function DescriptionContent() {
+    return (
+      <TextField
+        value={props.assemblyDesc}
+        onChange={(e) => props.setAssemblyDesc(e.target.value)}
+        style={{ width: "100%" }}
+        id="outlined-basic"
+        label="Description"
+        variant="outlined"
+      />
+    );
+  }
+
   function Description() {
     if (props.validated) {
       return (
         <Grid item xs={5}>
-          <TextField
-            style={{ width: "100%" }}
-            id="outlined-basic"
-            label="Description"
-            variant="outlined"
-          />
+          <DescriptionContent />
         </Grid>
       );
     } else {
       return (
         <Grid item xs={6}>
-          <TextField
-            style={{ width: "100%" }}
-            id="outlined-basic"
-            label="Description"
-            variant="outlined"
-          />
+          <DescriptionContent />
         </Grid>
       );
     }
@@ -97,8 +100,6 @@ export default function StandardPartLinker(props) {
     );
   }
 
-  function handleValidation() {}
-
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -117,14 +118,23 @@ export default function StandardPartLinker(props) {
           <Grid item xs={3}>
             <TextField
               style={{ width: "100%" }}
-              value={props.assemblyID}
-              onChange={(e) => props.setAssemblyID(e.target.value)}
+              value={props.assemblyName}
+              onChange={(e) => props.setAssemblyName(e.target.value)}
               id="outlined-basic"
               label="Name"
               variant="outlined"
             />
           </Grid>
-          <Description />
+          <Grid item xs={5}>
+            <TextField
+              value={props.assemblyDesc}
+              onChange={(e) => props.setAssemblyDesc(e.target.value)}
+              style={{ width: "100%" }}
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+            />
+          </Grid>
           {props.validated ? <DisplaySuccess /> : null}
         </Grid>
         <Typography className={classes.pos}>

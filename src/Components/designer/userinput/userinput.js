@@ -104,6 +104,9 @@ export default function UserInput(props) {
   const [validated, setValidated] = useState(false);
   const [openValidation, setOpenValidation] = useState(false);
   const [openValidationMessage, setOpenValidationMessage] = useState(false);
+  //AssemblyInputBoxed
+  const [assemblyName, setAssemblyName] = useState("");
+  const [assemblyDesc, setAssemblyDesc] = useState("");
 
   const handleClickVisualiseOpen = () => {
     setOpenVisualise(true);
@@ -206,19 +209,15 @@ export default function UserInput(props) {
   };
 
   const onAddToBuild = () => {
-    console.log("validated", validated);
-    if (assemblyID !== "") {
-      props.setCurrentBuild((C) => [
-        ...C,
-        { id: assemblyID, buildItems: shoppingBagItems },
-      ]);
-      setAssemblyID("");
-    } else {
-      props.setCurrentBuild((C) => [
-        ...C,
-        { id: uuid(), buildItems: shoppingBagItems },
-      ]);
-    }
+    props.setCurrentBuild((C) => [
+      ...C,
+      {
+        id: uuid(),
+        buildItems: shoppingBagItems,
+        name: assemblyName,
+        desc: assemblyDesc,
+      },
+    ]);
     setShoppingBagItems([]);
     setValidated(false);
   };
@@ -284,6 +283,10 @@ export default function UserInput(props) {
           </Grid>
           <Grid item xs={12}>
             <Plasmid
+              assemblyName={assemblyName}
+              assemblyDesc={assemblyDesc}
+              setAssemblyDesc={setAssemblyDesc}
+              setAssemblyName={setAssemblyName}
               validated={validated}
               assemblyID={assemblyID}
               setAssemblyID={setAssemblyID}

@@ -3,7 +3,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -19,23 +18,36 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import CloseIcon from "@material-ui/icons/Close";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const useRowStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: "relative",
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+  SeqVizDiv: {
+    width: "100%",
+    height: "100%",
+  },
   root: {
     "& > *": {
       borderBottom: "unset",
     },
   },
-});
-
+}));
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  const classes = useRowStyles();
+  const classes = useStyles();
 
   return (
     <React.Fragment>
@@ -52,9 +64,11 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.id}
         </TableCell>
-        <TableCell align="right" scope="row">
-          {row.buildItems.length}
+        <TableCell component="th" scope="row">
+          {row.name}
         </TableCell>
+        <TableCell scope="row">{row.buildItems.length}</TableCell>
+        <TableCell scope="row">{row.desc}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -94,8 +108,10 @@ function Row(props) {
 }
 
 export default function ViewBuild(props) {
+  const classes = useStyles();
   return (
     <Dialog
+      fullScreen
       open={props.open}
       TransitionComponent={Transition}
       keepMounted
@@ -103,7 +119,24 @@ export default function ViewBuild(props) {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle id="alert-dialog-slide-title">{"View Build"}</DialogTitle>
+      <AppBar className={classes.appBar} color="secondary">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={props.handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Current Assembly Sequence
+          </Typography>
+          <Button autoFocus color="inherit" onClick={props.handleClose}>
+            Exit
+          </Button>
+        </Toolbar>
+      </AppBar>
       <DialogContent>
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
@@ -111,7 +144,9 @@ export default function ViewBuild(props) {
               <TableRow>
                 <TableCell />
                 <TableCell>ID</TableCell>
-                <TableCell align="right">Number Items</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Number Items</TableCell>
+                <TableCell>Description</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
