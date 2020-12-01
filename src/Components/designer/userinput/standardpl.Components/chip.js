@@ -12,6 +12,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Divider from "@material-ui/core/Divider";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -29,14 +30,19 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
     marginTop: theme.spacing(2),
+    textAlign: "center",
   },
   container: {
     display: "flex",
     flexWrap: "wrap",
   },
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+    marginTop: theme.spacing(1),
+    width: "100%",
+  },
+  selectcolumn: {
+    width: "100%",
+    paddingTop: "10px",
   },
 }));
 
@@ -47,10 +53,9 @@ export default function Chip(props) {
 
   //Popup Components
   const [versionOpen, setVersionOpen] = useState(false);
-  const [age, setAge] = useState("");
+  const [age, setAge] = React.useState("");
   const [clickedCollection, setClickedCollection] = useState("");
-
-  const handleVersionChange = (event) => {
+  const handleChange = (event) => {
     setAge(Number(event.target.value) || "");
   };
 
@@ -145,22 +150,22 @@ export default function Chip(props) {
         open={versionOpen}
         onClose={handleVersionClose}
       >
-        <DialogTitle>
-          Select which version of the Collection you would like
-        </DialogTitle>
+        <DialogTitle>Select Desired Version</DialogTitle>
+        <Divider variant="middle" />
         <DialogContent>
+          <Typography color="textSecondary">{clickedCollection}</Typography>
           <form className={classes.container}>
-            <Typography>{clickedCollection}</Typography>
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-dialog-select-label">Version</InputLabel>
+              <InputLabel htmlFor="demo-dialog-native">Version</InputLabel>
               <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
+                autoWidth
+                native
                 value={age}
-                onChange={handleVersionChange}
-                input={<Input />}
+                onChange={handleChange}
+                input={<Input id="demo-dialog-native" />}
               >
-                <MenuItem value={10}>v0.1</MenuItem>
+                <option aria-label="None" value="" />
+                <option value={10}>v0.1</option>
               </Select>
             </FormControl>
           </form>
@@ -170,7 +175,7 @@ export default function Chip(props) {
             Cancel
           </Button>
           <Button onClick={handleVersionClose} color="primary">
-            Ok
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
