@@ -88,6 +88,8 @@ export default function UserInput(props) {
     collection: "",
     type: "",
     base64: "",
+    multiple: false,
+    index: null,
   });
   const [shoppingBagItems, setShoppingBagItems] = useState([]);
   //const [currentBuild,setCurrentBuild] = useState([]);
@@ -100,6 +102,8 @@ export default function UserInput(props) {
       collection: "",
       type: "custom",
       base64: "",
+      multiple: false,
+      index: null,
     },
   ]);
 
@@ -174,6 +178,10 @@ export default function UserInput(props) {
           label: value.id,
           seq: value.seq,
           collection: value.collection,
+          type: "standard",
+          base64: null,
+          multiple: false,
+          index: null,
         },
       ]);
       console.log(value);
@@ -194,6 +202,8 @@ export default function UserInput(props) {
         collection: "",
         type: uploadedFile.type,
         base64: uploadedFile.base64,
+        multiple: uploadedFile.multiple,
+        index: uploadedFile.index,
       },
     ]);
   }, [uploadedFile]);

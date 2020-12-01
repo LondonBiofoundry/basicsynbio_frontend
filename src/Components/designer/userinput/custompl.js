@@ -12,6 +12,7 @@ import Fasta from "./custompl.Components/fasta";
 import SBOL from "./custompl.Components/SBOL";
 import Genbank from "./custompl.Components/genbank";
 import Shop from "./custompl.Components/shop";
+import MultipleCheck from "./custompl.Components/MultipleCheck";
 
 const useStyles = makeStyles({
   root: {
@@ -32,6 +33,7 @@ export default function CustomPartLinker(props) {
 
   const [method, setMethod] = React.useState("Genbank");
   const [catchError, setCatchError] = React.useState("");
+  const [multiplePartLinkers, setMultiplePartLinkers] = React.useState(false);
 
   const handleMethod = (event, newMethod) => {
     setMethod(newMethod);
@@ -68,8 +70,17 @@ export default function CustomPartLinker(props) {
         <Typography className={classes.pos} color="textSecondary">
           Upload your {method} file
         </Typography>
+        {method !== "SBOL" ? (
+          <MultipleCheck
+            multiplePartLinkers={multiplePartLinkers}
+            setMultiplePartLinkers={setMultiplePartLinkers}
+          />
+        ) : (
+          <></>
+        )}
         {method === "Genbank" ? (
           <Genbank
+            multiplePartLinkers={multiplePartLinkers}
             setUploadedFile={props.setUploadedFile}
             setCatchError={setCatchError}
           />
@@ -78,6 +89,7 @@ export default function CustomPartLinker(props) {
         )}
         {method === "Fasta" ? (
           <Fasta
+            multiplePartLinkers={multiplePartLinkers}
             setUploadedFile={props.setUploadedFile}
             setCatchError={setCatchError}
           />
