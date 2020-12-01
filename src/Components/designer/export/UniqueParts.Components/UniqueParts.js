@@ -25,7 +25,7 @@ export default function JSONCard(props) {
   const classes = useStyles();
 
   var downloadURL =
-    "http://127.0.0.1:5000/buildjson?build=" +
+    "http://127.0.0.1:5000/builduniqueparts?build=" +
     JSON.stringify(props.currentBuild);
 
   return (
@@ -33,10 +33,11 @@ export default function JSONCard(props) {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            JSON
+            Unique Parts
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Machine readable output for the build in JSON format
+            Download a genbank file containing inforamtion for every unique part
+            within the build
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -44,9 +45,9 @@ export default function JSONCard(props) {
         <Button
           className={classes.downloadButton}
           variant="contained"
-          color="secondary"
+          color="primary"
         >
-          Download JSON
+          Download Unique Parts
         </Button>
       </a>
     </Card>
