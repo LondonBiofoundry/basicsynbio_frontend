@@ -3,15 +3,14 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import BuildRoundedIcon from "@material-ui/icons/BuildRounded";
-import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
-import DoneAllRoundedIcon from "@material-ui/icons/DoneAllRounded";
+import {
+  AddIcon,
+  BuildRoundedIcon,
+  VisibilityRoundedIcon,
+  DoneAllRoundedIcon,
+} from "@material-ui/icons/VisibilityRounded";
 import { green } from "@material-ui/core/colors";
-import { orange } from "@material-ui/core/colors";
-import { brown } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-
 import StandardPartLinker from "./standardpl";
 import CustomPartLinker from "./custompl";
 import Plasmid from "./plasmid";
@@ -23,19 +22,6 @@ import VisualiseAssembly from "./userinput.Components/visualiseAssembly";
 import "./styles.css";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-  backButton: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
@@ -53,14 +39,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: green[500],
     "&:hover": {
       backgroundColor: green[600],
-    },
-  },
-  FABitemorange: {
-    marginRight: theme.spacing(1),
-    color: theme.palette.common.white,
-    backgroundColor: brown[900],
-    "&:hover": {
-      backgroundColor: orange[600],
     },
   },
 }));
