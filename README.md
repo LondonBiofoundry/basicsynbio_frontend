@@ -2,19 +2,27 @@
 
 A frontend webapp for the python package basicsynbio built with react.js
 
-## To Run
+# Getting Started running the frontend
 
-In the project directory, you can run:
+Clone our repositry
 
-### `npm install`
+`$ git clone https://github.com/LondonBiofoundry/basicsynbio_frontend.git`
 
-### `npm start`
+Change directory into the cloned folder
 
-Runs the app in the development mode.\
+`$ cd basicsynbio_frontend`
+
+Install frontend dependencies located in package.json
+
+`$ npm install`
+
+Start app in Development mode
+
+`$ npm start`
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The page will reload if you make edits.
 
 ### `npm test`
 
