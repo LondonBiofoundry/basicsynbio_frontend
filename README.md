@@ -20,6 +20,8 @@ Start app in Development mode
 
 `$ npm start`
 
+> Note: the backend need to be running to get full functionality: https://github.com/LondonBiofoundry/basicsynbio_backend
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
