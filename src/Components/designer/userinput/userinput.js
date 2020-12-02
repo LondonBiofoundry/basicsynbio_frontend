@@ -218,6 +218,8 @@ export default function UserInput(props) {
         desc: assemblyDesc,
       },
     ]);
+    setAssemblyDesc("");
+    setAssemblyName("");
     setShoppingBagItems([]);
     setValidated(false);
   };

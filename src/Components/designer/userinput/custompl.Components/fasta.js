@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import RootRef from "@material-ui/core/RootRef";
 import Paper from "@material-ui/core/Paper";

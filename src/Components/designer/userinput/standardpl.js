@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 
 import Chip from "./standardpl.Components/chip";
 import PartSeach from "./standardpl.Components/partsearch";
-import StandardPartLinkerSearch from "./standardpl.Components/standardpartsearch";
 import Shop from "./standardpl.Components/shop";
 
 const useStyles = makeStyles({

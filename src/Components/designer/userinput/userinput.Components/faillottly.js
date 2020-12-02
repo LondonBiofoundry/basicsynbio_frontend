@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Lottie from "react-lottie";
 import animationData from "./fail/9915-spinner-fail.json";

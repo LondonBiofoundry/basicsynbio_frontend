@@ -67,22 +67,6 @@ export default function StandardPartLinker(props) {
     );
   }
 
-  function Description() {
-    if (props.validated) {
-      return (
-        <Grid item xs={5}>
-          <DescriptionContent />
-        </Grid>
-      );
-    } else {
-      return (
-        <Grid item xs={6}>
-          <DescriptionContent />
-        </Grid>
-      );
-    }
-  }
-
   function DisplaySuccess() {
     return (
       <Grid item xs={1}>
