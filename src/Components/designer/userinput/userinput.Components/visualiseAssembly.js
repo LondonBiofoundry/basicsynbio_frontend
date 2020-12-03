@@ -42,7 +42,7 @@ export default function VisualiseAssembly(props) {
     (async () => {
       console.log(props.shoppingBagItems);
       const response = await fetch(
-        "http://127.0.0.1:5000/s?build=" +
+        "http://127.0.0.1:5000/assemblySeq?build=" +
           JSON.stringify(props.shoppingBagItems)
       );
       const myresponse = await response.json();
