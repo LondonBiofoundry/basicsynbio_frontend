@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
 import Chip from "./standardpl.Components/chip";
@@ -59,9 +60,14 @@ export default function StandardPartLinker(props) {
           partOptions={partOptions}
           setPartOptions={setPartOptions}
         />
-        <Typography className={classes.title} style={{ padding: "5px" }}>
+        <Typography
+          color="textSecondary"
+          className={classes.title}
+          style={{ padding: "5px" }}
+        >
           Standard Part Linker from Collection
         </Typography>
+        <Divider variant="middle" />
         <Shop
           items={props.items}
           onDeleteStandardPart={props.onDeleteStandardPart}

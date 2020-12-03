@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import Fab from "@material-ui/core/Fab";
-import {
-  AddIcon,
-  BuildRoundedIcon,
-  VisibilityRoundedIcon,
-  DoneAllRoundedIcon,
-} from "@material-ui/icons/VisibilityRounded";
+import AddIcon from "@material-ui/icons/Add";
+import BuildRoundedIcon from "@material-ui/icons/BuildRounded";
+import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
+import DoneAllRoundedIcon from "@material-ui/icons/DoneAllRounded";
 import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import StandardPartLinker from "./standardpl";

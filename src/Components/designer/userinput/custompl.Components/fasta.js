@@ -16,8 +16,9 @@ export default function Genbank(props) {
     console.log(dataString);
     if (checked) {
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/fastamultiple?file=" +
-          JSON.stringify(dataString)
+        "http://127.0.0.1:5000/fileupload/multiple?file=" +
+          JSON.stringify(dataString) +
+          "&type=fasta"
       );
       const result = await response.json();
       if (result.partsarray) {
@@ -38,8 +39,9 @@ export default function Genbank(props) {
       }
     } else {
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/fasta?file=" +
-          JSON.stringify(dataString)
+        "http://127.0.0.1:5000/fileupload/singular?file=" +
+          JSON.stringify(dataString) +
+          "&type=fasta"
       );
       const result = await response.json();
       if (result.seq) {

@@ -17,8 +17,9 @@ export default function Genbank(props) {
     if (checked) {
       console.log("ran", checked);
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/genbankmultiple?file=" +
-          JSON.stringify(dataString)
+        "http://127.0.0.1:5000/fileupload/multiple?file=" +
+          JSON.stringify(dataString) +
+          "&type=genbank"
       );
       const result = await response.json();
       console.log(props.multiple);
@@ -42,8 +43,9 @@ export default function Genbank(props) {
       }
     } else {
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/genbank?file=" +
-          JSON.stringify(dataString)
+        "http://127.0.0.1:5000/fileupload/singular?file=" +
+          JSON.stringify(dataString) +
+          "&type=genbank"
       );
       const result = await response.json();
       if (result.seq) {

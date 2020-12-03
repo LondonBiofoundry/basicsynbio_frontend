@@ -30,7 +30,7 @@ export default function JSONCard(props) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardContent>
+        <CardContent style={{ height: "100px" }}>
           <Typography gutterBottom variant="h5" component="h2">
             Unique Parts
           </Typography>

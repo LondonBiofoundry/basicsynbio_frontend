@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import Divider from "@material-ui/core/Divider";
 
 import Fasta from "./custompl.Components/fasta";
 import SBOL from "./custompl.Components/SBOL";
@@ -105,9 +106,14 @@ export default function CustomPartLinker(props) {
         )}
         <div style={{ paddingTop: 8 }}></div>
         {catchError ? "Unable to Process : " + catchError : ""}
-        <Typography className={classes.title} style={{ padding: "5px" }}>
-          Custom Part Linker
+        <Typography
+          className={classes.title}
+          style={{ padding: "5px" }}
+          color="textSecondary"
+        >
+          Draggable Part Linker from file
         </Typography>
+        <Divider variant="middle" />
         <Shop
           items={props.items}
           onDeleteCustomPart={props.onDeleteCustomPart}

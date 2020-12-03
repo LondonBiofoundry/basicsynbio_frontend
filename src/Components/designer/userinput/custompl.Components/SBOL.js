@@ -11,7 +11,9 @@ export default function SBOL(props) {
   async function ValidateFileUpload(dataString, filename) {
     console.log(dataString);
     const response = await fetch(
-      "http://127.0.0.1:5000/fileupload/SBOL?file=" + JSON.stringify(dataString)
+      "http://127.0.0.1:5000/fileupload/singular?file=" +
+        JSON.stringify(dataString) +
+        "&type=SBOL"
     );
     const result = await response.json();
     if (result.seq) {
