@@ -35,18 +35,10 @@ export default function StandardPartLinker(props) {
   const [clickedCollection, setClickedCollection] = useState("");
   const [clickenBin, setclickenBin] = useState("");
 
-  const handleClickOpen = (
-    itemid,
-    itemlabel,
-    itemseq,
-    itemcollection,
-    itembin
-  ) => {
-    setClickedID(itemid);
-    setClickedLabel(itemlabel);
-    setClickedSeq(itemseq);
-    setClickedCollection(itemcollection);
-    setclickenBin(itembin);
+  const [clickedItem, setclickedItem] = useState({});
+
+  const handleClickOpen = (item) => {
+    setclickedItem(item);
     setOpen(true);
   };
 
@@ -136,11 +128,12 @@ export default function StandardPartLinker(props) {
       <BagItemModal
         open={open}
         handleClose={handleClose}
-        itemlabel={clickedLabel}
-        itemid={clickedID}
-        itemseq={clickedSeq}
-        itemcollection={clickedCollection}
-        itembin={clickenBin}
+        item={clickedItem}
+        //itemlabel={clickedLabel}
+        //itemid={clickedID}
+        //itemseq={clickedSeq}
+        //itemcollection={clickedCollection}
+        //itembin={clickenBin}
       />
     </Card>
   );

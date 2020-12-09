@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,6 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +35,112 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 export default function BagItemModal(props) {
   const classes = useStyles();
+  const [label, setLabel] = useState([]);
+  const [selectedQualifier, setSelectedQualifier] = useState("Feature");
+  const [returnedSeq, setReturnedSeq] = useState("");
+  const [annotationsSet, setAnnotationsSet] = useState([]);
+  const loading = props.open && label.length === 0;
+
+  React.useEffect(() => {
+    (async () => {
+      const responselabels = await fetch(
+        "http://127.0.0.1:5000/viewpartlabels?part=" +
+          JSON.stringify(props.item)
+      );
+      console.log(responselabels);
+      const resultlabels = await responselabels.json();
+      console.log(resultlabels);
+      setLabel(resultlabels);
+    })();
+  }, [loading]);
+
+  function random_color() {
+    const colorCodes = [
+      "#9DEAED", // cyan
+      "#8FDE8C", // green
+      "#CFF283", // light green
+      "#8CDEBD", // teal
+      "#F0A3CE", // pink
+      "#F7C672", // orange
+      "#F07F7F", // red
+      "#FAA887", // red-orange
+      "#F099F7", // magenta
+      "#C59CFF", // purple
+      "#6B81FF", // blue
+      "#85A6FF", // light blue
+    ];
+    return colorCodes[Math.floor(Math.random() * colorCodes.length)];
+  }
+
+  function process(entry) {
+    if (entry)
+      return {
+        name: entry.name,
+        start: entry.start,
+        end: entry.end,
+        direction: entry.direction,
+        color: random_color(),
+      };
+    else return;
+  }
+
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "http://127.0.0.1:5000/returnseqann?part=" +
+          JSON.stringify(props.item) +
+          "&qualifier=" +
+          JSON.stringify(selectedQualifier)
+      );
+      console.log(response);
+      const result = await response.json();
+      console.log(result);
+      var filtered = result.annotated.filter(Boolean);
+      var processed = filtered.map(process);
+      setAnnotationsSet(processed);
+      setReturnedSeq(result.seq);
+    })();
+  }, [selectedQualifier]);
+
+  React.useEffect(() => {
+    if (!props.open) {
+      setLabel([]);
+      setSelectedQualifier("Feature");
+    }
+  }, [props.open]);
+
+  const SeqVizComponent = () => {
+    if (selectedQualifier === "Feature") {
+      return (
+        <SeqViz name="J23100" file={props.item.binaryString} viewer="linear" />
+      );
+    } else {
+      return (
+        <SeqViz
+          //name="J23100"
+          //seq="TTGACGGCTAGCTCAGTCCTAGGTACAGTGCTAGC"
+          //annotations={[
+          //  {
+          //    name: "promoter",
+          //    start: 0,
+          //    end: 34,
+          //    direction: 1,
+          //    //color: "#9DEAED",
+          //  },
+          //]}
+          name="item"
+          seq={returnedSeq}
+          annotations={annotationsSet}
+          //annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
+          //name="item"
+          //seq={returnedSeq}
+          //seq="TTGACGGCTAGCTCAGTCCTAGGTACAGTGCTAGC"
+          //annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
+          viewer="linear"
+        />
+      );
+    }
+  };
 
   return (
     <div>
@@ -54,12 +163,36 @@ export default function BagItemModal(props) {
             >
               <CloseIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              {props.itemlabel}
+            <Typography variant="h5" className={classes.title}>
+              {props.item.label}
             </Typography>
-            <Button autoFocus color="inherit" onClick={props.handleClose}>
-              Exit
-            </Button>
+            <Typography variant="h6" className={classes.title}>
+              Current Annotation: {selectedQualifier}
+            </Typography>
+            <div className={classes.search}>
+              <Autocomplete
+                color="white"
+                id="combo-box-demo"
+                options={label}
+                getOptionLabel={(option) => option}
+                value={selectedQualifier}
+                onChange={(event, newValue) => {
+                  setSelectedQualifier(newValue);
+                }}
+                style={{
+                  width: 400,
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Search Qualifiers to change Annotation..."
+                    variant="filled"
+                  />
+                )}
+              />
+            </div>
           </Toolbar>
         </AppBar>
         <DialogContent>
@@ -67,7 +200,7 @@ export default function BagItemModal(props) {
             the selected part is from the collection: {props.itemcollection}
           </DialogContentText>
           <div className={classes.SeqVizDiv}>
-            <SeqViz name="J23100" file={props.itembin} viewer="linear" />
+            <SeqVizComponent />
           </div>
         </DialogContent>
         <DialogActions>

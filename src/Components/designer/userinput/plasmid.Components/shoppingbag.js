@@ -95,14 +95,8 @@ export default function ShoppingBag(props) {
                       <div className={classes.controls}>
                         <IconButton
                           onClick={() => {
-                            props.openDialog(
-                              item.id,
-                              item.label,
-                              item.seq,
-                              item.collection,
-                              item.binaryString
-                            );
-                            console.log(item.binaryString);
+                            props.openDialog(item);
+                            //console.log(item.binaryString);
                           }}
                           aria-label="view"
                           color="primary"
