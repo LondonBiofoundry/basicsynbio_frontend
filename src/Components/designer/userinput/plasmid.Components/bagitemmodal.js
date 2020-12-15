@@ -117,25 +117,9 @@ export default function BagItemModal(props) {
     } else {
       return (
         <SeqViz
-          //name="J23100"
-          //seq="TTGACGGCTAGCTCAGTCCTAGGTACAGTGCTAGC"
-          //annotations={[
-          //  {
-          //    name: "promoter",
-          //    start: 0,
-          //    end: 34,
-          //    direction: 1,
-          //    //color: "#9DEAED",
-          //  },
-          //]}
           name="item"
           seq={returnedSeq}
           annotations={annotationsSet}
-          //annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
-          //name="item"
-          //seq={returnedSeq}
-          //seq="TTGACGGCTAGCTCAGTCCTAGGTACAGTGCTAGC"
-          //annotations={[{ name: "promoter", start: 0, end: 34, direction: 1 }]}
           viewer="linear"
         />
       );

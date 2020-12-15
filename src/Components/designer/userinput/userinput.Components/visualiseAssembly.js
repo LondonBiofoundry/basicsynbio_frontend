@@ -11,6 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -33,32 +35,137 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VisualiseAssembly(props) {
   const classes = useStyles();
+  const [seqLabel, setSeqLabel] = useState([]);
+  const [selectedSeqQualifier, setSelectedSeqQualifier] = useState("Feature");
   const [assemblySequence, setAssemblySequence] = useState("");
   const [assemblySequenceErr, setAssemblySequenceErr] = useState("");
+  const [returnSeq, setReturnSeq] = useState("");
+  const [annotationsSeqSet, setAnnotationsSeqSet] = useState([]);
+  //const loading = props.open && seqLabel.length === 0;
 
+  //////
   React.useEffect(() => {
-    let active = true;
-
     (async () => {
-      console.log(props.shoppingBagItems);
-      const response = await fetch(
-        "http://127.0.0.1:5000/assemblySeq?build=" +
+      const responselabels = await fetch(
+        "http://127.0.0.1:5000/viewseqlabels?build=" +
           JSON.stringify(props.shoppingBagItems)
       );
-      const myresponse = await response.json();
-      try {
-        setAssemblySequence(myresponse.seq);
-      } catch {
-        setAssemblySequenceErr(myresponse.error);
-      }
-      console.log("seq", assemblySequence);
-      console.log("err", assemblySequenceErr);
+      console.log("response label", responselabels);
+      const resultlabels = await responselabels.json();
+      console.log("result label", resultlabels);
+      setSeqLabel(resultlabels);
     })();
-
-    return () => {
-      active = false;
-    };
   }, [props.open]);
+
+  function random_color() {
+    const colorCodes = [
+      "#9DEAED", // cyan
+      "#8FDE8C", // green
+      "#CFF283", // light green
+      "#8CDEBD", // teal
+      "#F0A3CE", // pink
+      "#F7C672", // orange
+      "#F07F7F", // red
+      "#FAA887", // red-orange
+      "#F099F7", // magenta
+      "#C59CFF", // purple
+      "#6B81FF", // blue
+      "#85A6FF", // light blue
+    ];
+    return colorCodes[Math.floor(Math.random() * colorCodes.length)];
+  }
+
+  function process(entry) {
+    if (entry)
+      return {
+        name: entry.name,
+        start: entry.start,
+        end: entry.end,
+        direction: entry.direction,
+        color: random_color(),
+      };
+    else return;
+  }
+
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "http://127.0.0.1:5000/assemblySeq?build=" +
+          JSON.stringify(props.shoppingBagItems) +
+          "&qualifier=" +
+          JSON.stringify(selectedSeqQualifier)
+      );
+      console.log(response);
+      const result = await response.json();
+      if (!result.err) {
+        console.log(result);
+        try {
+          var filtered = result.annotated.filter(Boolean);
+          var processed = filtered.map(process);
+          setAnnotationsSeqSet(processed);
+          setReturnSeq(result.seq);
+        } catch (err) {
+          console.log("err", err);
+        }
+      }
+      console.log(result.err);
+    })();
+  }, [selectedSeqQualifier, props.open]);
+
+  React.useEffect(() => {
+    if (!props.open) {
+      setSeqLabel([]);
+      setSelectedSeqQualifier("Feature");
+      setReturnSeq("");
+    }
+  }, [props.open]);
+
+  const SeqVizComponent = () => {
+    if (selectedSeqQualifier === "Feature") {
+      return (
+        <SeqViz
+          name="J23100"
+          seq={returnSeq}
+          annotations={annotationsSeqSet}
+          viewer="linear"
+        />
+      );
+    } else {
+      return (
+        <SeqViz
+          name="item"
+          seq={returnSeq}
+          annotations={annotationsSeqSet}
+          viewer="linear"
+        />
+      );
+    }
+  };
+  //////
+
+  //React.useEffect(() => {
+  //  let active = true;
+
+  //  (async () => {
+  ///    console.log(props.shoppingBagItems);
+  //    const response = await fetch(
+  //      "http://127.0.0.1:5000/assemblySeq?build=" +
+  //        JSON.stringify(props.shoppingBagItems)
+  //    );
+  //    const myresponse = await response.json();
+  //     try {
+  //      setAssemblySequence(myresponse.seq);
+  //    } catch {
+  //      setAssemblySequenceErr(myresponse.error);
+  //    }
+  //    console.log("seq", assemblySequence);
+  //   console.log("err", assemblySequenceErr);
+  //  },[])();
+
+  //  return () => {
+  //    active = false;
+  //  };
+  //}, [props.open]);
 
   return (
     <div>
@@ -84,9 +191,33 @@ export default function VisualiseAssembly(props) {
             <Typography variant="h6" className={classes.title}>
               Current Assembly Sequence
             </Typography>
-            <Button autoFocus color="inherit" onClick={props.handleClose}>
-              Exit
-            </Button>
+            <Typography variant="h6" className={classes.title}>
+              Current Annotation: {selectedSeqQualifier}
+            </Typography>
+            <div className={classes.search}>
+              <Autocomplete
+                color="white"
+                id="combo-box-demo"
+                options={seqLabel}
+                getOptionLabel={(option) => option}
+                value={selectedSeqQualifier}
+                onChange={(event, newValue) => {
+                  setSelectedSeqQualifier(newValue);
+                }}
+                style={{
+                  width: 400,
+                  background: "white",
+                  borderRadius: "5px",
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Search Qualifiers to change Annotation..."
+                    variant="filled"
+                  />
+                )}
+              />
+            </div>
           </Toolbar>
         </AppBar>
         <DialogContent>
@@ -94,7 +225,7 @@ export default function VisualiseAssembly(props) {
             the selected part is from the collection: {props.itemcollection}
           </DialogContentText>
           <div className={classes.SeqVizDiv}>
-            <SeqViz name="J23100" file={assemblySequence} viewer="linear" />
+            <SeqVizComponent />
           </div>
         </DialogContent>
         <DialogActions>
