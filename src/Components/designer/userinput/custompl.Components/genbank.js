@@ -8,6 +8,7 @@ import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
+import { ApiEndpoint } from "../../../..";
 
 export default function Genbank(props) {
   const { promiseInProgress } = usePromiseTracker();
@@ -17,7 +18,8 @@ export default function Genbank(props) {
     if (checked) {
       console.log("ran", checked);
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/multiple?file=" +
+        ApiEndpoint +
+          "fileupload/multiple?file=" +
           JSON.stringify(dataString) +
           "&type=genbank"
       );
@@ -43,7 +45,8 @@ export default function Genbank(props) {
       }
     } else {
       const response = await fetch(
-        "http://127.0.0.1:5000/fileupload/singular?file=" +
+        ApiEndpoint +
+          "fileupload/singular?file=" +
           JSON.stringify(dataString) +
           "&type=genbank"
       );

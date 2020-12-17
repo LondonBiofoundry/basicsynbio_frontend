@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+//export const ApiEndpoint = "https://flask-fire-xi5dtbaifq-nw.a.run.app/";
+export const ApiEndpoint = "http://127.0.0.1:8000/";
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

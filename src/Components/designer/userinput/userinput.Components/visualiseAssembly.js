@@ -14,6 +14,7 @@ import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
+import { ApiEndpoint } from "../../../..";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -47,7 +48,8 @@ export default function VisualiseAssembly(props) {
   React.useEffect(() => {
     (async () => {
       const responselabels = await fetch(
-        "http://127.0.0.1:5000/viewseqlabels?build=" +
+        ApiEndpoint +
+          "viewseqlabels?build=" +
           JSON.stringify(props.shoppingBagItems)
       );
       console.log("response label", responselabels);
@@ -90,7 +92,8 @@ export default function VisualiseAssembly(props) {
   React.useEffect(() => {
     (async () => {
       const response = await fetch(
-        "http://127.0.0.1:5000/assemblySeq?build=" +
+        ApiEndpoint +
+          "assemblySeq?build=" +
           JSON.stringify(props.shoppingBagItems) +
           "&qualifier=" +
           JSON.stringify(selectedSeqQualifier)

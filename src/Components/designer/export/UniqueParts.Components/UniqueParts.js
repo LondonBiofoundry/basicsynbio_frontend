@@ -5,6 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { ApiEndpoint } from "../../../../index";
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +25,8 @@ export default function JSONCard(props) {
   const classes = useStyles();
 
   var downloadURL =
-    "http://127.0.0.1:5000/builduniqueparts?build=" +
+    ApiEndpoint +
+    "builduniqueparts?build=" +
     JSON.stringify(props.currentBuild);
 
   return (

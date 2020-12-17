@@ -3,15 +3,16 @@ import { useDropzone } from "react-dropzone";
 import RootRef from "@material-ui/core/RootRef";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
+import { ApiEndpoint } from "../../../../index";
 
 export default function SBOL(props) {
   async function ValidateFileUpload(dataString, filename) {
     console.log(dataString);
     const response = await fetch(
-      "http://127.0.0.1:5000/fileupload/singular?file=" +
+      ApiEndpoint +
+        "fileupload/singular?file=" +
         JSON.stringify(dataString) +
         "&type=SBOL"
     );

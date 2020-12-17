@@ -18,6 +18,7 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Typography from "@material-ui/core/Typography";
+import { ApiEndpoint } from "../../../../index.js";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -70,7 +71,7 @@ export default function Chip(props) {
     }
 
     (async () => {
-      const response = await fetch("http://127.0.0.1:5000/collections/names");
+      const response = await fetch(ApiEndpoint + "collections/names");
       const myresponse = await response.json();
       console.log(myresponse);
 

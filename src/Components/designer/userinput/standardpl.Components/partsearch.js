@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import fetch from "cross-fetch";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { ApiEndpoint } from "../../../..";
 
 export default function PartSearch(props) {
   const [inputValue, setInputValue] = React.useState("");
@@ -20,7 +21,7 @@ export default function PartSearch(props) {
       if (props.CollectionSelected.length === 0) {
         setOpen(false);
       }
-      const response = await fetch("http://127.0.0.1:5000/collections/data");
+      const response = await fetch(ApiEndpoint + "collections/data");
       const myresponse = await response.json();
       var mergedArray = [];
 

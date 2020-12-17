@@ -15,6 +15,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
+import { ApiEndpoint } from "../../../..";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -44,8 +45,7 @@ export default function BagItemModal(props) {
   React.useEffect(() => {
     (async () => {
       const responselabels = await fetch(
-        "http://127.0.0.1:5000/viewpartlabels?part=" +
-          JSON.stringify(props.item)
+        ApiEndpoint + "viewpartlabels?part=" + JSON.stringify(props.item)
       );
       console.log(responselabels);
       const resultlabels = await responselabels.json();
@@ -87,7 +87,8 @@ export default function BagItemModal(props) {
   React.useEffect(() => {
     (async () => {
       const response = await fetch(
-        "http://127.0.0.1:5000/returnseqann?part=" +
+        ApiEndpoint +
+          "returnseqann?part=" +
           JSON.stringify(props.item) +
           "&qualifier=" +
           JSON.stringify(selectedQualifier)
