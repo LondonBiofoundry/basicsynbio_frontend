@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 
 import SuccessAnimation from "./successlottly";
 import FailAnimation from "./faillottly";
+import { ApiEndpoint } from "../../../..";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -25,8 +26,7 @@ export default function ValidateAssembly(props) {
     (async () => {
       console.log(props.shoppingBagItems);
       const response = await fetch(
-        "http://127.0.0.1:5000/validate?build=" +
-          JSON.stringify(props.shoppingBagItems)
+        ApiEndpoint + "validate?build=" + JSON.props.shoppingBagItems
       );
       const myresponse = await response.json();
       setValidation(String(myresponse.result));
