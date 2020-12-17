@@ -26,7 +26,7 @@ export default function ValidateAssembly(props) {
     (async () => {
       console.log(props.shoppingBagItems);
       const response = await fetch(
-        ApiEndpoint + "validate?build=" + JSON.props.shoppingBagItems
+        ApiEndpoint + "validate?build=" + JSON.stringify(props.shoppingBagItems)
       );
       const myresponse = await response.json();
       setValidation(String(myresponse.result));
