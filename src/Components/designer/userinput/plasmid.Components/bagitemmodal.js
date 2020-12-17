@@ -44,9 +44,13 @@ export default function BagItemModal(props) {
 
   React.useEffect(() => {
     (async () => {
-      const responselabels = await fetch(
-        ApiEndpoint + "viewpartlabels?part=" + JSON.stringify(props.item)
-      );
+      const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.item),
+      });
       console.log(responselabels);
       const resultlabels = await responselabels.json();
       console.log(resultlabels);
@@ -88,18 +92,27 @@ export default function BagItemModal(props) {
     (async () => {
       const response = await fetch(
         ApiEndpoint +
-          "returnseqann?part=" +
-          JSON.stringify(props.item) +
-          "&qualifier=" +
-          JSON.stringify(selectedQualifier)
+          "returnseqann?qualifier=" +
+          JSON.stringify(selectedQualifier),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(props.item),
+        }
       );
-      console.log(response);
-      const result = await response.json();
-      console.log(result);
-      var filtered = result.annotated.filter(Boolean);
-      var processed = filtered.map(process);
-      setAnnotationsSet(processed);
-      setReturnedSeq(result.seq);
+      try {
+        console.log(response);
+        const result = await response.json();
+        console.log(result);
+        var filtered = result.annotated.filter(Boolean);
+        var processed = filtered.map(process);
+        setAnnotationsSet(processed);
+        setReturnedSeq(result.seq);
+      } catch {
+        console.log("error filtering");
+      }
     })();
   }, [selectedQualifier]);
 

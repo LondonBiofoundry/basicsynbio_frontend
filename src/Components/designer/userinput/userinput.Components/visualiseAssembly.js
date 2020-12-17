@@ -47,11 +47,13 @@ export default function VisualiseAssembly(props) {
   //////
   React.useEffect(() => {
     (async () => {
-      const responselabels = await fetch(
-        ApiEndpoint +
-          "viewseqlabels?build=" +
-          JSON.stringify(props.shoppingBagItems)
-      );
+      const responselabels = await fetch(ApiEndpoint + "viewseqlabels", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.shoppingBagItems),
+      });
       console.log("response label", responselabels);
       const resultlabels = await responselabels.json();
       console.log("result label", resultlabels);
@@ -93,10 +95,15 @@ export default function VisualiseAssembly(props) {
     (async () => {
       const response = await fetch(
         ApiEndpoint +
-          "assemblySeq?build=" +
-          JSON.stringify(props.shoppingBagItems) +
-          "&qualifier=" +
-          JSON.stringify(selectedSeqQualifier)
+          "assemblySeq?qualifier=" +
+          JSON.stringify(selectedSeqQualifier),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(props.shoppingBagItems),
+        }
       );
       console.log(response);
       const result = await response.json();
