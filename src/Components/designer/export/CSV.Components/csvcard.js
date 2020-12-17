@@ -23,9 +23,24 @@ const useStyles = makeStyles({
 
 export default function CSVCard(props) {
   const classes = useStyles();
-  console.log(props.currentBuild);
-  var downloadURL =
-    ApiEndpoint + "buildcsvs?build=" + JSON.stringify(props.currentBuild);
+
+  const downloadBuildCSV = () => {
+    fetch(ApiEndpoint + "buildcsvs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.currentBuild),
+    }).then((response) => {
+      response.blob().then((blob) => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "csvs.zip";
+        a.click();
+      });
+    });
+  };
 
   return (
     <Card className={classes.root}>
@@ -39,15 +54,14 @@ export default function CSVCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <a href={downloadURL} download style={{ textDecoration: "none" }}>
-        <Button
-          className={classes.downloadButton}
-          variant="contained"
-          color="primary"
-        >
-          Download CSV's
-        </Button>
-      </a>
+      <Button
+        onClick={downloadBuildCSV}
+        className={classes.downloadButton}
+        variant="contained"
+        color="primary"
+      >
+        Download CSV's
+      </Button>
     </Card>
   );
 }

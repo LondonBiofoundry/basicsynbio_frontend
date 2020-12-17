@@ -29,6 +29,24 @@ export default function UniqueAssemblies(props) {
     "builduniqueassemblies?build=" +
     JSON.stringify(props.currentBuild);
 
+  const downloadUniqueAssemblies = () => {
+    fetch(ApiEndpoint + "builduniqueassemblies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.currentBuild),
+    }).then((response) => {
+      response.blob().then((blob) => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "Unique_Assemblies.gb";
+        a.click();
+      });
+    });
+  };
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -42,15 +60,14 @@ export default function UniqueAssemblies(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <a href={downloadURL} download style={{ textDecoration: "none" }}>
-        <Button
-          className={classes.downloadButton}
-          variant="contained"
-          color="secondary"
-        >
-          Download Unique Assemblies
-        </Button>
-      </a>
+      <Button
+        onClick={downloadUniqueAssemblies}
+        className={classes.downloadButton}
+        variant="contained"
+        color="secondary"
+      >
+        Download Unique Assemblies
+      </Button>
     </Card>
   );
 }

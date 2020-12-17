@@ -24,10 +24,23 @@ const useStyles = makeStyles({
 export default function JSONCard(props) {
   const classes = useStyles();
 
-  var downloadURL =
-    ApiEndpoint +
-    "builduniqueparts?build=" +
-    JSON.stringify(props.currentBuild);
+  const downloadUniquePart = () => {
+    fetch(ApiEndpoint + "builduniqueparts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.currentBuild),
+    }).then((response) => {
+      response.blob().then((blob) => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "Unique_Parts.gb";
+        a.click();
+      });
+    });
+  };
 
   return (
     <Card className={classes.root}>
@@ -42,15 +55,14 @@ export default function JSONCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <a href={downloadURL} download style={{ textDecoration: "none" }}>
-        <Button
-          className={classes.downloadButton}
-          variant="contained"
-          color="primary"
-        >
-          Download Unique Parts
-        </Button>
-      </a>
+      <Button
+        onClick={downloadUniquePart}
+        className={classes.downloadButton}
+        variant="contained"
+        color="primary"
+      >
+        Download Unique Parts
+      </Button>
     </Card>
   );
 }

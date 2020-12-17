@@ -24,8 +24,23 @@ const useStyles = makeStyles({
 export default function JSONCard(props) {
   const classes = useStyles();
 
-  var downloadURL =
-    ApiEndpoint + "buildjson?build=" + JSON.stringify(props.currentBuild);
+  const downloadBuildJson = () => {
+    fetch(ApiEndpoint + "buildjson", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(props.currentBuild),
+    }).then((response) => {
+      response.blob().then((blob) => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "my_build.json";
+        a.click();
+      });
+    });
+  };
 
   return (
     <Card className={classes.root}>
@@ -39,15 +54,14 @@ export default function JSONCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <a href={downloadURL} download style={{ textDecoration: "none" }}>
-        <Button
-          className={classes.downloadButton}
-          variant="contained"
-          color="secondary"
-        >
-          Download JSON
-        </Button>
-      </a>
+      <Button
+        onClick={downloadBuildJson}
+        className={classes.downloadButton}
+        variant="contained"
+        color="secondary"
+      >
+        Download JSON
+      </Button>
     </Card>
   );
 }
