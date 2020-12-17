@@ -18,10 +18,14 @@ export default function Genbank(props) {
     if (checked) {
       console.log("ran", checked);
       const response = await fetch(
-        ApiEndpoint +
-          "fileupload/multiple?file=" +
-          JSON.stringify(dataString) +
-          "&type=genbank"
+        ApiEndpoint + "fileupload/multiple?type=genbank",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataString),
+        }
       );
       const result = await response.json();
       console.log(props.multiple);
@@ -45,10 +49,14 @@ export default function Genbank(props) {
       }
     } else {
       const response = await fetch(
-        ApiEndpoint +
-          "fileupload/singular?file=" +
-          JSON.stringify(dataString) +
-          "&type=genbank"
+        ApiEndpoint + "fileupload/singular?type=genbank",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataString),
+        }
       );
       const result = await response.json();
       if (result.seq) {

@@ -17,10 +17,14 @@ export default function Genbank(props) {
     console.log(dataString);
     if (checked) {
       const response = await fetch(
-        ApiEndpoint +
-          "fileupload/multiple?file=" +
-          JSON.stringify(dataString) +
-          "&type=fasta"
+        ApiEndpoint + "fileupload/multiple?type=fasta",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataString),
+        }
       );
       const result = await response.json();
       if (result.partsarray) {
@@ -41,10 +45,14 @@ export default function Genbank(props) {
       }
     } else {
       const response = await fetch(
-        ApiEndpoint +
-          "fileupload/singular?file=" +
-          JSON.stringify(dataString) +
-          "&type=fasta"
+        ApiEndpoint + "fileupload/singular?type=fasta",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataString),
+        }
       );
       const result = await response.json();
       if (result.seq) {

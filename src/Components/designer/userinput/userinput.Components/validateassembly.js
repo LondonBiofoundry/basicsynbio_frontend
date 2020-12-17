@@ -22,12 +22,16 @@ export default function ValidateAssembly(props) {
 
   React.useEffect(() => {
     let active = true;
-
+    const buildasastring = "build";
     (async () => {
       console.log(props.shoppingBagItems);
-      const response = await fetch(
-        ApiEndpoint + "validate?build=" + JSON.stringify(props.shoppingBagItems)
-      );
+      const response = await fetch(ApiEndpoint + "validate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.shoppingBagItems),
+      });
       const myresponse = await response.json();
       setValidation(String(myresponse.result));
       if (
