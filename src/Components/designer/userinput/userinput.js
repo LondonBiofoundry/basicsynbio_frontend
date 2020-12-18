@@ -153,7 +153,6 @@ export default function UserInput(props) {
           binaryString: value.binaryString,
         },
       ]);
-      console.log(value);
     }
   }, [setValue, value]);
 

@@ -51,9 +51,7 @@ export default function BagItemModal(props) {
         },
         body: JSON.stringify(props.item),
       });
-      console.log(responselabels);
       const resultlabels = await responselabels.json();
-      console.log(resultlabels);
       setLabel(resultlabels);
     })();
   }, [loading]);
@@ -103,9 +101,7 @@ export default function BagItemModal(props) {
         }
       );
       try {
-        console.log(response);
         const result = await response.json();
-        console.log(result);
         var filtered = result.annotated.filter(Boolean);
         var processed = filtered.map(process);
         setAnnotationsSet(processed);
@@ -170,7 +166,7 @@ export default function BagItemModal(props) {
             <div className={classes.search}>
               <Autocomplete
                 color="white"
-                id="combo-box-demo"
+                id="item-qualifiers"
                 options={label}
                 getOptionLabel={(option) => option}
                 value={selectedQualifier}

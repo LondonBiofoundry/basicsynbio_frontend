@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VisualiseAssembly(props) {
   const classes = useStyles();
-  const [seqLabel, setSeqLabel] = useState([]);
+  const [seqLabel, setSeqLabel] = useState(["Feature"]);
   const [selectedSeqQualifier, setSelectedSeqQualifier] = useState("Feature");
   const [assemblySequence, setAssemblySequence] = useState("");
   const [assemblySequenceErr, setAssemblySequenceErr] = useState("");
@@ -54,10 +54,8 @@ export default function VisualiseAssembly(props) {
         },
         body: JSON.stringify(props.shoppingBagItems),
       });
-      console.log("response label", responselabels);
       const resultlabels = await responselabels.json();
-      console.log("result label", resultlabels);
-      setSeqLabel(resultlabels);
+      if (!resultlabels.error) setSeqLabel(resultlabels);
     })();
   }, [props.open]);
 
@@ -105,20 +103,17 @@ export default function VisualiseAssembly(props) {
           body: JSON.stringify(props.shoppingBagItems),
         }
       );
-      console.log(response);
       const result = await response.json();
       if (!result.err) {
-        console.log(result);
         try {
           var filtered = result.annotated.filter(Boolean);
           var processed = filtered.map(process);
           setAnnotationsSeqSet(processed);
           setReturnSeq(result.seq);
         } catch (err) {
-          console.log("err", err);
+          console.log("error filtering", err);
         }
       }
-      console.log(result.err);
     })();
   }, [selectedSeqQualifier, props.open]);
 
@@ -151,31 +146,6 @@ export default function VisualiseAssembly(props) {
       );
     }
   };
-  //////
-
-  //React.useEffect(() => {
-  //  let active = true;
-
-  //  (async () => {
-  ///    console.log(props.shoppingBagItems);
-  //    const response = await fetch(
-  //      "http://127.0.0.1:5000/assemblySeq?build=" +
-  //        JSON.stringify(props.shoppingBagItems)
-  //    );
-  //    const myresponse = await response.json();
-  //     try {
-  //      setAssemblySequence(myresponse.seq);
-  //    } catch {
-  //      setAssemblySequenceErr(myresponse.error);
-  //    }
-  //    console.log("seq", assemblySequence);
-  //   console.log("err", assemblySequenceErr);
-  //  },[])();
-
-  //  return () => {
-  //    active = false;
-  //  };
-  //}, [props.open]);
 
   return (
     <>
@@ -207,8 +177,8 @@ export default function VisualiseAssembly(props) {
             <div className={classes.search}>
               <Autocomplete
                 color="white"
-                id="combo-box-demo"
-                options={seqLabel}
+                id="seq-qualifiers"
+                options={seqLabel ? seqLabel : ["Feauture"]}
                 getOptionLabel={(option) => option}
                 value={selectedSeqQualifier}
                 onChange={(event, newValue) => {

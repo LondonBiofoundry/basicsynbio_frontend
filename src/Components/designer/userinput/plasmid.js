@@ -29,12 +29,6 @@ export default function StandardPartLinker(props) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [clickedID, setClickedID] = useState("");
-  const [clickedLabel, setClickedLabel] = useState("");
-  const [clickedSeq, setClickedSeq] = useState("");
-  const [clickedCollection, setClickedCollection] = useState("");
-  const [clickenBin, setclickenBin] = useState("");
-
   const [clickedItem, setclickedItem] = useState({});
 
   const handleClickOpen = (item) => {
@@ -45,19 +39,6 @@ export default function StandardPartLinker(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  function DescriptionContent() {
-    return (
-      <TextField
-        value={props.assemblyDesc}
-        onChange={(e) => props.setAssemblyDesc(e.target.value)}
-        style={{ width: "100%" }}
-        id="outlined-basic"
-        label="Description"
-        variant="outlined"
-      />
-    );
-  }
 
   function DisplaySuccess() {
     return (
@@ -96,7 +77,7 @@ export default function StandardPartLinker(props) {
               style={{ width: "100%" }}
               value={props.assemblyName}
               onChange={(e) => props.setAssemblyName(e.target.value)}
-              id="outlined-basic"
+              id="outlined-basic2"
               label="Name"
               variant="outlined"
             />
@@ -106,7 +87,7 @@ export default function StandardPartLinker(props) {
               value={props.assemblyDesc}
               onChange={(e) => props.setAssemblyDesc(e.target.value)}
               style={{ width: "100%" }}
-              id="outlined-basic"
+              id="outlined-basic3"
               label="Description"
               variant="outlined"
             />

@@ -24,7 +24,6 @@ export default function ValidateAssembly(props) {
     let active = true;
     const buildasastring = "build";
     (async () => {
-      console.log(props.shoppingBagItems);
       const response = await fetch(ApiEndpoint + "validate", {
         method: "POST",
         headers: {
@@ -42,7 +41,6 @@ export default function ValidateAssembly(props) {
       } else {
         props.setValidated(false);
       }
-      console.log(myresponse.result);
     })();
 
     return () => {

@@ -9,7 +9,6 @@ import { ApiEndpoint } from "../../../../index";
 
 export default function SBOL(props) {
   async function ValidateFileUpload(dataString, filename) {
-    console.log(dataString);
     const response = await fetch(
       ApiEndpoint +
         "fileupload/singular?file=" +
@@ -29,7 +28,6 @@ export default function SBOL(props) {
     } else {
       props.setCatchError(result.error);
     }
-    console.log(result);
   }
 
   const onDrop = useCallback((acceptedFiles) => {

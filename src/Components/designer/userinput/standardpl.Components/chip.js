@@ -73,7 +73,6 @@ export default function Chip(props) {
     (async () => {
       const response = await fetch(ApiEndpoint + "collections/names");
       const myresponse = await response.json();
-      console.log(myresponse);
 
       if (active) {
         props.setCollectionOptions(myresponse.data);
@@ -92,9 +91,6 @@ export default function Chip(props) {
   }, [open]);
 
   function HandleClickOnChip(event) {
-    console.log("event", event);
-    console.log("event.target.value", event.target.value);
-    console.log("event.target.outertext", event.target.outerText);
     setClickedCollection(
       event.target.outerText.substring(0, event.target.outerText.length - 7)
     );

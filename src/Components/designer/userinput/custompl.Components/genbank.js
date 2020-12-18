@@ -109,27 +109,29 @@ export default function Genbank(props) {
   const { ref, ...rootProps } = getRootProps();
 
   return (
-    <RootRef rootRef={ref}>
-      <Paper {...rootProps} variant="outlined">
-        <input {...getInputProps()} />
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-          spacing={1}
-          padding={1}
-        >
-          <Grid item>
-            <UploadIMG />
+    <>
+      <RootRef rootRef={ref}>
+        <Paper {...rootProps} variant="outlined">
+          <input {...getInputProps()} />
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            spacing={1}
+            padding={1}
+          >
+            <Grid item>
+              <UploadIMG />
+            </Grid>
+            <Grid item>
+              <Typography>
+                Drag and drop some files here, or click to select files,
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Typography>
-              Drag and drop some files here, or click to select files,
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
+        </Paper>
+      </RootRef>
       {promiseInProgress ? (
         <div style={{ padding: "10px" }}>
           <Typography color="textSecondary">Loading...</Typography>
@@ -138,6 +140,6 @@ export default function Genbank(props) {
       ) : (
         <></>
       )}
-    </RootRef>
+    </>
   );
 }

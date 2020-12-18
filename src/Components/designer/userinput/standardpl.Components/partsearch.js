@@ -26,8 +26,6 @@ export default function PartSearch(props) {
       var mergedArray = [];
 
       for (const [key, value] of Object.entries(myresponse)) {
-        console.log("props", props.CollectionSelected);
-        console.log("key", key);
         if (props.CollectionSelected.includes(key)) {
           for (let item of value) {
             item.collection = key;
