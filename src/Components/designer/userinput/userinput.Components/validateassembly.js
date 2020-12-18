@@ -59,7 +59,7 @@ export default function ValidateAssembly(props) {
   }
 
   return (
-    <div>
+    <>
       <Dialog
         open={props.open}
         TransitionComponent={Transition}
@@ -99,6 +99,6 @@ export default function ValidateAssembly(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

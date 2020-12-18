@@ -55,11 +55,7 @@ export default function NavBar() {
               />
             </IconButton>
           </Link>
-          <Typography
-            color="black"
-            variant="h6"
-            className={classes.title}
-          ></Typography>
+          <Typography variant="h6" className={classes.title}></Typography>
           <Hidden xsDown>
             <Link style={navStyle} to="/">
               <Button>
@@ -67,11 +63,6 @@ export default function NavBar() {
               </Button>
             </Link>
             <Link style={navStyle} to="/about">
-              <Button>
-                <Typography className={classes.navbartext}>About</Typography>
-              </Button>
-            </Link>
-            <Link style={navStyle} to="/basic">
               <Button>
                 <Typography className={classes.navbartext}>About</Typography>
               </Button>

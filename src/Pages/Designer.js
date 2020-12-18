@@ -65,7 +65,11 @@ export default function Designer() {
       case 1:
         return <Export currentBuild={currentBuild} />;
       default:
-        return "Unknown stepIndex";
+        return (
+          <Typography className={classes.instructions}>
+            Unknown Step Index
+          </Typography>
+        );
     }
   }
 
@@ -88,9 +92,7 @@ export default function Designer() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
+            {getStepContent(activeStep)}
             <div style={{ padding: 20 }}>
               <Grid
                 container

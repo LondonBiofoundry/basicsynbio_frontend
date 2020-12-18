@@ -178,7 +178,7 @@ export default function VisualiseAssembly(props) {
   //}, [props.open]);
 
   return (
-    <div>
+    <>
       <Dialog
         fullScreen
         open={props.open}
@@ -244,6 +244,6 @@ export default function VisualiseAssembly(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
