@@ -68,7 +68,7 @@ export default function PartSearch(props) {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.id === value.label}
+      getOptionSelected={(option, value) => option.id?option.id === value.id:value=''}
       getOptionLabel={(option) => option.id}
       options={props.partOptions}
       loading={loading}

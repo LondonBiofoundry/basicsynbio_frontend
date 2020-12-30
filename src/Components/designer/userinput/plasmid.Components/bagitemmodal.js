@@ -41,6 +41,8 @@ export default function BagItemModal(props) {
   const [returnedSeq, setReturnedSeq] = useState("");
   const [annotationsSet, setAnnotationsSet] = useState([]);
   const loading = props.open && label.length === 0;
+  const userWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const userHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
 
   React.useEffect(() => {
     (async () => {
@@ -122,7 +124,7 @@ export default function BagItemModal(props) {
   const SeqVizComponent = () => {
     if (selectedQualifier === "Feature") {
       return (
-        <SeqViz name="J23100" file={props.item.binaryString} viewer="linear" />
+        <SeqViz name="J23100" file={props.item.binaryString} viewer="linear" style={{ height: userHeight, width: userWidth}}/>
       );
     } else {
       return (
@@ -131,6 +133,7 @@ export default function BagItemModal(props) {
           seq={returnedSeq}
           annotations={annotationsSet}
           viewer="linear"
+          style={{ height: userHeight, width: userWidth }}
         />
       );
     }

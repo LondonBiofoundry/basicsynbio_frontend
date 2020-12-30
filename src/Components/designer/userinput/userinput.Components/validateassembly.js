@@ -22,7 +22,6 @@ export default function ValidateAssembly(props) {
 
   React.useEffect(() => {
     let active = true;
-    const buildasastring = "build";
     (async () => {
       const response = await fetch(ApiEndpoint + "validate", {
         method: "POST",
@@ -32,13 +31,14 @@ export default function ValidateAssembly(props) {
         body: JSON.stringify(props.shoppingBagItems),
       });
       const myresponse = await response.json();
-      setValidation(String(myresponse.result));
       if (
         String(myresponse.result) === "success" &&
         props.validated !== "success"
       ) {
+        setValidation(String(myresponse.result));
         props.setValidated(true);
       } else {
+        setValidation(String(myresponse.error));
         props.setValidated(false);
       }
     })();
