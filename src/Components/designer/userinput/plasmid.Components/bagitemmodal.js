@@ -40,23 +40,27 @@ export default function BagItemModal(props) {
   const [selectedQualifier, setSelectedQualifier] = useState("Feature");
   const [returnedSeq, setReturnedSeq] = useState("");
   const [annotationsSet, setAnnotationsSet] = useState([]);
-  const loading = props.open && label.length === 0;
   const userWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   const userHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
 
   React.useEffect(() => {
-    (async () => {
-      const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(props.item),
-      });
-      const resultlabels = await responselabels.json();
-      setLabel(resultlabels);
-    })();
-  }, [loading]);
+    if (!props.open) {
+      setLabel([]);
+      setSelectedQualifier("Feature");
+    } else {
+      (async () => {
+        const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(props.item),
+        });
+        const resultlabels = await responselabels.json();
+        setLabel(resultlabels);
+      })();
+    }
+  }, [props.open]);
 
   function random_color() {
     const colorCodes = [
@@ -113,13 +117,6 @@ export default function BagItemModal(props) {
       }
     })();
   }, [selectedQualifier]);
-
-  React.useEffect(() => {
-    if (!props.open) {
-      setLabel([]);
-      setSelectedQualifier("Feature");
-    }
-  }, [props.open]);
 
   const SeqVizComponent = () => {
     if (selectedQualifier === "Feature") {
