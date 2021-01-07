@@ -191,7 +191,7 @@ export default function BagItemModal(props) {
         </AppBar>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            the selected part is from the collection: {props.itemcollection}
+            The selected part is from the collection: {props.item.collection?props.item.collection:'Custom'}
           </DialogContentText>
           <div className={classes.SeqVizDiv}>
             <SeqVizComponent />
