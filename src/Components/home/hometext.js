@@ -47,7 +47,7 @@ export default function HomeText(props) {
       <div className={classes.textsection}>
         <ThemeProvider theme={theme}>
           <BasicSynBio />
-          <Typography variant={"h5"}>
+          <Typography id="intotext" variant={"h5"}>
             A Web Interface for the basicsynbio python package. Get started
             creating and analysing you constructs and build below
           </Typography>
