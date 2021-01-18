@@ -14,8 +14,6 @@ The unit tests themselves are stored within the `src/__tests__` folder and can b
 $ npm run test
 ```
 
-
-
 ## Code Formatting
 
 This repository uses prettier (https://prettier.io) code formatting.
