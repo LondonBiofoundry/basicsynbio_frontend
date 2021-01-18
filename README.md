@@ -6,7 +6,7 @@ A frontend webapp for the python package basicsynbio built with react.js
 
 ## UnitTests
 
-This repository uses unittest using the Jest (https://jestjs.io) and Enzyme (https://www.npmjs.com/package/enzyme) packages
+This repository uses unittest using the [Jest](https://jestjs.io) and [Enzyme](https://www.npmjs.com/package/enzyme) packages
 
 The unit tests themselves are stored within the `src/__tests__` folder and can be tested with the following command:
 
@@ -16,7 +16,7 @@ $ npm run test
 
 ## Code Formatting
 
-This repository uses prettier (https://prettier.io) code formatting.
+This repository uses [prettier](https://prettier.io) code formatting.
 
 To check if you code is prettier compliant run:
 
