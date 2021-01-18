@@ -2,7 +2,23 @@
 
 A frontend webapp for the python package basicsynbio built with react.js
 
-> ## Getting Started running the frontend
+## Code Formatting
+
+This repository uses prettier (https://prettier.io) code formatting.
+
+To check if you code is prettier compliant run:
+
+```bash
+$ npx prettier --check .
+```
+
+To allow prettier to rewrite your code to be prettier compliant run:
+
+```bash
+$ npx prettier --write .
+```
+
+# Installation
 
 Clone our repositry
 
