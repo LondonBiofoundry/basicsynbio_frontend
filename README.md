@@ -8,6 +8,8 @@ A frontend webapp for the python package basicsynbio built with react.js
 
 This repository uses unittest using the [Jest](https://jestjs.io) and [Enzyme](https://www.npmjs.com/package/enzyme) packages
 
+![UnitTests](https://github.com/LondonBiofoundry/basicsynbio_frontend/workflows/UnitTests/badge.svg)
+
 The unit tests themselves are stored within the `src/__tests__` folder and can be tested with the following command:
 
 ```bash
@@ -17,6 +19,8 @@ $ npm run test
 ## Code Formatting
 
 This repository uses [prettier](https://prettier.io) code formatting.
+
+![CodeFormat](https://github.com/LondonBiofoundry/basicsynbio_frontend/workflows/CodeFormat/badge.svg)
 
 To check if you code is prettier compliant run:
 
