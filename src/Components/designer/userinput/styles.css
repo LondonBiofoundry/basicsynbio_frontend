@@ -1,35 +1,33 @@
 .App {
-    font-family: sans-serif;
-    text-align: center;
-  }
-  
-  ul,
-  li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .react-beatiful-dnd-copy ~ li {
-    transform: none !important;
-  }
-  
-  .dragging {
-    background: yellow;
-  }
-  
-  .react-beatiful-dnd-copy {
-    background: lightblue;
-  }
-  
-  .react-beatiful-dnd-copy ~ [data-rbd-placeholder-context-id] {
-    display: none !important;
-  }
-  
-  
-  .shopping-bag {
-    padding: 10px;
-    border: 3px dashed #777;
-    border-radius: 10px;
-  }
-  
+  font-family: sans-serif;
+  text-align: center;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.react-beatiful-dnd-copy ~ li {
+  transform: none !important;
+}
+
+.dragging {
+  background: yellow;
+}
+
+.react-beatiful-dnd-copy {
+  background: lightblue;
+}
+
+.react-beatiful-dnd-copy ~ [data-rbd-placeholder-context-id] {
+  display: none !important;
+}
+
+.shopping-bag {
+  padding: 10px;
+  border: 3px dashed #777;
+  border-radius: 10px;
+}

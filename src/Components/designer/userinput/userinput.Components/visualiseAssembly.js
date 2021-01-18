@@ -42,8 +42,14 @@ export default function VisualiseAssembly(props) {
   const [assemblySequenceErr, setAssemblySequenceErr] = useState("");
   const [returnSeq, setReturnSeq] = useState("");
   const [annotationsSeqSet, setAnnotationsSeqSet] = useState([]);
-  const userWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  const userHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+  const userWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  const userHeight =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
 
   //////
   React.useEffect(() => {
@@ -134,7 +140,7 @@ export default function VisualiseAssembly(props) {
           seq={returnSeq}
           annotations={annotationsSeqSet}
           viewer="linear"
-          style={{ height: userHeight, width: userWidth}}
+          style={{ height: userHeight, width: userWidth }}
         />
       );
     } else {
@@ -144,7 +150,7 @@ export default function VisualiseAssembly(props) {
           seq={returnSeq}
           annotations={annotationsSeqSet}
           viewer="linear"
-          style={{ height: userHeight, width: userWidth}}
+          style={{ height: userHeight, width: userWidth }}
         />
       );
     }

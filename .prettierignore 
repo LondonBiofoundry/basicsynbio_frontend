@@ -1,0 +1,5 @@
+build
+.firebaserc
+.gitignore
+firebase.json
+LICENSE

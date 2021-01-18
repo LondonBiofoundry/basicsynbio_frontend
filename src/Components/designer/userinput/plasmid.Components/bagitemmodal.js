@@ -40,8 +40,14 @@ export default function BagItemModal(props) {
   const [selectedQualifier, setSelectedQualifier] = useState("Feature");
   const [returnedSeq, setReturnedSeq] = useState("");
   const [annotationsSet, setAnnotationsSet] = useState([]);
-  const userWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  const userHeight = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+  const userWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  const userHeight =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
 
   React.useEffect(() => {
     if (!props.open) {
@@ -121,7 +127,12 @@ export default function BagItemModal(props) {
   const SeqVizComponent = () => {
     if (selectedQualifier === "Feature") {
       return (
-        <SeqViz name="J23100" file={props.item.binaryString} viewer="linear" style={{ height: userHeight, width: userWidth}}/>
+        <SeqViz
+          name="J23100"
+          file={props.item.binaryString}
+          viewer="linear"
+          style={{ height: userHeight, width: userWidth }}
+        />
       );
     } else {
       return (
@@ -191,7 +202,8 @@ export default function BagItemModal(props) {
         </AppBar>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            The selected part is from the collection: {props.item.collection?props.item.collection:'Custom'}
+            The selected part is from the collection:{" "}
+            {props.item.collection ? props.item.collection : "Custom"}
           </DialogContentText>
           <div className={classes.SeqVizDiv}>
             <SeqVizComponent />

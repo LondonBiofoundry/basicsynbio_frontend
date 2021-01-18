@@ -29,4 +29,3 @@ The page will reload if you make edits.
 > ## Linting / Code Style
 
 This repo uses prettier: https://prettier.io/docs/en/integrating-with-linters.html
-
