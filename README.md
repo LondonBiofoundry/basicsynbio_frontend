@@ -1,6 +1,20 @@
 # basicsynbio Frontend
 
+This repository is hosted at: https://basicsynbio.web.app
+
 A frontend webapp for the python package basicsynbio built with react.js
+
+## UnitTests
+
+This repository uses unittest using the Jest (https://jestjs.io) and Enzyme (https://www.npmjs.com/package/enzyme) packages
+
+The unit tests themselves are stored within the `src/__tests__` folder and can be tested with the following command:
+
+```bash
+$ npm run test
+```
+
+
 
 ## Code Formatting
 
@@ -22,26 +36,26 @@ $ npx prettier --write .
 
 Clone our repositry
 
-`$ git clone https://github.com/LondonBiofoundry/basicsynbio_frontend.git`
+```bash
+$ git clone https://github.com/LondonBiofoundry/basicsynbio_frontend.git
+```
 
 Change directory into the cloned folder
 
-`$ cd basicsynbio_frontend`
+```bash
+$ cd basicsynbio_frontend
+```
 
 Install frontend dependencies located in package.json
 
-`$ npm install`
+```bash
+$ npm install
+```
 
 Start app in Development mode
 
-`$ npm start`
+```bash
+$ npm start
+```
 
-> Note: the backend need to be running to get full functionality: https://github.com/LondonBiofoundry/basicsynbio_backend
-
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.
-
-> ## Linting / Code Style
-
-This repo uses prettier: https://prettier.io/docs/en/integrating-with-linters.html
+This causes the frontend to run locally to view it, Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
