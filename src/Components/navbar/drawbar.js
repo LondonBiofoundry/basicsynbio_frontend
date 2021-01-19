@@ -83,14 +83,6 @@ export default function TemporaryDrawer() {
             <ListItemText primary={"Basic"} />
           </ListItem>
         </Link>
-        <Link style={navStyle} to="/docs">
-          <ListItem button key={"Docs"}>
-            <ListItemIcon>
-              <VpnKeyIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Docs"} />
-          </ListItem>
-        </Link>
         <Link style={navStyle} to="/designer">
           <ListItem button key={"Designer"}>
             <ListItemIcon>

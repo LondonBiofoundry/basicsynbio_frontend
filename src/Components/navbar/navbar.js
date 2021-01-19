@@ -67,11 +67,6 @@ export default function NavBar() {
                 <Typography className={classes.navbartext}>About</Typography>
               </Button>
             </Link>
-            <Link style={navStyle} to="/docs">
-              <Button>
-                <Typography className={classes.navbartext}>Docs</Typography>
-              </Button>
-            </Link>
             <Link style={navStyle} to="/designer">
               <Button>
                 <Typography className={classes.navbartext}>designer</Typography>
