@@ -1,7 +1,19 @@
 import React from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
+
+const HtmlTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "#333333",
+    color: "#f2f2f2",
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +58,25 @@ export default function Copyable(props) {
                     //style={provided.draggableProps.style}
                     //className={snapshot.isDragging ? "dragging" : ""}
                   >
-                    <Chip
-                      className={classes.root}
-                      label={item.label}
-                      onDelete={() => props.onDeleteStandardPart(item.label)}
-                      color="primary"
-                    />
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <Typography variant="body1" color="inherit">
+                            Part Description:
+                          </Typography>
+                          <Typography variant="body2" color="inherit">
+                            {item.description}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    >
+                      <Chip
+                        className={classes.root}
+                        label={item.label}
+                        onDelete={() => props.onDeleteStandardPart(item.label)}
+                        color="primary"
+                      />
+                    </HtmlTooltip>
                   </li>
                 </React.Fragment>
               )}

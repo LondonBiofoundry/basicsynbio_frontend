@@ -146,6 +146,7 @@ export default function UserInput(props) {
           label: value.id,
           seq: value.seq,
           collection: value.collection,
+          description: value.description,
           type: "standard",
           base64: null,
           multiple: false,

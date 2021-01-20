@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Basic from "./Pages/Basic";
-import Docs from "./Pages/Docs";
 import Designer from "./Pages/Designer";
 
 import NavBar from "./Components/navbar/navbar";

@@ -68,6 +68,10 @@ export default function StandardPartLinker(props) {
           Standard Part Linker from Collection
         </Typography>
         <Divider variant="middle" />
+        <Typography className={classes.pos}>
+          Hover over a part to read its description, drag the part to the parts
+          list below to add it to the plasmid.
+        </Typography>
         <Shop
           items={props.items}
           onDeleteStandardPart={props.onDeleteStandardPart}
