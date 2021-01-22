@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: "#293241",
+    height: "10vh",
   },
   menuButton: {
     color: "white",
@@ -39,8 +40,8 @@ export default function NavBar() {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="transparent">
+    <div>
+      <AppBar position="static" color="transparent" className={classes.root}>
         <Toolbar>
           <Link to="/">
             <IconButton

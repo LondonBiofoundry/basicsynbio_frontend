@@ -6,7 +6,7 @@ For further information on the basicsynbio package or BASIC DNA assembly please 
 
 ## Disclaimer
 
-*Please note this web app is currently under development. For issues or feedback please add a "new issue" via the [source repository issues section](https://github.com/LondonBiofoundry/basicsynbio_frontend/issues).*
+_Please note this web app is currently under development. For issues or feedback please add a "new issue" via the [source repository issues section](https://github.com/LondonBiofoundry/basicsynbio_frontend/issues)._
 
 ## Additional sources
 

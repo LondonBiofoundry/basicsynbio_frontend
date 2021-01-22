@@ -19,6 +19,7 @@
     "react-dropzone": "^11.2.4",
     "react-error-boundary": "^3.0.2",
     "react-lottie": "^1.2.3",
+    "react-markdown": "^5.0.3",
     "react-promise-tracker": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",

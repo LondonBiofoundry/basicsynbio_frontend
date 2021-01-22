@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: "#3D5A80",
-    minHeight: "850px",
-    paddingTop: "50px",
+    minHeight: "85vh",
+    paddingTop: "5vh",
   },
 }));
 
