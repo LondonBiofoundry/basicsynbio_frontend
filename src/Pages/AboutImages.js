@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     "&:hover, &$focusVisible": {
       zIndex: 1,
       "& $imageBackdrop": {
-        opacity: 0.15,
+        backgroundColor: "#FFB38B",
+        //opacity: 0.15,
       },
       "& $imageMarked": {
         opacity: 0,
@@ -119,7 +120,7 @@ export default function ButtonBases() {
             className={classes.imageSrc}
             style={{
               //backgroundImage: `url(${image.url})`,
-              backgroundColor: "#293241",
+              backgroundColor: "#FF977d",
             }}
           />
           <span className={classes.imageBackdrop} />

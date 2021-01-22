@@ -61,13 +61,10 @@ export default function About() {
       <Grid container spacing={3} padding={3}>
         <Grid item xs={12} md={7}>
           <Typography className={classes.textSect} variant="body1">
-            Welcome to the BasicSynBio web app! Here, users can implement the{" "}
-            <a href="https://londonbiofoundry.github.io/basicsynbio/usage.html">
-              BasicSynBio workflow
-            </a>{" "}
-            via a user-friendly web interface. For further information on the
-            basicsynbio package or BASIC DNA assembly please refer to the
-            additional sources below.
+            Welcome to the BasicSynBio web app! Here, users can implement the
+            BasicSynBio workflow via a user-friendly web interface. For further
+            information on the basicsynbio package or BASIC DNA assembly please
+            refer to the additional sources below.
           </Typography>
           <Button
             variant="outlined"
@@ -81,10 +78,8 @@ export default function About() {
           </Typography>
           <Typography className={classes.textSect} variant="body1">
             Please note this web app is currently under development. For issues
-            or feedback please add a "new issue" via the{" "}
-            <a href="https://github.com/LondonBiofoundry/basicsynbio_frontend/issues">
-              source repository issues
-            </a>{" "}
+            or feedback please add a "new issue" via the source repository
+            issues
           </Typography>
           <Button
             variant="outlined"
