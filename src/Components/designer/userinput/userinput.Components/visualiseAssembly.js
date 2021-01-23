@@ -14,7 +14,7 @@ import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../..";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

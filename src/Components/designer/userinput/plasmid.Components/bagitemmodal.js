@@ -15,7 +15,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../..";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

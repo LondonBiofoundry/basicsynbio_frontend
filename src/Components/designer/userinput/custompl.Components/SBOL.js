@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
-import { ApiEndpoint } from "../../../../index";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 export default function SBOL(props) {
   async function ValidateFileUpload(dataString, filename) {

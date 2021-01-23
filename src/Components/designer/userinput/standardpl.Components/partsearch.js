@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import fetch from "cross-fetch";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { ApiEndpoint } from "../../../..";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 export default function PartSearch(props) {
   const [inputValue, setInputValue] = React.useState("");

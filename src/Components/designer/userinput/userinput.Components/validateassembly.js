@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 
 import SuccessAnimation from "./successlottly";
 import FailAnimation from "./faillottly";
-import { ApiEndpoint } from "../../../..";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

@@ -8,7 +8,7 @@ import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
-import { ApiEndpoint } from "../../../..";
+import { ApiEndpoint } from "../../../../ApiConnection";
 
 export default function Genbank(props) {
   const { promiseInProgress } = usePromiseTracker();
