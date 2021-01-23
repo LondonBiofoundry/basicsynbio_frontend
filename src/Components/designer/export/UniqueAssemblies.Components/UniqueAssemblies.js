@@ -24,11 +24,6 @@ const useStyles = makeStyles({
 export default function UniqueAssemblies(props) {
   const classes = useStyles();
 
-  var downloadURL =
-    ApiEndpoint +
-    "builduniqueassemblies?build=" +
-    JSON.stringify(props.currentBuild);
-
   const downloadUniqueAssemblies = () => {
     fetch(ApiEndpoint + "builduniqueassemblies", {
       method: "POST",
