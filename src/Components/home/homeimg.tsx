@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function HomeImage() {
+export const HomeImg: React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -46,4 +46,4 @@ export default function HomeImage() {
       />
     </div>
   );
-}
+};
