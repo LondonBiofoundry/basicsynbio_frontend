@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import HomeText from "../components/home/hometext";
 import { HomeImg } from "../components/home/homeimg";
+import HomeText from "../components/home/hometext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +26,7 @@ export default function Home() {
       >
         <Grid item xs={1} />
         <Grid item xs={11} sm={4}>
-          <HomeText />
+          <HomeText></HomeText>
         </Grid>
         <Grid item xs={12} sm={7}>
           <HomeImg></HomeImg>
