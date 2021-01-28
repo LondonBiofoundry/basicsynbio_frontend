@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-
 import { HomeImg } from "../components/home/homeimg";
 import HomeText from "../components/home/hometext";
 
@@ -9,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: "#3D5A80",
-    minHeight: "85vh",
+    minHeight: "90vh",
     paddingTop: "5vh",
   },
 }));

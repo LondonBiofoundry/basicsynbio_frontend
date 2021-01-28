@@ -15,6 +15,7 @@
     "@types/react-dom": "^17.0.0",
     "babel-polyfill": "^6.26.0",
     "cross-fetch": "^3.0.6",
+    "firebase-tools": "^9.2.2",
     "import": "0.0.6",
     "jest-canvas-mock": "^2.3.0",
     "js-file-download": "^0.4.12",
