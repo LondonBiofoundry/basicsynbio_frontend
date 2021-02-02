@@ -14,6 +14,7 @@ import FailAnimation from "./faillottly";
 import { ApiEndpoint } from "../../../../ApiConnection";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Part } from "../../../../interfaces/Part";
+import { Popups } from "../../../../interfaces/Popups";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -25,15 +26,15 @@ const Transition = React.forwardRef(function Transition(
 interface Props {
   setValidated: React.Dispatch<React.SetStateAction<boolean>>;
   shoppingBagItems: Part[];
-  open: boolean;
-  handleClose: () => void;
+  openPopups: Popups;
+  setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }
 
 export const ValidateAssembly: React.FC<Props> = ({
   setValidated,
   shoppingBagItems,
-  open,
-  handleClose,
+  openPopups,
+  setOpenPopups,
 }) => {
   const [validation, setValidation] = useState("");
 
@@ -60,7 +61,7 @@ export const ValidateAssembly: React.FC<Props> = ({
     return () => {
       active = false;
     };
-  }, [open]);
+  }, [openPopups.validationAssembly]);
 
   function FailSuccess() {
     return validation === "success" ? <SuccessAnimation /> : <FailAnimation />;
@@ -69,10 +70,12 @@ export const ValidateAssembly: React.FC<Props> = ({
   return (
     <>
       <Dialog
-        open={open}
+        open={openPopups.validationAssembly}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={() =>
+          setOpenPopups((C) => ({ ...C, validationAssembly: false }))
+        }
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
@@ -102,7 +105,12 @@ export const ValidateAssembly: React.FC<Props> = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={() =>
+              setOpenPopups((C) => ({ ...C, validationAssembly: false }))
+            }
+            color="primary"
+          >
             Close
           </Button>
         </DialogActions>

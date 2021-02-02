@@ -17,6 +17,7 @@ import { SeqViz } from "seqviz";
 import { ApiEndpoint } from "../../../../ApiConnection";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Part } from "../../../../interfaces/Part";
+import { Popups } from "../../../../interfaces/Popups";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -41,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   shoppingBagItems: Part[];
-  open: boolean;
-  handleClose: () => void;
+  openPopups: Popups;
+  setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }
 
 export const VisualiseAssembly: React.FC<Props> = ({
   shoppingBagItems,
-  open,
-  handleClose,
+  openPopups,
+  setOpenPopups,
 }) => {
   const classes = useStyles();
   const [seqLabel, setSeqLabel] = useState(["Feature"]);
@@ -77,7 +78,7 @@ export const VisualiseAssembly: React.FC<Props> = ({
       const resultlabels = await responselabels.json();
       if (!resultlabels.error) setSeqLabel(resultlabels);
     })();
-  }, [open]);
+  }, [openPopups.viewAssembly]);
 
   function random_color() {
     const colorCodes = [
@@ -135,15 +136,15 @@ export const VisualiseAssembly: React.FC<Props> = ({
         }
       }
     })();
-  }, [selectedSeqQualifier, open]);
+  }, [selectedSeqQualifier, openPopups.viewAssembly]);
 
   React.useEffect(() => {
-    if (!open) {
+    if (!openPopups.viewAssembly) {
       setSeqLabel([]);
       setSelectedSeqQualifier("Feature");
       setReturnSeq("");
     }
-  }, [open]);
+  }, [openPopups.viewAssembly]);
 
   const SeqVizComponent = () => {
     if (selectedSeqQualifier === "Feature") {
@@ -173,10 +174,10 @@ export const VisualiseAssembly: React.FC<Props> = ({
     <>
       <Dialog
         fullScreen
-        open={open}
+        open={openPopups.viewAssembly}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={() => setOpenPopups((C) => ({ ...C, viewAssembly: false }))}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
@@ -185,7 +186,9 @@ export const VisualiseAssembly: React.FC<Props> = ({
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleClose}
+              onClick={() =>
+                setOpenPopups((C) => ({ ...C, viewAssembly: false }))
+              }
               aria-label="close"
             >
               <CloseIcon />
@@ -230,7 +233,12 @@ export const VisualiseAssembly: React.FC<Props> = ({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={() =>
+              setOpenPopups((C) => ({ ...C, viewAssembly: false }))
+            }
+            color="primary"
+          >
             Close
           </Button>
         </DialogActions>

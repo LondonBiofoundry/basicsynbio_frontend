@@ -20,6 +20,7 @@ import "./styles.css";
 import { Part } from "../../../interfaces/Part";
 import { Assembly } from "../../../interfaces/Assembly";
 import { StandardInput } from "./standardinput/standardinput";
+import { Popups } from "../../../interfaces/Popups";
 
 const useStyles = makeStyles((theme) => ({
   extendedIcon: {
@@ -79,51 +80,18 @@ export const UserInput: React.FC<Props> = ({
   const [COLLECTION, setCOLLECTION] = useState<Part[]>([]);
   const [COLLECTION2, setCOLLECTION2] = useState<Part[]>([]);
   const [shoppingBagItems, setShoppingBagItems] = useState<Part[]>([]);
-  //Visualise Assembly Function
-  const [openVisualise, setOpenVisualise] = useState<boolean>(false);
-  //View Build Functions
-  const [open, setOpen] = useState<boolean>(false);
   //Validate Assembly Function
   const [validated, setValidated] = useState<boolean>(false);
-  const [openValidation, setOpenValidation] = useState<boolean>(false);
-  const [openValidationMessage, setOpenValidationMessage] = useState<boolean>(
-    false
-  );
   //AssemblyInputBoxed
   const [assemblyName, setAssemblyName] = useState<string>("");
   const [assemblyDesc, setAssemblyDesc] = useState<string>("");
-
-  const handleClickVisualiseOpen = () => {
-    setOpenVisualise(true);
-  };
-
-  const handleVisualiseClose = () => {
-    setOpenVisualise(false);
-  };
-
-  const handleClickOpenValidation = () => {
-    setOpenValidation(true);
-  };
-
-  const handleCloseValidation = () => {
-    setOpenValidation(false);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const OpenValidationMessage = () => {
-    setOpenValidationMessage(true);
-  };
-
-  const handleCloseValidationMessage = () => {
-    setOpenValidationMessage(false);
-  };
+  //HandlePopups
+  const [openPopups, setOpenPopups] = useState<Popups>({
+    viewAssembly: false,
+    viewBuild: false,
+    validationAssembly: false,
+    pleaseValidateMessage: false,
+  });
 
   const onDeleteStandardPart = (partlabel: Part["label"]) => {
     if (partlabel !== null) {
@@ -272,7 +240,13 @@ export const UserInput: React.FC<Props> = ({
             <div className={classes.FAB}>
               <Fab
                 onClick={
-                  validated ? handleClickVisualiseOpen : OpenValidationMessage
+                  validated
+                    ? () => setOpenPopups((C) => ({ ...C, viewAssembly: true }))
+                    : () =>
+                        setOpenPopups((C) => ({
+                          ...C,
+                          pleaseValidateMessage: true,
+                        }))
                 }
                 className={classes.FABitem}
                 variant="extended"
@@ -283,7 +257,9 @@ export const UserInput: React.FC<Props> = ({
                 Visualise
               </Fab>
               <Fab
-                onClick={handleClickOpenValidation}
+                onClick={() =>
+                  setOpenPopups((C) => ({ ...C, validationAssembly: true }))
+                }
                 className={classes.FABitemgreen}
                 variant="extended"
                 aria-label="Validate"
@@ -292,7 +268,9 @@ export const UserInput: React.FC<Props> = ({
                 Validate
               </Fab>
               <Fab
-                onClick={handleClickOpen}
+                onClick={() =>
+                  setOpenPopups((C) => ({ ...C, viewBuild: true }))
+                }
                 className={classes.FABitem}
                 variant="extended"
                 color="secondary"
@@ -302,11 +280,19 @@ export const UserInput: React.FC<Props> = ({
               </Fab>
               <ViewBuild
                 rows={currentBuild}
-                open={open}
-                handleClose={handleClose}
+                openPopups={openPopups}
+                setOpenPopups={setOpenPopups}
               />
               <Fab
-                onClick={validated ? onAddToBuild : OpenValidationMessage}
+                onClick={
+                  validated
+                    ? onAddToBuild
+                    : () =>
+                        setOpenPopups((C) => ({
+                          ...C,
+                          pleaseValidateMessage: true,
+                        }))
+                }
                 className={classes.FABitem}
                 variant="extended"
                 color="secondary"
@@ -321,17 +307,14 @@ export const UserInput: React.FC<Props> = ({
         <ValidateAssembly
           setValidated={setValidated}
           shoppingBagItems={shoppingBagItems}
-          open={openValidation}
-          handleClose={handleCloseValidation}
+          openPopups={openPopups}
+          setOpenPopups={setOpenPopups}
         />
-        <SnackbarPopups
-          open={openValidationMessage}
-          handleClose={handleCloseValidationMessage}
-        />
+        <SnackbarPopups openPopups={openPopups} setOpenPopups={setOpenPopups} />
         <VisualiseAssembly
           shoppingBagItems={shoppingBagItems}
-          open={openVisualise}
-          handleClose={handleVisualiseClose}
+          openPopups={openPopups}
+          setOpenPopups={setOpenPopups}
         />
       </div>
     </DragDropContext>

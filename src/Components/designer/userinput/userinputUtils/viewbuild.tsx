@@ -23,6 +23,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import CloseIcon from "@material-ui/icons/Close";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Assembly } from "../../../../interfaces/Assembly";
+import { Popups } from "../../../../interfaces/Popups";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -119,19 +120,23 @@ const RenderRow: React.FC<Row> = ({ key, row }) => {
 
 interface Props {
   rows: Assembly[];
-  open: boolean;
-  handleClose: () => void;
+  openPopups: Popups;
+  setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }
 
-export const ViewBuild: React.FC<Props> = ({ rows, open, handleClose }) => {
+export const ViewBuild: React.FC<Props> = ({
+  rows,
+  openPopups,
+  setOpenPopups,
+}) => {
   const classes = useStyles();
   return (
     <Dialog
       fullScreen
-      open={open}
+      open={openPopups.viewBuild}
       TransitionComponent={Transition}
       keepMounted
-      onClose={handleClose}
+      onClose={() => setOpenPopups((C) => ({ ...C, viewBuild: false }))}
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
@@ -140,7 +145,7 @@ export const ViewBuild: React.FC<Props> = ({ rows, open, handleClose }) => {
           <IconButton
             edge="start"
             color="inherit"
-            onClick={handleClose}
+            onClick={() => setOpenPopups((C) => ({ ...C, viewBuild: false }))}
             aria-label="close"
           >
             <CloseIcon />
@@ -148,7 +153,11 @@ export const ViewBuild: React.FC<Props> = ({ rows, open, handleClose }) => {
           <Typography variant="h6" className={classes.title}>
             Current Assembly Sequence
           </Typography>
-          <Button autoFocus color="inherit" onClick={handleClose}>
+          <Button
+            autoFocus
+            color="inherit"
+            onClick={() => setOpenPopups((C) => ({ ...C, viewBuild: false }))}
+          >
             Exit
           </Button>
         </Toolbar>
@@ -174,7 +183,10 @@ export const ViewBuild: React.FC<Props> = ({ rows, open, handleClose }) => {
         </TableContainer>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button
+          onClick={() => setOpenPopups((C) => ({ ...C, viewBuild: false }))}
+          color="primary"
+        >
           Close
         </Button>
       </DialogActions>
