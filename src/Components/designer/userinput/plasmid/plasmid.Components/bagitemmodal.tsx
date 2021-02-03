@@ -15,6 +15,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TransitionProps } from "@material-ui/core/transitions";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
 import { ApiEndpoint } from "../../../../../ApiConnection";
@@ -27,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+  },
+  switch: {
+    paddingLeft: "10%",
+  },
+  toggle: {
+    background: "white",
+    borderRadius: "5px",
   },
   SeqVizDiv: {
     width: "100%",
@@ -49,6 +59,10 @@ interface Props {
 
 export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
   const classes = useStyles();
+  const [DnaViewerString, setDnaViewerString] = useState<string>("");
+  const [viewType, setViewType] = useState<"DnaFeatureViewer" | "Seqviz">(
+    "Seqviz"
+  );
   const [label, setLabel] = useState([]);
   const [selectedQualifier, setSelectedQualifier] = useState("Feature");
   const [returnedSeq, setReturnedSeq] = useState("");
@@ -62,10 +76,19 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
       document.documentElement.clientHeight ||
       document.body.clientHeight) - 120;
 
+  type ViewMethod = "DnaFeatureViewer" | "Seqviz";
+  const handleViewTypeChange = (event: any, newMethod: ViewMethod) => {
+    if (["DnaFeatureViewer", "Seqviz"].indexOf(newMethod) >= 0) {
+      if (newMethod === viewType) return;
+      else setViewType(newMethod);
+    }
+  };
+
   React.useEffect(() => {
     if (!open) {
       setLabel([]);
       setSelectedQualifier("Feature");
+      setViewType("Seqviz");
     } else {
       (async () => {
         const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
@@ -77,6 +100,18 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
         });
         const resultlabels = await responselabels.json();
         setLabel(resultlabels);
+      })();
+      (async () => {
+        const DnaFeatureViewer = await fetch(ApiEndpoint + "dnafeatureviewer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+        });
+        const dnafeatureviewer_response = await DnaFeatureViewer.json();
+        setDnaViewerString(dnafeatureviewer_response.base64image);
+        console.log(dnafeatureviewer_response);
       })();
     }
   }, [open]);
@@ -184,34 +219,62 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
             <Typography variant="h5" className={classes.title}>
               {item ? item.label : ""}
             </Typography>
-            <Typography variant="h6" className={classes.title}>
-              Current Annotation: {selectedQualifier}
-            </Typography>
-            <div>
-              <Autocomplete
-                color="white"
-                id="item-qualifiers"
-                options={label}
-                getOptionLabel={(option) => option}
-                value={selectedQualifier}
-                onChange={(event, newValue) => {
-                  if (newValue !== null) {
-                    setSelectedQualifier(newValue);
-                  }
-                }}
-                style={{
-                  width: 400,
-                  background: "white",
-                  borderRadius: "5px",
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Search Qualifiers to change Annotation..."
-                    variant="filled"
+            {viewType === "Seqviz" ? (
+              <>
+                <Typography variant="h6" className={classes.title}>
+                  Current Annotation: {selectedQualifier}
+                </Typography>
+                <div>
+                  <Autocomplete
+                    color="secondary"
+                    id="item-qualifiers"
+                    options={label}
+                    getOptionLabel={(option) => option}
+                    value={selectedQualifier}
+                    onChange={(event, newValue) => {
+                      if (newValue !== null) {
+                        setSelectedQualifier(newValue);
+                      }
+                    }}
+                    style={{
+                      width: 400,
+                      background: "white",
+                      borderRadius: "5px",
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Search Qualifiers to change Annotation..."
+                        variant="filled"
+                      />
+                    )}
                   />
-                )}
-              />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+            <div className={classes.switch}>
+              <div className={classes.toggle}>
+                <ToggleButtonGroup
+                  color="primary"
+                  value={viewType}
+                  exclusive
+                  onChange={handleViewTypeChange}
+                  aria-label="text alignment"
+                >
+                  <ToggleButton value="Seqviz">Seqviz</ToggleButton>
+                  {item.collection !== "BASIC_BIOLEGIO_LINKERS" ? (
+                    <ToggleButton value="DnaFeatureViewer">
+                      DnaFeatureViewer
+                    </ToggleButton>
+                  ) : (
+                    <ToggleButton disabled value="DnaFeatureViewer">
+                      DnaFeatureViewer
+                    </ToggleButton>
+                  )}
+                </ToggleButtonGroup>
+              </div>
             </div>
           </Toolbar>
         </AppBar>
@@ -220,9 +283,18 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
             The selected part is from the collection:{" "}
             {item ? item.collection : "Custom"}
           </DialogContentText>
-          <div className={classes.SeqVizDiv}>
-            <SeqVizComponent />
-          </div>
+          {viewType === "Seqviz" ? (
+            <div className={classes.SeqVizDiv}>
+              <SeqVizComponent />
+            </div>
+          ) : (
+            <>
+              <img
+                width="100%"
+                src={`data:image/jpeg;base64,${DnaViewerString}`}
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

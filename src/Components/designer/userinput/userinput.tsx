@@ -113,6 +113,7 @@ export const UserInput: React.FC<Props> = ({
     if (value?.binaryString !== undefined && value.label !== undefined) {
       const newPartStandard: Part = {
         id: uuid(),
+        accessor: value.accessor,
         label: value?.label,
         seq: value?.seq,
         collection: value?.collection,
