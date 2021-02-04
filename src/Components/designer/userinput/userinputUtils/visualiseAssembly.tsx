@@ -12,6 +12,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
 import { ApiEndpoint } from "../../../../ApiConnection";
@@ -38,6 +40,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
+  switch: {
+    paddingLeft: "10%",
+  },
+  toggle: {
+    background: "white",
+    borderRadius: "5px",
+  },
 }));
 
 interface Props {
@@ -52,6 +61,10 @@ export const VisualiseAssembly: React.FC<Props> = ({
   setOpenPopups,
 }) => {
   const classes = useStyles();
+  const [DnaViewerString, setDnaViewerString] = useState<string>("");
+  const [viewType, setViewType] = useState<"DnaFeatureViewer" | "Seqviz">(
+    "Seqviz"
+  );
   const [seqLabel, setSeqLabel] = useState(["Feature"]);
   const [selectedSeqQualifier, setSelectedSeqQualifier] = useState("Feature");
   const [returnSeq, setReturnSeq] = useState("");
@@ -65,6 +78,14 @@ export const VisualiseAssembly: React.FC<Props> = ({
     document.documentElement.clientHeight ||
     document.body.clientHeight - 120;
 
+  type ViewMethod = "DnaFeatureViewer" | "Seqviz";
+  const handleViewTypeChange = (event: any, newMethod: ViewMethod) => {
+    if (["DnaFeatureViewer", "Seqviz"].indexOf(newMethod) >= 0) {
+      if (newMethod === viewType) return;
+      else setViewType(newMethod);
+    }
+  };
+
   //////
   React.useEffect(() => {
     (async () => {
@@ -77,6 +98,21 @@ export const VisualiseAssembly: React.FC<Props> = ({
       });
       const resultlabels = await responselabels.json();
       if (!resultlabels.error) setSeqLabel(resultlabels);
+    })();
+    (async () => {
+      const DnaFeatureViewer = await fetch(
+        ApiEndpoint + "dnafeatureviewer_assembly",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(shoppingBagItems),
+        }
+      );
+      const dnafeatureviewer_response = await DnaFeatureViewer.json();
+      setDnaViewerString(dnafeatureviewer_response.base64image);
+      console.log(dnafeatureviewer_response);
     })();
   }, [openPopups.viewAssembly]);
 
@@ -196,41 +232,72 @@ export const VisualiseAssembly: React.FC<Props> = ({
             <Typography variant="h6" className={classes.title}>
               Current Assembly Sequence
             </Typography>
-            <Typography variant="h6" className={classes.title}>
-              Current Annotation: {selectedSeqQualifier}
-            </Typography>
-            <div>
-              <Autocomplete
-                color="white"
-                id="seq-qualifiers"
-                options={seqLabel ? seqLabel : ["Feauture"]}
-                getOptionLabel={(option) => option}
-                value={selectedSeqQualifier}
-                onChange={(event, newValue) => {
-                  if (newValue !== null) {
-                    setSelectedSeqQualifier(newValue);
-                  }
-                }}
-                style={{
-                  width: 400,
-                  background: "white",
-                  borderRadius: "5px",
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Search Qualifiers to change Annotation..."
-                    variant="filled"
+            {viewType === "Seqviz" ? (
+              <>
+                <Typography variant="h6" className={classes.title}>
+                  Current Annotation: {selectedSeqQualifier}
+                </Typography>
+                <div>
+                  <Autocomplete
+                    color="white"
+                    id="seq-qualifiers"
+                    options={seqLabel ? seqLabel : ["Feauture"]}
+                    getOptionLabel={(option) => option}
+                    value={selectedSeqQualifier}
+                    onChange={(event, newValue) => {
+                      if (newValue !== null) {
+                        setSelectedSeqQualifier(newValue);
+                      }
+                    }}
+                    style={{
+                      width: 400,
+                      background: "white",
+                      borderRadius: "5px",
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Search Qualifiers to change Annotation..."
+                        variant="filled"
+                      />
+                    )}
                   />
-                )}
-              />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+            <div className={classes.switch}>
+              <div className={classes.toggle}>
+                <ToggleButtonGroup
+                  color="primary"
+                  value={viewType}
+                  exclusive
+                  onChange={handleViewTypeChange}
+                  aria-label="text alignment"
+                >
+                  <ToggleButton value="Seqviz">Seqviz</ToggleButton>
+                  <ToggleButton value="DnaFeatureViewer">
+                    DnaFeatureViewer
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </div>
             </div>
           </Toolbar>
         </AppBar>
         <DialogContent>
-          <div className={classes.SeqVizDiv}>
-            <SeqVizComponent />
-          </div>
+          {viewType === "Seqviz" ? (
+            <div className={classes.SeqVizDiv}>
+              <SeqVizComponent />
+            </div>
+          ) : (
+            <>
+              <img
+                width="100%"
+                src={`data:image/jpeg;base64,${DnaViewerString}`}
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
