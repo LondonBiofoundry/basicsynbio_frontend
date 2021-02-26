@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     hieght: "100%",
   },
+  partitem: {
+    background: "#E5E5E5",
+    display: "flex",
+    hieght: "100%",
+  },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
@@ -84,7 +89,13 @@ export const ShoppingBag: React.FC<Props> = ({
                   {...provided.draggableProps}
                   style={provided.draggableProps.style}
                 >
-                  <Card className={classes.root}>
+                  <Card
+                    className={
+                      item.collection === "BASIC_BIOLEGIO_LINKERS"
+                        ? classes.partitem
+                        : classes.root
+                    }
+                  >
                     <div className={classes.details}>
                       <CardContent
                         className={classes.content}
@@ -117,6 +128,13 @@ export const ShoppingBag: React.FC<Props> = ({
                         >
                           <CancelIcon className={classes.playIcon} />
                         </IconButton>
+                        <Typography component="h5" variant="h6" color="primary">
+                          {item.collection === "BASIC_BIOLEGIO_LINKERS" ? (
+                            "Linker"
+                          ) : (
+                            <></>
+                          )}
+                        </Typography>
                       </div>
                     </div>
                   </Card>

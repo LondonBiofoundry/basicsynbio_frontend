@@ -86,7 +86,11 @@ export const Copyable: React.FC<Props> = ({
                           className={classes.root}
                           label={item.label}
                           onDelete={() => onDeleteStandardPart(item.label)}
-                          color="primary"
+                          color={
+                            item.collection === "BASIC_BIOLEGIO_LINKERS"
+                              ? "secondary"
+                              : "primary"
+                          }
                         />
                       </HtmlTooltip>
                     </li>
