@@ -12,12 +12,14 @@ import { ApiEndpoint } from "../../../../../ApiConnection";
 import { Part } from "../../../../../interfaces/Part";
 
 interface Props {
+  addiseq: boolean;
   multiplePartLinkers: boolean;
   setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
   setCatchError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const Genbank: React.FC<Props> = ({
+  addiseq,
   multiplePartLinkers,
   setUploadedFile,
   setCatchError,
@@ -28,13 +30,16 @@ export const Genbank: React.FC<Props> = ({
     dataString: string,
     filename: string,
     checked: boolean,
-    binary: any
+    binary: any,
+    addiseq_ticked: boolean
   ) {
     console.log(dataString);
     if (checked) {
       console.log("ran", checked);
       const response = await fetch(
-        ApiEndpoint + "fileupload/multiple?type=genbank",
+        ApiEndpoint +
+          "fileupload/multiple?type=genbank&addiseq=" +
+          String(addiseq_ticked),
         {
           method: "POST",
           headers: {
@@ -65,7 +70,9 @@ export const Genbank: React.FC<Props> = ({
       }
     } else {
       const response = await fetch(
-        ApiEndpoint + "fileupload/singular?type=genbank",
+        ApiEndpoint +
+          "fileupload/singular?type=genbank&addiseq=" +
+          String(addiseq_ticked),
         {
           method: "POST",
           headers: {
@@ -113,7 +120,8 @@ export const Genbank: React.FC<Props> = ({
                 b64string,
                 file.path,
                 multiplePartLinkers,
-                file
+                file,
+                addiseq
               )
             );
           }
@@ -121,7 +129,7 @@ export const Genbank: React.FC<Props> = ({
         reader.readAsArrayBuffer(file);
       });
     },
-    [multiplePartLinkers]
+    [multiplePartLinkers, addiseq]
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });

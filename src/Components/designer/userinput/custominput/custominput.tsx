@@ -14,6 +14,7 @@ import { Genbank } from "./custompl.Components/genbank";
 import { CustomShop } from "./custompl.Components/customShop";
 import { MultipleCheck } from "./custompl.Components/MultipleCheck";
 import { Part } from "../../../../interfaces/Part";
+import { AddISeq } from "./custompl.Components/addiseq";
 
 const useStyles = makeStyles({
   root: {
@@ -45,6 +46,7 @@ export const CustomPartLinker: React.FC<Props> = ({
   const [method, setMethod] = React.useState<string>("Genbank");
   const [catchError, setCatchError] = React.useState("");
   const [multiplePartLinkers, setMultiplePartLinkers] = React.useState(false);
+  const [addiseq, setAddiseq] = React.useState(false);
 
   const handleMethod = (event: any, newMethod: string) => {
     if (["Genbank", "SBOL", "Fasta"].indexOf(newMethod) >= 0) {
@@ -91,8 +93,10 @@ export const CustomPartLinker: React.FC<Props> = ({
         ) : (
           <></>
         )}
+        <AddISeq addiseq={addiseq} setAddiseq={setAddiseq} />
         {method === "Genbank" ? (
           <Genbank
+            addiseq={addiseq}
             multiplePartLinkers={multiplePartLinkers}
             setUploadedFile={setUploadedFile}
             setCatchError={setCatchError}
@@ -102,6 +106,7 @@ export const CustomPartLinker: React.FC<Props> = ({
         )}
         {method === "Fasta" ? (
           <Fasta
+            addiseq={addiseq}
             multiplePartLinkers={multiplePartLinkers}
             setUploadedFile={setUploadedFile}
             setCatchError={setCatchError}
@@ -111,6 +116,7 @@ export const CustomPartLinker: React.FC<Props> = ({
         )}
         {method === "SBOL" ? (
           <SBOL
+            addiseq={addiseq}
             setUploadedFile={setUploadedFile}
             setCatchError={setCatchError}
           />

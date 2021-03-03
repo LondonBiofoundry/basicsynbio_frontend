@@ -13,12 +13,14 @@ import { ApiEndpoint } from "../../../../../ApiConnection";
 import { Part } from "../../../../../interfaces/Part";
 
 interface Props {
+  addiseq: boolean;
   multiplePartLinkers: boolean;
   setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
   setCatchError: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const Fasta: React.FC<Props> = ({
+  addiseq,
   multiplePartLinkers,
   setUploadedFile,
   setCatchError,
@@ -33,7 +35,9 @@ export const Fasta: React.FC<Props> = ({
     console.log(dataString);
     if (checked) {
       const response = await fetch(
-        ApiEndpoint + "fileupload/multiple?type=fasta",
+        ApiEndpoint +
+          "fileupload/multiple?type=fasta&addiseq=" +
+          String(addiseq),
         {
           method: "POST",
           headers: {
@@ -63,7 +67,9 @@ export const Fasta: React.FC<Props> = ({
       }
     } else {
       const response = await fetch(
-        ApiEndpoint + "fileupload/singular?type=fasta",
+        ApiEndpoint +
+          "fileupload/singular?type=fasta&addiseq=" +
+          String(addiseq),
         {
           method: "POST",
           headers: {

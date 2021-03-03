@@ -10,17 +10,23 @@ import { Part } from "../../../../../interfaces/Part";
 import { v4 as uuid } from "uuid";
 
 interface Props {
+  addiseq: boolean;
   setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
   setCatchError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const SBOL: React.FC<Props> = ({ setUploadedFile, setCatchError }) => {
+export const SBOL: React.FC<Props> = ({
+  addiseq,
+  setUploadedFile,
+  setCatchError,
+}) => {
   async function ValidateFileUpload(dataString: string, filename: string) {
     const response = await fetch(
       ApiEndpoint +
         "fileupload/singular?file=" +
         JSON.stringify(dataString) +
-        "&type=SBOL"
+        "&type=SBOL&addiseq=" +
+        String(addiseq)
     );
     const result = await response.json();
     if (result.seq) {
