@@ -17,6 +17,9 @@ const space12 = "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0";
 const space16 =
   "\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0";
 
+const basiclinker = `"<class 'basicsynbio.main.BasicLinker'>"`;
+const utrlinker = `"<class 'basicsynbio.main.BasicUTRRBSLinker'>"`;
+
 const components = {
   code({ node, inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || "");
@@ -230,7 +233,11 @@ export default function BasicBuild() {
                 <span style={{ color: "#dd1244" }}>
                   {space12}"linker_class"
                 </span>
-                : <span style={{ color: "#1b7fff" }}>String</span>,
+                :{" "}
+                <span style={{ color: "#1b7fff" }}>
+                  Enum({basiclinker + "," + utrlinker})
+                </span>
+                ,
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>{space12}"sequence"</span>:{" "}
