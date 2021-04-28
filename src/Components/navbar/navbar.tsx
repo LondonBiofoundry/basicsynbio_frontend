@@ -65,6 +65,13 @@ export default function NavBar() {
               <Typography className={classes.navbartext}>About</Typography>
             </Button>
           </Link>
+          <Link style={navStyle} to="/basicbuild-standard">
+            <Button>
+              <Typography className={classes.navbartext}>
+                BasicBuild v0.1 Standard
+              </Typography>
+            </Button>
+          </Link>
           <Link style={navStyle} to="/designer">
             <Button>
               <Typography className={classes.navbartext}>designer</Typography>
