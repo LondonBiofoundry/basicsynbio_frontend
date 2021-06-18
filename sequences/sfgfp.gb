@@ -1,0 +1,20 @@
+LOCUS       BASIC_sfGFP_ORF_[52-774] 723 bp ds-DNA     linear       23-JUN-2021
+DEFINITION  .
+FEATURES             Location/Qualifiers
+     CDS             1..723
+                     /label="sfGFP CDS"
+ORIGIN
+        1 atgcgtaaag gcgaagaact gttcacgggc gtagttccga ttctggtcga gctggacggc
+       61 gatgtgaacg gtcataagtt tagcgttcgc ggtgaaggtg agggcgacgc gaccaacggc
+      121 aaactgaccc tgaagttcat ctgcaccacc ggtaaactgc cggtgccttg gccgaccttg
+      181 gtgacgacgt tgacgtatgg cgtgcagtgt tttgcgcgtt atccggacca catgaaacaa
+      241 cacgatttct tcaaatctgc gatgccggag ggttacgtcc aggagcgtac catttccttc
+      301 aaggatgatg gcacttacaa aactcgcgca gaggttaagt ttgaaggtga cacgctggtc
+      361 aatcgtatcg aattgaaggg tatcgacttt aaagaggatg gtaacattct gggccataaa
+      421 ctggagtata acttcaacag ccataatgtt tacattacgg cagacaagca aaagaacggc
+      481 atcaaggcca atttcaagat tcgccacaat gttgaggacg gtagcgtcca actggccgac
+      541 cattaccagc agaacacccc aattggtgac ggtccggttt tgctgccgga taatcactat
+      601 ctgagcaccc aaagcgtgct gagcaaagat ccgaacgaaa aacgtgatca catggtcctg
+      661 ctggaatttg tgaccgctgc gggcatcacc cacggtatgg acgagctgta taagcgtccg
+      721 taa
+//
