@@ -27,6 +27,8 @@ const useStyles = makeStyles({
 });
 
 interface Props {
+  COLLECTION: Part[];
+  COLLECTION2: Part[];
   assemblyName: string;
   assemblyDesc: string;
   setAssemblyDesc: React.Dispatch<React.SetStateAction<string>>;
@@ -39,6 +41,8 @@ interface Props {
 }
 
 export const Plasmid: React.FC<Props> = ({
+  COLLECTION,
+  COLLECTION2,
   assemblyName,
   assemblyDesc,
   setAssemblyDesc,
@@ -123,6 +127,8 @@ export const Plasmid: React.FC<Props> = ({
         <div className="hello">
           <h1>Parts List</h1>
           <ShoppingBag
+            COLLECTION={COLLECTION}
+            COLLECTION2={COLLECTION2}
             items={items}
             onShopItemDelete={onShopItemDelete}
             openDialog={handleClickOpen}

@@ -38,25 +38,166 @@ export const ValidateAssembly: React.FC<Props> = ({
 }) => {
   const [validation, setValidation] = useState("");
 
+  const expand_first_combinatorial = (input_lists: Part[][]) => {
+    const expanded_assemblies: Part[][] = [];
+    input_lists.forEach((input_list) => {
+      const combinatorialFirstItem = input_list.filter(
+        (item) => item.combinatorial == true
+      )[0];
+      const combinatorialItemIndex = input_list.indexOf(combinatorialFirstItem);
+      combinatorialFirstItem.combinatorialParts?.forEach((element) => {
+        var smaller_list = input_list.filter(
+          (part) => part != combinatorialFirstItem
+        );
+        smaller_list.splice(combinatorialItemIndex, 0, element);
+        console.log(smaller_list);
+        expanded_assemblies.push(smaller_list);
+      });
+    });
+    return expanded_assemblies;
+  };
+
+  const check_list_contains_conbinatorial = (input_lists: Part[][]) => {
+    const mylist = input_lists[0].filter((item) => item.combinatorial === true);
+    if (mylist.length >= 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   React.useEffect(() => {
     let active = true;
-    (async () => {
-      const response = await fetch(ApiEndpoint + "validate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(shoppingBagItems),
+    console.log(shoppingBagItems);
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length === 1
+    ) {
+      console.log("only 1 combinatorial");
+      const combinatorialItem = shoppingBagItems.filter(
+        (item) => item.combinatorial == true
+      )[0];
+      const combinatorialItemIndex = shoppingBagItems.indexOf(
+        combinatorialItem
+      );
+      console.log(combinatorialItemIndex);
+      const new_assemblies: Part[][] = [];
+      const old_shopping: Part[] = shoppingBagItems;
+      shoppingBagItems.map((item, index) => {
+        if (item.combinatorial) {
+          item.combinatorialParts?.forEach((element) => {
+            var smaller_list = shoppingBagItems.filter((part) => part != item);
+            smaller_list.splice(index, 0, element);
+            console.log(smaller_list);
+            new_assemblies.push(smaller_list);
+          });
+        }
       });
-      const myresponse = await response.json();
-      if (String(myresponse.result) === "success") {
-        setValidation(String(myresponse.result));
-        setValidated(true);
-      } else {
-        setValidation(String(myresponse.error));
-        setValidated(false);
+      console.log(new_assemblies);
+      const my_validation_results: Boolean[] = [];
+      const my_errors: String[] = [];
+
+      new_assemblies.forEach((element) => {
+        (async () => {
+          const response = await fetch(ApiEndpoint + "validate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(element),
+          });
+          const myresponse = await response.json();
+          if (String(myresponse.result) === "success") {
+            my_validation_results.push(true);
+          } else {
+            my_validation_results.push(false);
+            my_errors.push(
+              String(myresponse.error) +
+                " ON COMBINATORIAL ASSEMBLY ->" +
+                String(element.map((thing) => thing.label))
+            );
+          }
+        })().then(() => {
+          if (my_validation_results.includes(false)) {
+            setValidated(false);
+            setValidation(String(my_errors));
+            console.log(my_errors);
+          } else {
+            setValidated(true);
+            setValidation("success");
+          }
+        });
+      });
+    }
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length === 0
+    ) {
+      (async () => {
+        const response = await fetch(ApiEndpoint + "validate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(shoppingBagItems),
+        });
+        const myresponse = await response.json();
+        if (String(myresponse.result) === "success") {
+          setValidation(String(myresponse.result));
+          setValidated(true);
+        } else {
+          setValidation(String(myresponse.error));
+          setValidated(false);
+        }
+      })();
+    }
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length > 1
+    ) {
+      console.log("more than 1 combinatorial");
+      //////
+      console.log("using_my_function");
+      var expanded_result: Part[][] = expand_first_combinatorial([
+        shoppingBagItems,
+      ]);
+      while (check_list_contains_conbinatorial(expanded_result)) {
+        expanded_result = expand_first_combinatorial(expanded_result);
       }
-    })();
+      console.log("final result");
+      console.log(expanded_result);
+      const my_validation_results: Boolean[] = [];
+      const my_errors: String[] = [];
+
+      expanded_result.forEach((element) => {
+        (async () => {
+          const response = await fetch(ApiEndpoint + "validate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(element),
+          });
+          const myresponse = await response.json();
+          if (String(myresponse.result) === "success") {
+            my_validation_results.push(true);
+          } else {
+            my_validation_results.push(false);
+            my_errors.push(
+              String(myresponse.error) +
+                " ON COMBINATORIAL ASSEMBLY ->" +
+                String(element.map((thing) => thing.label))
+            );
+          }
+        })().then(() => {
+          if (my_validation_results.includes(false)) {
+            setValidated(false);
+            setValidation(String(my_errors));
+            console.log(my_errors);
+          } else {
+            setValidated(true);
+            setValidation("success");
+          }
+        });
+      });
+    }
 
     return () => {
       active = false;

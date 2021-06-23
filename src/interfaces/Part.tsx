@@ -10,4 +10,6 @@ export interface Part {
   multiple?: boolean;
   index?: number;
   binaryString?: string;
+  combinatorial?: boolean;
+  combinatorialParts?: Part[];
 }

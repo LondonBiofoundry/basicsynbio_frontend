@@ -61,6 +61,34 @@ const copy = (
   return destination;
 };
 
+const expand_first_combinatorial = (input_lists: Part[][]) => {
+  const expanded_assemblies: Part[][] = [];
+  input_lists.forEach((input_list) => {
+    const combinatorialFirstItem = input_list.filter(
+      (item) => item.combinatorial == true
+    )[0];
+    const combinatorialItemIndex = input_list.indexOf(combinatorialFirstItem);
+    combinatorialFirstItem.combinatorialParts?.forEach((element) => {
+      var smaller_list = input_list.filter(
+        (part) => part != combinatorialFirstItem
+      );
+      smaller_list.splice(combinatorialItemIndex, 0, element);
+      console.log(smaller_list);
+      expanded_assemblies.push(smaller_list);
+    });
+  });
+  return expanded_assemblies;
+};
+
+const check_list_contains_conbinatorial = (input_lists: Part[][]) => {
+  const mylist = input_lists[0].filter((item) => item.combinatorial === true);
+  if (mylist.length >= 1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 interface Props {
   currentBuild: Assembly[];
   setCurrentBuild: React.Dispatch<React.SetStateAction<Assembly[]>>;
@@ -150,17 +178,80 @@ export const UserInput: React.FC<Props> = ({
   };
 
   const onAddToBuild = () => {
-    const currentAssembly: Assembly = {
-      id: uuid(),
-      parts: shoppingBagItems,
-      name: assemblyName,
-      description: assemblyDesc,
-    };
-    setCurrentBuild((C) => [...C, currentAssembly]);
-    setAssemblyDesc("");
-    setAssemblyName("");
-    setShoppingBagItems([]);
-    setValidated(false);
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length === 0
+    ) {
+      const currentAssembly: Assembly = {
+        id: uuid(),
+        parts: shoppingBagItems,
+        name: assemblyName,
+        description: assemblyDesc,
+      };
+      setCurrentBuild((C) => [...C, currentAssembly]);
+      setAssemblyDesc("");
+      setAssemblyName("");
+      setShoppingBagItems([]);
+      setValidated(false);
+    }
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length === 1
+    ) {
+      const combinatorialItem = shoppingBagItems.filter(
+        (item) => item.combinatorial == true
+      )[0];
+      const combinatorialItemIndex = shoppingBagItems.indexOf(
+        combinatorialItem
+      );
+      console.log(combinatorialItemIndex);
+      const new_assemblies: Part[][] = [];
+      const old_shopping: Part[] = shoppingBagItems;
+      shoppingBagItems.map((item, index) => {
+        if (item.combinatorial) {
+          item.combinatorialParts?.forEach((element) => {
+            var smaller_list = shoppingBagItems.filter((part) => part != item);
+            smaller_list.splice(index, 0, element);
+            console.log(smaller_list);
+            new_assemblies.push(smaller_list);
+          });
+        }
+      });
+      new_assemblies.forEach((element) => {
+        const currentAssembly: Assembly = {
+          id: uuid(),
+          parts: element,
+          name: assemblyName,
+          description: assemblyDesc,
+        };
+        setCurrentBuild((C) => [...C, currentAssembly]);
+      });
+      setAssemblyDesc("");
+      setAssemblyName("");
+      setShoppingBagItems([]);
+      setValidated(false);
+    }
+    if (
+      shoppingBagItems.filter((item) => item.combinatorial == true).length > 1
+    ) {
+      var expanded_result: Part[][] = expand_first_combinatorial([
+        shoppingBagItems,
+      ]);
+      while (check_list_contains_conbinatorial(expanded_result)) {
+        expanded_result = expand_first_combinatorial(expanded_result);
+      }
+      expanded_result.forEach((element) => {
+        const currentAssembly: Assembly = {
+          id: uuid(),
+          parts: element,
+          name: assemblyName,
+          description: assemblyDesc,
+        };
+        setCurrentBuild((C) => [...C, currentAssembly]);
+      });
+      setAssemblyDesc("");
+      setAssemblyName("");
+      setShoppingBagItems([]);
+      setValidated(false);
+    }
   };
 
   const onDragEnd = React.useCallback(
@@ -218,6 +309,8 @@ export const UserInput: React.FC<Props> = ({
           </Grid>
           <Grid item xs={12}>
             <Plasmid
+              COLLECTION={COLLECTION}
+              COLLECTION2={COLLECTION2}
               assemblyName={assemblyName}
               assemblyDesc={assemblyDesc}
               setAssemblyDesc={setAssemblyDesc}

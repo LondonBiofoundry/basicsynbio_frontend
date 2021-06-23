@@ -192,12 +192,6 @@ export default function BasicBuild() {
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>
-                  {space12}"total clip reactions"
-                </span>
-                : <span style={{ color: "#1b7fff" }}>Int</span>,
-              </div>
-              <div style={{ paddingTop: "10px" }}>
-                <span style={{ color: "#dd1244" }}>
                   {space12}"clip reactions"
                 </span>
                 :{" "}
@@ -250,18 +244,6 @@ export default function BasicBuild() {
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>{space12}"suffix_id"</span>:{" "}
                 <span style={{ color: "#1b7fff" }}>String</span>,
-              </div>
-              <div style={{ paddingTop: "10px" }}>
-                <span style={{ color: "#dd1244" }}>
-                  {space12}"total prefix clip reactions"
-                </span>
-                : <span style={{ color: "#1b7fff" }}>Int</span>,
-              </div>
-              <div style={{ paddingTop: "10px" }}>
-                <span style={{ color: "#dd1244" }}>
-                  {space12}"total suffix clip reactions"
-                </span>
-                : <span style={{ color: "#1b7fff" }}>Int</span>,
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>
