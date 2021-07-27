@@ -62,6 +62,17 @@ export default function About() {
           >
             Source repository issues
           </Button>
+          <Typography className={classes.textSect} variant="body1">
+            A Youtube demo of this website's functionality can be viewed at the
+            below link
+          </Typography>
+          <Button
+            variant="outlined"
+            color="primary"
+            href="https://www.youtube.com/watch?v=rQsUzkat7TM&t=156s"
+          >
+            Youtube - BasicSynBio Web App Tutorial
+          </Button>
           <Typography className={classes.textTitle} variant="h6">
             BasicSynBio Package
           </Typography>
