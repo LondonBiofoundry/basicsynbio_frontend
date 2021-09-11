@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@mdx-js/react": "^1.6.22",
+    "@openapitools/openapi-generator-cli": "^2.4.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
@@ -35,7 +36,7 @@
     "react-markdown": "^5.0.3",
     "react-promise-tracker": "^2.1.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
+    "react-scripts": "^1.1.5",
     "react-spring": "^8.0.27",
     "react-syntax-highlighter": "^12.2.1",
     "remark-gfm": "^1.0.0",
@@ -47,7 +48,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate": "openapi-generator-cli generate -i openapi/schema.json -g typescript-axios -o generated-sources --additional-properties=supportsES6=true"
   },
   "eslintConfig": {
     "extends": [
