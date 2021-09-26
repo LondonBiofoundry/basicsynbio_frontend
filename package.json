@@ -47,7 +47,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate": "openapi-generator-cli generate -i openapi/schema.json -g typescript-axios -o src/generated-sources --additional-properties=supportsES6=true"
   },
   "eslintConfig": {
     "extends": [
