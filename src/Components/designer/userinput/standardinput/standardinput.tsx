@@ -8,8 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { SearchCollection } from "./standardpl.Components/seachCollection";
 import { SearchPart } from "./standardpl.Components/searchPart";
 import { StandardShop } from "./standardpl.Components/standardShop";
-import { Part } from "../../../../interfaces/Part";
-import { Collection } from "../../../../interfaces/Collection";
+import { Collection, BasicPart } from "../../../../generated-sources";
 
 const useStyles = makeStyles({
   root: {
@@ -26,10 +25,10 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  standardCollection: Part[];
-  value: Part | undefined;
-  onDeleteStandardPart: (partlabel: Part["label"]) => void;
-  onChangeValue: React.Dispatch<React.SetStateAction<Part | undefined>>;
+  standardCollection: BasicPart[];
+  value: BasicPart | undefined;
+  onDeleteStandardPart: (partlabel: BasicPart["label"]) => void;
+  onChangeValue: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
 }
 
 export const StandardInput: React.FC<Props> = ({
@@ -40,11 +39,13 @@ export const StandardInput: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
-  const [CollectionOptions, setCollectionOptions] = useState<Collection[]>([]);
-  const [clickedCollections, setClickedCollections] = useState<Collection[]>(
-    []
-  );
-  const [partOptions, setPartOptions] = useState<Part[]>([]);
+  const [CollectionOptions, setCollectionOptions] = useState<
+    Collection["name"][]
+  >([]);
+  const [clickedCollections, setClickedCollections] = useState<
+    Collection["name"][]
+  >([]);
+  const [partOptions, setPartOptions] = useState<BasicPart[]>([]);
 
   return (
     <Card className={classes.root} variant="outlined">

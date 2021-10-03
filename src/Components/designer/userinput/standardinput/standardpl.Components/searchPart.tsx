@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import fetch from "cross-fetch";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { ApiEndpoint } from "../../../../../ApiConnection";
-import { Collection } from "../../../../../interfaces/Collection";
-import { CollectionData } from "../../../../../interfaces/CollectionData";
-import { Part } from "../../../../../interfaces/Part";
+import { Context } from "../../../../../App";
+import { Collection, BasicPart } from "../../../../../generated-sources";
 
 interface Props {
-  value: Part | undefined;
-  onChangeValue: React.Dispatch<React.SetStateAction<Part | undefined>>;
-  clickedCollections: Collection[];
-  partOptions: Part[];
-  setPartOptions: React.Dispatch<React.SetStateAction<Part[]>>;
+  value: BasicPart | undefined;
+  onChangeValue: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
+  clickedCollections: Collection["name"][];
+  partOptions: BasicPart[];
+  setPartOptions: React.Dispatch<React.SetStateAction<BasicPart[]>>;
 }
 
 export const SearchPart: React.FC<Props> = ({
@@ -23,6 +22,7 @@ export const SearchPart: React.FC<Props> = ({
   partOptions,
   setPartOptions,
 }) => {
+  const { names, collections } = useContext(Context);
   const [inputValue, setInputValue] = React.useState<string>();
   const [open, setOpen] = React.useState<boolean>(false);
   const loading = open && partOptions.length === 0;
@@ -37,30 +37,27 @@ export const SearchPart: React.FC<Props> = ({
       if (clickedCollections.length === 0) {
         setOpen(false);
       }
-      const response = await fetch(ApiEndpoint + "collections/data");
-      console.log(response);
-      const myresponse = await response.json();
-      console.log(myresponse);
-      const collectionsData: CollectionData[] = myresponse.data;
+      const collectionsData: Collection[] = collections;
       console.log(collectionsData);
       var mergedArray = [];
 
-      const clickedCollectionsArray = clickedCollections.map(
-        (item) => item.name
-      );
+      const clickedCollectionsArray = clickedCollections;
 
-      console.log(clickedCollectionsArray);
+      console.log("clicked collections", clickedCollectionsArray);
 
       for (let selectedCollection of collectionsData) {
+        console.log(selectedCollection.name, clickedCollectionsArray);
         if (clickedCollectionsArray.includes(selectedCollection.name)) {
-          for (let part of selectedCollection.parts) {
+          console.log("selected collection to render", selectedCollection);
+          for (let part of selectedCollection.versions[0].parts) {
             console.log(part);
             mergedArray.push(part);
           }
         }
       }
+
       if (active) {
-        console.log(mergedArray);
+        console.log("merged array", mergedArray);
         setPartOptions(mergedArray);
       }
       return () => {
@@ -80,7 +77,7 @@ export const SearchPart: React.FC<Props> = ({
       id="asynchronous-demo"
       style={{ width: "100%" }}
       value={value}
-      onChange={(event: any, newValue: Part | null) => {
+      onChange={(event: any, newValue: BasicPart | null) => {
         if (newValue !== null) {
           onChangeValue(newValue);
         }
@@ -97,7 +94,7 @@ export const SearchPart: React.FC<Props> = ({
         setOpen(false);
       }}
       getOptionSelected={(option, value) => value.label === option.label}
-      getOptionLabel={(option) => option.label}
+      getOptionLabel={(option) => option.label ?? ""}
       options={partOptions}
       loading={loading}
       renderInput={(params) => (

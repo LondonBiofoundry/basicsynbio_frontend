@@ -1,9 +1,9 @@
 import React from "react";
-import { Part } from "../../../../../interfaces/Part";
+import { BasicPart } from "../../../../../generated-sources";
 import { Copyable } from "./standardCopyable";
 interface Props {
-  standardCollection: Part[];
-  onDeleteStandardPart: (partlabel: Part["label"]) => void;
+  standardCollection: BasicPart[];
+  onDeleteStandardPart: (partlabel: BasicPart["label"]) => void;
 }
 
 export const StandardShop: React.FC<Props> = ({

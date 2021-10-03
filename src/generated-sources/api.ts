@@ -63,7 +63,7 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
@@ -75,13 +75,13 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    binaryString?: string;
+    label: string;
     /**
      * 
-     * @type {any}
+     * @type {string}
      * @memberof BasicPart
      */
-    base64?: any | null;
+    seq?: string;
     /**
      * 
      * @type {string}
@@ -93,19 +93,19 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    version?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicPart
-     */
     description?: string;
     /**
      * 
      * @type {string}
      * @memberof BasicPart
      */
-    label?: string;
+    type?: string;
+    /**
+     * 
+     * @type {any}
+     * @memberof BasicPart
+     */
+    base64?: any | null;
     /**
      * 
      * @type {boolean}
@@ -123,7 +123,19 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    type?: string;
+    binaryString?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BasicPart
+     */
+    version?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BasicPart
+     */
+    combinatorial?: boolean;
 }
 /**
  * 

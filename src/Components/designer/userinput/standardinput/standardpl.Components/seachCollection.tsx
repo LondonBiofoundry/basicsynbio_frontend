@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Checkbox,
   TextField,
@@ -21,7 +21,8 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { makeStyles } from "@material-ui/core/styles";
 import fetch from "cross-fetch";
 import { ApiEndpoint } from "../../../../../ApiConnection";
-import { Collection } from "../../../../../interfaces/Collection";
+import { Collection } from "../../../../../generated-sources";
+import { Context } from "../../../../../App";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -50,10 +51,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  clickedCollections: Collection[];
-  setClickedCollections: React.Dispatch<React.SetStateAction<Collection[]>>;
-  collections: Collection[];
-  setCollections: React.Dispatch<React.SetStateAction<Collection[]>>;
+  clickedCollections: Collection["name"][];
+  setClickedCollections: React.Dispatch<
+    React.SetStateAction<Collection["name"][]>
+  >;
+  collections: Collection["name"][];
+  setCollections: React.Dispatch<React.SetStateAction<Collection["name"][]>>;
 }
 
 export const SearchCollection: React.FC<Props> = ({
@@ -62,6 +65,7 @@ export const SearchCollection: React.FC<Props> = ({
   collections,
   setCollections,
 }) => {
+  const { names } = useContext(Context);
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const loading = open && collections.length === 0;
@@ -88,10 +92,8 @@ export const SearchCollection: React.FC<Props> = ({
       return undefined;
     }
     (async () => {
-      const response = await fetch(ApiEndpoint + "collections/names");
-      const myresponse = await response.json();
       if (active) {
-        setCollections(myresponse.data.map((item: string) => ({ name: item })));
+        setCollections(names);
       }
     })();
     return () => {
@@ -117,7 +119,7 @@ export const SearchCollection: React.FC<Props> = ({
       <div className={classes.root}>
         <Autocomplete
           onChange={(event: any, value: string[]) => {
-            setClickedCollections(value.map((item) => ({ name: item })));
+            setClickedCollections(value);
             console.log(value);
           }}
           ChipProps={{ clickable: true, onClick: HandleClickOnChip }}
@@ -131,7 +133,7 @@ export const SearchCollection: React.FC<Props> = ({
           }}
           fullWidth
           getOptionLabel={(option) => option + String(" | v0.1")}
-          options={collections.map((item) => item.name)}
+          options={collections}
           loading={loading}
           disableCloseOnSelect
           renderOption={(option, { selected }) => (

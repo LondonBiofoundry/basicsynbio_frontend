@@ -638,19 +638,22 @@
       },
       "basicPart": {
         "title": "basicPart",
+        "required": ["id", "label"],
         "type": "object",
         "properties": {
           "id": { "title": "Id", "type": "string" },
           "accessor": { "title": "Accessor", "type": "string" },
-          "binaryString": { "title": "Binarystring", "type": "string" },
-          "base64": { "title": "Base64" },
-          "collection": { "title": "Collection", "type": "string" },
-          "version": { "title": "Version", "type": "string" },
-          "description": { "title": "Description", "type": "string" },
           "label": { "title": "Label", "type": "string" },
+          "seq": { "title": "Seq", "type": "string" },
+          "collection": { "title": "Collection", "type": "string" },
+          "description": { "title": "Description", "type": "string" },
+          "type": { "title": "Type", "type": "string" },
+          "base64": { "title": "Base64" },
           "multiple": { "title": "Multiple", "type": "boolean" },
           "index": { "title": "Index", "type": "integer" },
-          "type": { "title": "Type", "type": "string" }
+          "binaryString": { "title": "Binarystring", "type": "string" },
+          "version": { "title": "Version", "type": "string" },
+          "combinatorial": { "title": "Combinatorial", "type": "boolean" }
         },
         "example": {
           "id": "3a1dedcb-27b3-4334-a4ea-417d2efe2c82",

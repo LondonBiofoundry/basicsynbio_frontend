@@ -5,6 +5,7 @@ import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import { Part } from "../../../../../interfaces/Part";
+import { BasicPart } from "../../../../../generated-sources";
 
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
@@ -43,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   droppableId: string;
-  standardCollection: Part[];
-  onDeleteStandardPart: (partlabel: Part["label"]) => void;
+  standardCollection: BasicPart[];
+  onDeleteStandardPart: (partlabel: BasicPart["label"]) => void;
 }
 
 export const Copyable: React.FC<Props> = ({
