@@ -27,29 +27,25 @@ export const Genbank: React.FC<Props> = ({
   const { promiseInProgress } = usePromiseTracker();
 
   async function ValidateFileUpload(
-    dataString: string,
-    filename: string,
+    base64string: string,
+    file: any,
     checked: boolean,
-    binary: any,
-    addiseq_ticked: boolean
+    addiseq_ticked: boolean,
+    binaryStr: string
   ) {
-    console.log(dataString);
+    const form = new FormData();
+    form.append("file", file);
     if (checked) {
-      console.log("ran", checked);
       const response = await fetch(
         ApiEndpoint +
           "fileupload/multiple?type=genbank&addiseq=" +
           String(addiseq_ticked),
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataString),
+          body: form,
         }
       );
       const result = await response.json();
-      console.log(result);
       if (result.partsarray) {
         for (let i = 0; i < result.partsarray.length; i++) {
           setUploadedFile({
@@ -58,10 +54,10 @@ export const Genbank: React.FC<Props> = ({
             label: result.partsarray[i].label,
             collection: "",
             type: "genbank",
-            base64: dataString,
+            base64: String(base64string),
             multiple: true,
             index: i,
-            binaryString: binary,
+            binaryString: binaryStr,
           });
         }
         setCatchError("");
@@ -75,10 +71,7 @@ export const Genbank: React.FC<Props> = ({
           String(addiseq_ticked),
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataString),
+          body: form,
         }
       );
       const result = await response.json();
@@ -86,13 +79,13 @@ export const Genbank: React.FC<Props> = ({
         setUploadedFile({
           id: uuid(),
           seq: result.seq,
-          label: filename,
+          label: file.path,
           collection: "",
           type: "genbank",
-          base64: dataString,
+          base64: base64string,
           multiple: false,
           index: undefined,
-          binaryString: binary,
+          binaryString: binaryStr,
         });
         setCatchError("");
       } else {
@@ -103,13 +96,17 @@ export const Genbank: React.FC<Props> = ({
 
   const onDrop = useCallback(
     (acceptedFiles) => {
-      acceptedFiles.forEach((file: any) => {
+      acceptedFiles.forEach((file: Blob) => {
+        console.log("file-preload", file);
         const reader = new FileReader();
 
         reader.onabort = () => console.log("file reading was aborted");
         reader.onerror = () => console.log("file reading has failed");
         reader.onload = () => {
+          console.log("file-postload", file);
+
           const binaryStr = reader.result;
+          if (file instanceof Blob) console.log("blob!!");
           if (binaryStr !== null && typeof binaryStr !== "string") {
             const uint8 = new Uint8Array(binaryStr);
             const dataString = JSON.stringify(Array.from(uint8));
@@ -118,15 +115,16 @@ export const Genbank: React.FC<Props> = ({
             trackPromise(
               ValidateFileUpload(
                 b64string,
-                file.path,
-                multiplePartLinkers,
                 file,
-                addiseq
+                multiplePartLinkers,
+                addiseq,
+                dataString
               )
             );
           }
         };
         reader.readAsArrayBuffer(file);
+        // reader.readAsDataURL(file);
       });
     },
     [multiplePartLinkers, addiseq]
