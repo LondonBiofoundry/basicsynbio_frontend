@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 
 import SuccessAnimation from "./successlottly";
 import FailAnimation from "./faillottly";
-import { ApiEndpoint } from "../../../../ApiConnection";
+import { ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Part } from "../../../../interfaces/Part";
 import { Popups } from "../../../../interfaces/Popups";

@@ -20,7 +20,7 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../../../ApiConnection";
+import { ApiEndpoint } from "../../../../../Api";
 import { Part } from "../../../../../interfaces/Part";
 
 const useStyles = makeStyles((theme) => ({

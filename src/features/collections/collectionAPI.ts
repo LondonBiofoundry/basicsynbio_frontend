@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiEndpoint } from "../../ApiConnection";
+import { ApiEndpoint } from "../../Api";
 import { Collection } from "../../generated-sources";
 
 // A function to return the collections from the API

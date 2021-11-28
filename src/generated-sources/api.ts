@@ -24,37 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
- * @interface BasicBuild
- */
-export interface BasicBuild {
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicBuild
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicBuild
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicBuild
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<BasicPart>}
-     * @memberof BasicBuild
-     */
-    parts?: Array<BasicPart>;
-}
-/**
- * 
- * @export
  * @interface BasicPart
  */
 export interface BasicPart {
@@ -63,19 +32,25 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    id: string;
+    id?: string;
     /**
      * 
      * @type {string}
      * @memberof BasicPart
      */
-    accessor?: string;
+    label?: string;
+    /**
+     * 
+     * @type {BasicPartType}
+     * @memberof BasicPart
+     */
+    type?: BasicPartType;
     /**
      * 
      * @type {string}
      * @memberof BasicPart
      */
-    label: string;
+    description?: string;
     /**
      * 
      * @type {string}
@@ -87,43 +62,13 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
+    accessor?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BasicPart
+     */
     collection?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicPart
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicPart
-     */
-    type?: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof BasicPart
-     */
-    base64?: any | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BasicPart
-     */
-    multiple?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof BasicPart
-     */
-    index?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BasicPart
-     */
-    binaryString?: string;
     /**
      * 
      * @type {string}
@@ -132,11 +77,35 @@ export interface BasicPart {
     version?: string;
     /**
      * 
+     * @type {string}
+     * @memberof BasicPart
+     */
+    fileId?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof BasicPart
      */
-    combinatorial?: boolean;
+    addiseq?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof BasicPart
+     */
+    index?: number;
 }
+/**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export enum BasicPartType {
+    UploadSingle = 'uploadSingle',
+    UploadMultiple = 'uploadMultiple',
+    Collection = 'collection'
+}
+
 /**
  * 
  * @export
@@ -235,6 +204,50 @@ export interface ResponseCollectionsName {
 /**
  * 
  * @export
+ * @interface ResponseSingularFileUpload
+ */
+export interface ResponseSingularFileUpload {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponseSingularFileUpload
+     */
+    result: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseSingularFileUpload
+     */
+    message?: string;
+    /**
+     * 
+     * @type {BasicPart}
+     * @memberof ResponseSingularFileUpload
+     */
+    part?: BasicPart;
+}
+/**
+ * 
+ * @export
+ * @interface ResponseValidate
+ */
+export interface ResponseValidate {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponseValidate
+     */
+    result: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseValidate
+     */
+    message?: string;
+}
+/**
+ * 
+ * @export
  * @interface ValidationError
  */
 export interface ValidationError {
@@ -265,15 +278,16 @@ export interface ValidationError {
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * ## Build CSVs  This endpoint takes a list of basicBuild objects and returns a CSV representation of the same objects.
+         * ## Build CSVs  This endpoint takes a list of basicAssembly objects and returns a CSV representation of the same objects.
          * @summary Build Csvs
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildCsvsBuildcsvsPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('buildCsvsBuildcsvsPost', 'basicBuild', basicBuild)
+        buildCsvsBuildcsvsPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('buildCsvsBuildcsvsPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/buildcsvs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -285,15 +299,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -301,15 +326,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * ## Build Echo Instructions  This endpoint takes a list of basicBuild objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
+         * ## Build Echo Instructions  This endpoint takes a list of basicAssembly objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
          * @summary Build Echo Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildEchoInstructionsBuildechoinstructionsPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('buildEchoInstructionsBuildechoinstructionsPost', 'basicBuild', basicBuild)
+        buildEchoInstructionsBuildechoinstructionsPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('buildEchoInstructionsBuildechoinstructionsPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/buildechoinstructions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -321,15 +347,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -337,15 +374,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * ## Build JSON  This endpoint takes a list of basicBuild objects and returns a JSON serialised version of the same objects.
+         * ## Build JSON  This endpoint takes a list of basicAssembly objects and returns a JSON serialised version of the same objects.
          * @summary Build Json
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildJsonBuildjsonPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('buildJsonBuildjsonPost', 'basicBuild', basicBuild)
+        buildJsonBuildjsonPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('buildJsonBuildjsonPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/buildjson`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -357,15 +395,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -373,15 +422,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * ## Build PDF Instructions  This endpoint takes a list of basicBuild objects and returns a PDF for the manual assembly within a lab of the BasicBuild object.
+         * ## Build PDF Instructions  This endpoint takes a list of basicAssembly objects and returns a PDF for the manual assembly within a lab of the basicAssembly object.
          * @summary Build Pdf Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildPdfInstructionsBuildPdfInstructionsPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('buildPdfInstructionsBuildPdfInstructionsPost', 'basicBuild', basicBuild)
+        buildPdfInstructionsBuildPdfInstructionsPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('buildPdfInstructionsBuildPdfInstructionsPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/build_pdf_instructions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -393,15 +443,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -409,15 +470,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * ## Build Unique Parts  This endpoint takes a list of basicBuild objects and returns unique parts within each BasicAssembly as a genbank file.
+         * ## Build Unique Parts  This endpoint takes a list of basicAssembly objects and returns unique parts within each BasicAssembly as a genbank file.
          * @summary Build Unique Parts As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildUniquePartsAsGenbankBuilduniquepartsPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('buildUniquePartsAsGenbankBuilduniquepartsPost', 'basicBuild', basicBuild)
+        buildUniquePartsAsGenbankBuilduniquepartsPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('buildUniquePartsAsGenbankBuilduniquepartsPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/builduniqueparts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -429,15 +491,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -445,15 +518,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * ## Build Unique Assemblies  This endpoint takes a list of basicBuild objects and returns unique assemblies within the BasicBuild as a genbank file.
+         * ## Build Unique Assemblies  This endpoint takes a list of basicAssembly objects and returns unique assemblies within the basicAssembly as a genbank file.
          * @summary Buils Unique Assemblies As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost: async (basicBuild: Array<BasicBuild>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicBuild' is not null or undefined
-            assertParamExists('builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost', 'basicBuild', basicBuild)
+        builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost: async (myAssemblyArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myAssemblyArrayStr' is not null or undefined
+            assertParamExists('builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost', 'myAssemblyArrayStr', myAssemblyArrayStr)
             const localVarPath = `/builduniqueassemblies`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -465,15 +539,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myAssemblyArrayStr !== undefined) { 
+                localVarFormParams.append('myAssemblyArrayStr', myAssemblyArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicBuild, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -483,13 +568,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Dnafeaturesviewer For Assemblies
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost: async (basicPart: Array<BasicPart>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost', 'basicPart', basicPart)
+        dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost: async (myPartArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myPartArrayStr' is not null or undefined
+            assertParamExists('dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost', 'myPartArrayStr', myPartArrayStr)
             const localVarPath = `/dnafeatureviewer_assembly`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -501,15 +587,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myPartArrayStr !== undefined) { 
+                localVarFormParams.append('myPartArrayStr', myPartArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -519,13 +616,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Dnafeatureviewer
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dnafeatureviewerDnafeatureviewerPost: async (basicPart: BasicPart, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('dnafeatureviewerDnafeatureviewerPost', 'basicPart', basicPart)
+        dnafeatureviewerDnafeatureviewerPost: async (myPart: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myPart' is not null or undefined
+            assertParamExists('dnafeatureviewerDnafeatureviewerPost', 'myPart', myPart)
             const localVarPath = `/dnafeatureviewer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -537,15 +635,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myPart !== undefined) { 
+                localVarFormParams.append('myPart', myPart as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -755,13 +864,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * ## Validate  This endpoint ensures that a input list of basicParts can successfully build a basic assembly.
          * @summary Validate Assembly
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        validateAssemblyValidatePost: async (basicPart: Array<BasicPart>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('validateAssemblyValidatePost', 'basicPart', basicPart)
+        validateAssemblyValidatePost: async (myPartArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myPartArrayStr' is not null or undefined
+            assertParamExists('validateAssemblyValidatePost', 'myPartArrayStr', myPartArrayStr)
             const localVarPath = `/validate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -773,15 +883,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myPartArrayStr !== undefined) { 
+                localVarFormParams.append('myPartArrayStr', myPartArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -791,13 +912,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary View Part Labels
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewPartLabelsViewpartlabelsPost: async (basicPart: BasicPart, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('viewPartLabelsViewpartlabelsPost', 'basicPart', basicPart)
+        viewPartLabelsViewpartlabelsPost: async (myPart: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myPart' is not null or undefined
+            assertParamExists('viewPartLabelsViewpartlabelsPost', 'myPart', myPart)
             const localVarPath = `/viewpartlabels`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -809,15 +931,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myPart !== undefined) { 
+                localVarFormParams.append('myPart', myPart as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -828,15 +961,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary View Sequence Annotations
          * @param {string} qualifier 
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceAnnotationsReturnseqannPost: async (qualifier: string, basicPart: BasicPart, options: any = {}): Promise<RequestArgs> => {
+        viewSequenceAnnotationsReturnseqannPost: async (qualifier: string, myPart: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'qualifier' is not null or undefined
             assertParamExists('viewSequenceAnnotationsReturnseqannPost', 'qualifier', qualifier)
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('viewSequenceAnnotationsReturnseqannPost', 'basicPart', basicPart)
+            // verify required parameter 'myPart' is not null or undefined
+            assertParamExists('viewSequenceAnnotationsReturnseqannPost', 'myPart', myPart)
             const localVarPath = `/returnseqann`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -848,19 +982,30 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
-            if (qualifier !== undefined) {
-                localVarQueryParameter['Qualifier'] = qualifier;
+
+            if (qualifier !== undefined) { 
+                localVarFormParams.append('Qualifier', qualifier as any);
+            }
+    
+            if (myPart !== undefined) { 
+                localVarFormParams.append('myPart', myPart as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
             }
 
-
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -870,13 +1015,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary View Sequence Labels
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceLabelsViewseqlabelsPost: async (basicPart: Array<BasicPart>, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'basicPart' is not null or undefined
-            assertParamExists('viewSequenceLabelsViewseqlabelsPost', 'basicPart', basicPart)
+        viewSequenceLabelsViewseqlabelsPost: async (myPartArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'myPartArrayStr' is not null or undefined
+            assertParamExists('viewSequenceLabelsViewseqlabelsPost', 'myPartArrayStr', myPartArrayStr)
             const localVarPath = `/viewseqlabels`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -888,15 +1034,26 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
+
+            if (myPartArrayStr !== undefined) { 
+                localVarFormParams.append('myPartArrayStr', myPartArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(basicPart, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -914,91 +1071,99 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
         /**
-         * ## Build CSVs  This endpoint takes a list of basicBuild objects and returns a CSV representation of the same objects.
+         * ## Build CSVs  This endpoint takes a list of basicAssembly objects and returns a CSV representation of the same objects.
          * @summary Build Csvs
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildCsvsBuildcsvsPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildCsvsBuildcsvsPost(basicBuild, options);
+        async buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildCsvsBuildcsvsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * ## Build Echo Instructions  This endpoint takes a list of basicBuild objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
+         * ## Build Echo Instructions  This endpoint takes a list of basicAssembly objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
          * @summary Build Echo Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildEchoInstructionsBuildechoinstructionsPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildEchoInstructionsBuildechoinstructionsPost(basicBuild, options);
+        async buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * ## Build JSON  This endpoint takes a list of basicBuild objects and returns a JSON serialised version of the same objects.
+         * ## Build JSON  This endpoint takes a list of basicAssembly objects and returns a JSON serialised version of the same objects.
          * @summary Build Json
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildJsonBuildjsonPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildJsonBuildjsonPost(basicBuild, options);
+        async buildJsonBuildjsonPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildJsonBuildjsonPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * ## Build PDF Instructions  This endpoint takes a list of basicBuild objects and returns a PDF for the manual assembly within a lab of the BasicBuild object.
+         * ## Build PDF Instructions  This endpoint takes a list of basicAssembly objects and returns a PDF for the manual assembly within a lab of the basicAssembly object.
          * @summary Build Pdf Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildPdfInstructionsBuildPdfInstructionsPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildPdfInstructionsBuildPdfInstructionsPost(basicBuild, options);
+        async buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * ## Build Unique Parts  This endpoint takes a list of basicBuild objects and returns unique parts within each BasicAssembly as a genbank file.
+         * ## Build Unique Parts  This endpoint takes a list of basicAssembly objects and returns unique parts within each BasicAssembly as a genbank file.
          * @summary Build Unique Parts As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild, options);
+        async buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * ## Build Unique Assemblies  This endpoint takes a list of basicBuild objects and returns unique assemblies within the BasicBuild as a genbank file.
+         * ## Build Unique Assemblies  This endpoint takes a list of basicAssembly objects and returns unique assemblies within the basicAssembly as a genbank file.
          * @summary Buils Unique Assemblies As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild: Array<BasicBuild>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild, options);
+        async builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Dnafeaturesviewer For Assemblies
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart: Array<BasicPart>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart, options);
+        async dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Dnafeatureviewer
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dnafeatureviewerDnafeatureviewerPost(basicPart: BasicPart, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeatureviewerDnafeatureviewerPost(basicPart, options);
+        async dnafeatureviewerDnafeatureviewerPost(myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeatureviewerDnafeatureviewerPost(myPart, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1053,53 +1218,57 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async singularFileUploadFileuploadSingularPost(type: FileType, addiseq: boolean, file: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async singularFileUploadFileuploadSingularPost(type: FileType, addiseq: boolean, file: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseSingularFileUpload>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.singularFileUploadFileuploadSingularPost(type, addiseq, file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * ## Validate  This endpoint ensures that a input list of basicParts can successfully build a basic assembly.
          * @summary Validate Assembly
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async validateAssemblyValidatePost(basicPart: Array<BasicPart>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.validateAssemblyValidatePost(basicPart, options);
+        async validateAssemblyValidatePost(myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseValidate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.validateAssemblyValidatePost(myPartArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary View Part Labels
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewPartLabelsViewpartlabelsPost(basicPart: BasicPart, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.viewPartLabelsViewpartlabelsPost(basicPart, options);
+        async viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.viewPartLabelsViewpartlabelsPost(myPart, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary View Sequence Annotations
          * @param {string} qualifier 
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewSequenceAnnotationsReturnseqannPost(qualifier: string, basicPart: BasicPart, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceAnnotationsReturnseqannPost(qualifier, basicPart, options);
+        async viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceAnnotationsReturnseqannPost(qualifier, myPart, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary View Sequence Labels
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewSequenceLabelsViewseqlabelsPost(basicPart: Array<BasicPart>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceLabelsViewseqlabelsPost(basicPart, options);
+        async viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceLabelsViewseqlabelsPost(myPartArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1113,84 +1282,92 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = DefaultApiFp(configuration)
     return {
         /**
-         * ## Build CSVs  This endpoint takes a list of basicBuild objects and returns a CSV representation of the same objects.
+         * ## Build CSVs  This endpoint takes a list of basicAssembly objects and returns a CSV representation of the same objects.
          * @summary Build Csvs
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildCsvsBuildcsvsPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.buildCsvsBuildcsvsPost(basicBuild, options).then((request) => request(axios, basePath));
+        buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.buildCsvsBuildcsvsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
-         * ## Build Echo Instructions  This endpoint takes a list of basicBuild objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
+         * ## Build Echo Instructions  This endpoint takes a list of basicAssembly objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
          * @summary Build Echo Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildEchoInstructionsBuildechoinstructionsPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.buildEchoInstructionsBuildechoinstructionsPost(basicBuild, options).then((request) => request(axios, basePath));
+        buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
-         * ## Build JSON  This endpoint takes a list of basicBuild objects and returns a JSON serialised version of the same objects.
+         * ## Build JSON  This endpoint takes a list of basicAssembly objects and returns a JSON serialised version of the same objects.
          * @summary Build Json
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildJsonBuildjsonPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.buildJsonBuildjsonPost(basicBuild, options).then((request) => request(axios, basePath));
+        buildJsonBuildjsonPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.buildJsonBuildjsonPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
-         * ## Build PDF Instructions  This endpoint takes a list of basicBuild objects and returns a PDF for the manual assembly within a lab of the BasicBuild object.
+         * ## Build PDF Instructions  This endpoint takes a list of basicAssembly objects and returns a PDF for the manual assembly within a lab of the basicAssembly object.
          * @summary Build Pdf Instructions
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildPdfInstructionsBuildPdfInstructionsPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.buildPdfInstructionsBuildPdfInstructionsPost(basicBuild, options).then((request) => request(axios, basePath));
+        buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
-         * ## Build Unique Parts  This endpoint takes a list of basicBuild objects and returns unique parts within each BasicAssembly as a genbank file.
+         * ## Build Unique Parts  This endpoint takes a list of basicAssembly objects and returns unique parts within each BasicAssembly as a genbank file.
          * @summary Build Unique Parts As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild, options).then((request) => request(axios, basePath));
+        buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
-         * ## Build Unique Assemblies  This endpoint takes a list of basicBuild objects and returns unique assemblies within the BasicBuild as a genbank file.
+         * ## Build Unique Assemblies  This endpoint takes a list of basicAssembly objects and returns unique assemblies within the basicAssembly as a genbank file.
          * @summary Buils Unique Assemblies As Genbank
-         * @param {Array<BasicBuild>} basicBuild 
+         * @param {string} myAssemblyArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild: Array<BasicBuild>, options?: any): AxiosPromise<any> {
-            return localVarFp.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild, options).then((request) => request(axios, basePath));
+        builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Dnafeaturesviewer For Assemblies
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart: Array<BasicPart>, options?: any): AxiosPromise<any> {
-            return localVarFp.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart, options).then((request) => request(axios, basePath));
+        dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Dnafeatureviewer
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dnafeatureviewerDnafeatureviewerPost(basicPart: BasicPart, options?: any): AxiosPromise<any> {
-            return localVarFp.dnafeatureviewerDnafeatureviewerPost(basicPart, options).then((request) => request(axios, basePath));
+        dnafeatureviewerDnafeatureviewerPost(myPart: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.dnafeatureviewerDnafeatureviewerPost(myPart, files, options).then((request) => request(axios, basePath));
         },
         /**
          * ## Collection Data  Returns a list of the available basicynbio part collections and the data within them to the user.  More infomation about part linker collections can be found at the [basicsynbio documentation](https://londonbiofoundry.github.io/basicsynbio/collections.html)
@@ -1240,49 +1417,53 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        singularFileUploadFileuploadSingularPost(type: FileType, addiseq: boolean, file: any, options?: any): AxiosPromise<any> {
+        singularFileUploadFileuploadSingularPost(type: FileType, addiseq: boolean, file: any, options?: any): AxiosPromise<ResponseSingularFileUpload> {
             return localVarFp.singularFileUploadFileuploadSingularPost(type, addiseq, file, options).then((request) => request(axios, basePath));
         },
         /**
          * ## Validate  This endpoint ensures that a input list of basicParts can successfully build a basic assembly.
          * @summary Validate Assembly
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        validateAssemblyValidatePost(basicPart: Array<BasicPart>, options?: any): AxiosPromise<any> {
-            return localVarFp.validateAssemblyValidatePost(basicPart, options).then((request) => request(axios, basePath));
+        validateAssemblyValidatePost(myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<ResponseValidate> {
+            return localVarFp.validateAssemblyValidatePost(myPartArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary View Part Labels
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewPartLabelsViewpartlabelsPost(basicPart: BasicPart, options?: any): AxiosPromise<any> {
-            return localVarFp.viewPartLabelsViewpartlabelsPost(basicPart, options).then((request) => request(axios, basePath));
+        viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.viewPartLabelsViewpartlabelsPost(myPart, files, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary View Sequence Annotations
          * @param {string} qualifier 
-         * @param {BasicPart} basicPart 
+         * @param {string} myPart 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceAnnotationsReturnseqannPost(qualifier: string, basicPart: BasicPart, options?: any): AxiosPromise<any> {
-            return localVarFp.viewSequenceAnnotationsReturnseqannPost(qualifier, basicPart, options).then((request) => request(axios, basePath));
+        viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.viewSequenceAnnotationsReturnseqannPost(qualifier, myPart, files, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary View Sequence Labels
-         * @param {Array<BasicPart>} basicPart 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceLabelsViewseqlabelsPost(basicPart: Array<BasicPart>, options?: any): AxiosPromise<any> {
-            return localVarFp.viewSequenceLabelsViewseqlabelsPost(basicPart, options).then((request) => request(axios, basePath));
+        viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+            return localVarFp.viewSequenceLabelsViewseqlabelsPost(myPartArrayStr, files, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1295,99 +1476,107 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  */
 export class DefaultApi extends BaseAPI {
     /**
-     * ## Build CSVs  This endpoint takes a list of basicBuild objects and returns a CSV representation of the same objects.
+     * ## Build CSVs  This endpoint takes a list of basicAssembly objects and returns a CSV representation of the same objects.
      * @summary Build Csvs
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public buildCsvsBuildcsvsPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).buildCsvsBuildcsvsPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).buildCsvsBuildcsvsPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ## Build Echo Instructions  This endpoint takes a list of basicBuild objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
+     * ## Build Echo Instructions  This endpoint takes a list of basicAssembly objects and returns the Echo robot instructions to perform the clip step of BASIC DNA assembly.
      * @summary Build Echo Instructions
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public buildEchoInstructionsBuildechoinstructionsPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).buildEchoInstructionsBuildechoinstructionsPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ## Build JSON  This endpoint takes a list of basicBuild objects and returns a JSON serialised version of the same objects.
+     * ## Build JSON  This endpoint takes a list of basicAssembly objects and returns a JSON serialised version of the same objects.
      * @summary Build Json
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public buildJsonBuildjsonPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).buildJsonBuildjsonPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public buildJsonBuildjsonPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).buildJsonBuildjsonPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ## Build PDF Instructions  This endpoint takes a list of basicBuild objects and returns a PDF for the manual assembly within a lab of the BasicBuild object.
+     * ## Build PDF Instructions  This endpoint takes a list of basicAssembly objects and returns a PDF for the manual assembly within a lab of the basicAssembly object.
      * @summary Build Pdf Instructions
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public buildPdfInstructionsBuildPdfInstructionsPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).buildPdfInstructionsBuildPdfInstructionsPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).buildPdfInstructionsBuildPdfInstructionsPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ## Build Unique Parts  This endpoint takes a list of basicBuild objects and returns unique parts within each BasicAssembly as a genbank file.
+     * ## Build Unique Parts  This endpoint takes a list of basicAssembly objects and returns unique parts within each BasicAssembly as a genbank file.
      * @summary Build Unique Parts As Genbank
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).buildUniquePartsAsGenbankBuilduniquepartsPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).buildUniquePartsAsGenbankBuilduniquepartsPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ## Build Unique Assemblies  This endpoint takes a list of basicBuild objects and returns unique assemblies within the BasicBuild as a genbank file.
+     * ## Build Unique Assemblies  This endpoint takes a list of basicAssembly objects and returns unique assemblies within the basicAssembly as a genbank file.
      * @summary Buils Unique Assemblies As Genbank
-     * @param {Array<BasicBuild>} basicBuild 
+     * @param {string} myAssemblyArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild: Array<BasicBuild>, options?: any) {
-        return DefaultApiFp(this.configuration).builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(basicBuild, options).then((request) => request(this.axios, this.basePath));
+    public builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(myAssemblyArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Dnafeaturesviewer For Assemblies
-     * @param {Array<BasicPart>} basicPart 
+     * @param {string} myPartArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart: Array<BasicPart>, options?: any) {
-        return DefaultApiFp(this.configuration).dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(basicPart, options).then((request) => request(this.axios, this.basePath));
+    public dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(myPartArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Dnafeatureviewer
-     * @param {BasicPart} basicPart 
+     * @param {string} myPart 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public dnafeatureviewerDnafeatureviewerPost(basicPart: BasicPart, options?: any) {
-        return DefaultApiFp(this.configuration).dnafeatureviewerDnafeatureviewerPost(basicPart, options).then((request) => request(this.axios, this.basePath));
+    public dnafeatureviewerDnafeatureviewerPost(myPart: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).dnafeatureviewerDnafeatureviewerPost(myPart, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1454,50 +1643,54 @@ export class DefaultApi extends BaseAPI {
     /**
      * ## Validate  This endpoint ensures that a input list of basicParts can successfully build a basic assembly.
      * @summary Validate Assembly
-     * @param {Array<BasicPart>} basicPart 
+     * @param {string} myPartArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public validateAssemblyValidatePost(basicPart: Array<BasicPart>, options?: any) {
-        return DefaultApiFp(this.configuration).validateAssemblyValidatePost(basicPart, options).then((request) => request(this.axios, this.basePath));
+    public validateAssemblyValidatePost(myPartArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).validateAssemblyValidatePost(myPartArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary View Part Labels
-     * @param {BasicPart} basicPart 
+     * @param {string} myPart 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public viewPartLabelsViewpartlabelsPost(basicPart: BasicPart, options?: any) {
-        return DefaultApiFp(this.configuration).viewPartLabelsViewpartlabelsPost(basicPart, options).then((request) => request(this.axios, this.basePath));
+    public viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).viewPartLabelsViewpartlabelsPost(myPart, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary View Sequence Annotations
      * @param {string} qualifier 
-     * @param {BasicPart} basicPart 
+     * @param {string} myPart 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public viewSequenceAnnotationsReturnseqannPost(qualifier: string, basicPart: BasicPart, options?: any) {
-        return DefaultApiFp(this.configuration).viewSequenceAnnotationsReturnseqannPost(qualifier, basicPart, options).then((request) => request(this.axios, this.basePath));
+    public viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).viewSequenceAnnotationsReturnseqannPost(qualifier, myPart, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary View Sequence Labels
-     * @param {Array<BasicPart>} basicPart 
+     * @param {string} myPartArrayStr 
+     * @param {Array<any>} [files] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public viewSequenceLabelsViewseqlabelsPost(basicPart: Array<BasicPart>, options?: any) {
-        return DefaultApiFp(this.configuration).viewSequenceLabelsViewseqlabelsPost(basicPart, options).then((request) => request(this.axios, this.basePath));
+    public viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).viewSequenceLabelsViewseqlabelsPost(myPartArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

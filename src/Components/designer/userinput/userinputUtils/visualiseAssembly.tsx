@@ -16,7 +16,7 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../../ApiConnection";
+import { ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Part } from "../../../../interfaces/Part";
 import { Popups } from "../../../../interfaces/Popups";

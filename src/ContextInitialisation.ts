@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiEndpoint } from "./ApiConnection";
+import { ApiEndpoint } from "./Api";
 import { Collection } from "./generated-sources";
 
 export const getCollectionNames = async (): Promise<Collection["name"][]> => {

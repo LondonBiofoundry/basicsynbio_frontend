@@ -8,7 +8,7 @@ import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 import { v4 as uuid } from "uuid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
-import { ApiEndpoint } from "../../../../../ApiConnection";
+import { ApiEndpoint } from "../../../../../Api";
 import { Part } from "../../../../../interfaces/Part";
 
 interface Props {
