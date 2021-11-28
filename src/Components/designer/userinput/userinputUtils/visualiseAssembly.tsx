@@ -18,8 +18,8 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import { SeqViz } from "seqviz";
 import { ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { Part } from "../../../../interfaces/Part";
 import { Popups } from "../../../../interfaces/Popups";
+import { BasicPart } from "../../../../generated-sources";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  shoppingBagItems: Part[];
+  shoppingBagItems: BasicPart[];
   openPopups: Popups;
   setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }

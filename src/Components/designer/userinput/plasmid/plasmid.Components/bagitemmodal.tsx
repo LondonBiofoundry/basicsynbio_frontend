@@ -21,7 +21,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
 import { ApiEndpoint } from "../../../../../Api";
-import { Part } from "../../../../../interfaces/Part";
+import { BasicPart } from "../../../../../generated-sources";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -54,7 +54,7 @@ const Transition = React.forwardRef(function Transition(
 interface Props {
   open: boolean;
   handleClose: () => void;
-  item: Part;
+  item: BasicPart;
 }
 
 export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
@@ -177,7 +177,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
       return (
         <SeqViz
           name="J23100"
-          file={item ? item.binaryString : null}
+          // file={item ? item.binaryString : null}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
         />

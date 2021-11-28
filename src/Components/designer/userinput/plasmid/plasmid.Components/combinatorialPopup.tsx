@@ -22,7 +22,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import Switch from "@material-ui/core/Switch";
 import WifiIcon from "@material-ui/icons/Wifi";
 import BluetoothIcon from "@material-ui/icons/Bluetooth";
-import { Part } from "../../../../../interfaces/Part";
+import { BasicPart } from "../../../../../generated-sources";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -76,9 +76,9 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 interface Props {
-  item: Part;
-  COLLECTION: Part[];
-  COLLECTION2: Part[];
+  item: BasicPart;
+  COLLECTION: BasicPart[];
+  COLLECTION2: BasicPart[];
   open: boolean;
   handleClose: () => void;
 }
@@ -92,7 +92,9 @@ export const CustomizedDialogs: React.FC<Props> = ({
 }) => {
   const list_of_original_checked = () => {
     if (item.combinatorial) {
-      const returnitem = item?.combinatorialParts?.map((item) => item.label);
+      const returnitem = item?.combinatorialParts?.map(
+        (item: any) => item.label
+      );
       if (returnitem) {
         console.log(returnitem);
         return returnitem;
@@ -106,7 +108,7 @@ export const CustomizedDialogs: React.FC<Props> = ({
   const [checked, setChecked] = React.useState(list_of_original_checked);
 
   console.log(item);
-  console.log(item?.combinatorialParts?.map((item) => item.label));
+  console.log(item?.combinatorialParts?.map((item: any) => item.label));
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
@@ -164,7 +166,7 @@ export const CustomizedDialogs: React.FC<Props> = ({
                 <ListItemSecondaryAction>
                   <Switch
                     edge="end"
-                    onChange={handleToggle(collectionItem.label)}
+                    onChange={handleToggle(collectionItem?.label || "")}
                     checked={checked.indexOf(collectionItem.label) !== -1}
                     inputProps={{
                       "aria-labelledby": "switch-list-label-bluetooth",

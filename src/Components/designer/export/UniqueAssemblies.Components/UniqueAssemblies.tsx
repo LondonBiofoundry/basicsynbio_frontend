@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { ApiEndpoint } from "../../../../Api";
-import { Assembly } from "../../../../interfaces/Assembly";
+import { BasicAssembly } from "../../../../generated-sources";
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  currentBuild: Assembly[];
+  currentBuild: BasicAssembly[];
 }
 
 export const UniqueAssemblies: React.FC<Props> = ({ currentBuild }) => {

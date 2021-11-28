@@ -10,10 +10,10 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import Divider from "@material-ui/core/Divider";
-import { Part } from "../../../../../interfaces/Part";
 import { green } from "@material-ui/core/colors";
 import Tooltip from "@material-ui/core/Tooltip";
 import CustomizedDialogs from "./combinatorialPopup";
+import { BasicPart, BasicPartType } from "../../../../../generated-sources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,11 +74,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  COLLECTION: Part[];
-  COLLECTION2: Part[];
-  items: Part[];
-  onShopItemDelete: (itemid: Part["id"]) => void;
-  openDialog: (item: Part) => void;
+  COLLECTION: BasicPart[];
+  COLLECTION2: BasicPart[];
+  items: BasicPart[];
+  onShopItemDelete: (itemid: BasicPart["id"]) => void;
+  openDialog: (item: BasicPart) => void;
 }
 
 export const ShoppingBag: React.FC<Props> = ({
@@ -92,7 +92,11 @@ export const ShoppingBag: React.FC<Props> = ({
   const [
     combinatorialClickedPart,
     setCombinatorialClickedPart,
-  ] = React.useState<Part>({ id: "31321312", label: "unchanged" });
+  ] = React.useState<BasicPart>({
+    id: "31321312",
+    label: "unchanged",
+    type: BasicPartType.Collection,
+  });
 
   const [combinatorialOpen, setCombinatorialOpen] = React.useState(false);
 
@@ -137,7 +141,7 @@ export const ShoppingBag: React.FC<Props> = ({
                           <Typography variant="subtitle1" color="textSecondary">
                             {item.combinatorial
                               ? item?.combinatorialParts?.map(
-                                  (combItem, index) => (
+                                  (combItem: any, index: any) => (
                                     <div>{combItem.label}</div>
                                   )
                                 )

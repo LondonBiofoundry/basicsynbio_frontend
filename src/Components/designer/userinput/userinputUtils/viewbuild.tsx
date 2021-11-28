@@ -22,8 +22,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import CloseIcon from "@material-ui/icons/Close";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { Assembly } from "../../../../interfaces/Assembly";
 import { Popups } from "../../../../interfaces/Popups";
+import { BasicAssembly } from "../../../../generated-sources";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface Row {
   key: string;
-  row: Assembly;
+  row: BasicAssembly;
 }
 
 const RenderRow: React.FC<Row> = ({ key, row }) => {
@@ -78,7 +78,7 @@ const RenderRow: React.FC<Row> = ({ key, row }) => {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell scope="row">{row.parts.length}</TableCell>
+        <TableCell scope="row">{row?.parts?.length}</TableCell>
         <TableCell scope="row">{row.description}</TableCell>
       </TableRow>
       <TableRow>
@@ -98,7 +98,7 @@ const RenderRow: React.FC<Row> = ({ key, row }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.parts.map((assemblyitems, index) => (
+                  {row?.parts?.map((assemblyitems, index) => (
                     <TableRow key={assemblyitems.id}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell component="th" scope="row">
@@ -119,7 +119,7 @@ const RenderRow: React.FC<Row> = ({ key, row }) => {
 };
 
 interface Props {
-  rows: Assembly[];
+  rows: BasicAssembly[];
   openPopups: Popups;
   setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }

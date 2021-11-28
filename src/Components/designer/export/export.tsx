@@ -5,11 +5,11 @@ import { JSONCard } from "./JSON.Components/JSONCard";
 import { UniqueParts } from "./UniqueParts.Components/UniqueParts";
 import { UniqueAssemblies } from "./UniqueAssemblies.Components/UniqueAssemblies";
 import { EchoCard } from "./ECHO.Components/echo";
-import { Assembly } from "../../../interfaces/Assembly";
 import { PdfCard } from "./PDF.Components/pdf";
+import { BasicAssembly } from "../../../generated-sources";
 
 interface Props {
-  currentBuild: Assembly[];
+  currentBuild: BasicAssembly[];
 }
 
 export const Export: React.FC<Props> = ({ currentBuild }) => {

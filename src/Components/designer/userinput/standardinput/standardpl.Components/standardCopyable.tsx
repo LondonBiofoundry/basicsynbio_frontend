@@ -4,7 +4,6 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
-import { Part } from "../../../../../interfaces/Part";
 import { BasicPart } from "../../../../../generated-sources";
 
 const HtmlTooltip = withStyles((theme) => ({

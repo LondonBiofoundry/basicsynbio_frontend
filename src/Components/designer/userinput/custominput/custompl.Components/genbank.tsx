@@ -9,12 +9,12 @@ import { v4 as uuid } from "uuid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
 import { ApiEndpoint } from "../../../../../Api";
-import { Part } from "../../../../../interfaces/Part";
+import { BasicPart, BasicPartType } from "../../../../../generated-sources";
 
 interface Props {
   addiseq: boolean;
   multiplePartLinkers: boolean;
-  setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
+  setUploadedFile: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
   setCatchError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -53,11 +53,8 @@ export const Genbank: React.FC<Props> = ({
             seq: result.partsarray[i].seq,
             label: result.partsarray[i].label,
             collection: "",
-            type: "genbank",
-            base64: String(base64string),
-            multiple: true,
+            type: BasicPartType.UploadMultiple,
             index: i,
-            binaryString: binaryStr,
           });
         }
         setCatchError("");
@@ -80,12 +77,7 @@ export const Genbank: React.FC<Props> = ({
           id: uuid(),
           seq: result.seq,
           label: file.path,
-          collection: "",
-          type: "genbank",
-          base64: base64string,
-          multiple: false,
-          index: undefined,
-          binaryString: binaryStr,
+          type: BasicPartType.UploadSingle,
         });
         setCatchError("");
       } else {

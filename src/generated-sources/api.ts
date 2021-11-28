@@ -24,6 +24,37 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface BasicAssembly
+ */
+export interface BasicAssembly {
+    /**
+     * 
+     * @type {string}
+     * @memberof BasicAssembly
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BasicAssembly
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BasicAssembly
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<BasicPart>}
+     * @memberof BasicAssembly
+     */
+    parts?: Array<BasicPart>;
+}
+/**
+ * 
+ * @export
  * @interface BasicPart
  */
 export interface BasicPart {
@@ -262,6 +293,12 @@ export interface ResponseValidate {
      * @memberof ResponseValidate
      */
     message?: string;
+    /**
+     * 
+     * @type {BasicAssembly}
+     * @memberof ResponseValidate
+     */
+    assembly?: BasicAssembly;
 }
 /**
  * 

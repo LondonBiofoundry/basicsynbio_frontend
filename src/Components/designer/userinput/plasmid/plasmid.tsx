@@ -10,7 +10,7 @@ import { ShoppingBag } from "./plasmid.Components/shoppingbag";
 import { BagItemModal } from "./plasmid.Components/bagitemmodal";
 
 import SuccessImg from "./plasmid.Components/successLotty";
-import { Part } from "../../../../interfaces/Part";
+import { BasicPart } from "../../../../generated-sources";
 
 const useStyles = makeStyles({
   root: {
@@ -27,8 +27,8 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  COLLECTION: Part[];
-  COLLECTION2: Part[];
+  COLLECTION: BasicPart[];
+  COLLECTION2: BasicPart[];
   assemblyName: string;
   assemblyDesc: string;
   setAssemblyDesc: React.Dispatch<React.SetStateAction<string>>;
@@ -36,8 +36,8 @@ interface Props {
   validated: boolean;
   assemblyID: string;
   setAssemblyID: React.Dispatch<React.SetStateAction<string>>;
-  items: Part[];
-  onShopItemDelete: (itemid: Part["id"]) => void;
+  items: BasicPart[];
+  onShopItemDelete: (itemid: BasicPart["id"]) => void;
 }
 
 export const Plasmid: React.FC<Props> = ({
@@ -56,9 +56,9 @@ export const Plasmid: React.FC<Props> = ({
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [clickedItem, setclickedItem] = useState<Part>();
+  const [clickedItem, setclickedItem] = useState<BasicPart>();
 
-  const handleClickOpen = (item: Part) => {
+  const handleClickOpen = (item: BasicPart) => {
     setclickedItem(item);
     setOpen(true);
   };

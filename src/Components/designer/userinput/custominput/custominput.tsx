@@ -8,13 +8,12 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Divider from "@material-ui/core/Divider";
 
-import { Fasta } from "./custompl.Components/fasta";
 import { SBOL } from "./custompl.Components/SBOL";
 import { Genbank } from "./custompl.Components/genbank";
 import { CustomShop } from "./custompl.Components/customShop";
 import { MultipleCheck } from "./custompl.Components/MultipleCheck";
-import { Part } from "../../../../interfaces/Part";
 import { AddISeq } from "./custompl.Components/addiseq";
+import { BasicPart } from "../../../../generated-sources";
 
 const useStyles = makeStyles({
   root: {
@@ -31,9 +30,9 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  items: Part[];
-  setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
-  onDeleteCustomPart: (partlabel: Part["label"]) => void;
+  items: BasicPart[];
+  setUploadedFile: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
+  onDeleteCustomPart: (partlabel: BasicPart["label"]) => void;
 }
 
 export const CustomPartLinker: React.FC<Props> = ({
@@ -49,7 +48,7 @@ export const CustomPartLinker: React.FC<Props> = ({
   const [addiseq, setAddiseq] = React.useState(false);
 
   const handleMethod = (event: any, newMethod: string) => {
-    if (["Genbank", "SBOL", "Fasta"].indexOf(newMethod) >= 0) {
+    if (["Genbank", "SBOL"].indexOf(newMethod) >= 0) {
       setMethod(newMethod);
     }
   };
@@ -77,7 +76,7 @@ export const CustomPartLinker: React.FC<Props> = ({
               aria-label="text alignment"
             >
               <ToggleButton value="Genbank">Genbank</ToggleButton>
-              <ToggleButton value="Fasta">Fasta</ToggleButton>
+              {/* <ToggleButton value="Fasta">Fasta</ToggleButton> */}
               <ToggleButton value="SBOL">SBOL</ToggleButton>
             </ToggleButtonGroup>
           </Grid>
@@ -104,7 +103,7 @@ export const CustomPartLinker: React.FC<Props> = ({
         ) : (
           <div />
         )}
-        {method === "Fasta" ? (
+        {/* {method === "Fasta" ? (
           <Fasta
             addiseq={addiseq}
             multiplePartLinkers={multiplePartLinkers}
@@ -113,7 +112,7 @@ export const CustomPartLinker: React.FC<Props> = ({
           />
         ) : (
           <div />
-        )}
+        )} */}
         {method === "SBOL" ? (
           <SBOL
             addiseq={addiseq}

@@ -9,7 +9,7 @@ import { Grid } from "@material-ui/core";
 
 import { UserInput } from "../components/designer/userinput/userinput";
 import { Export } from "../components/designer/export/export";
-import { Assembly } from "../interfaces/Assembly";
+import { BasicAssembly } from "../generated-sources";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ function getSteps() {
 export default function Designer() {
   const classes = useStyles();
 
-  const [currentBuild, setCurrentBuild] = useState<Assembly[]>([]);
+  const [currentBuild, setCurrentBuild] = useState<BasicAssembly[]>([]);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();

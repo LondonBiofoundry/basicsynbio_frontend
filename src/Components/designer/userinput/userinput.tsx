@@ -17,10 +17,13 @@ import { SnackbarPopups } from "./userinputUtils/snackbar";
 import { VisualiseAssembly } from "./userinputUtils/visualiseAssembly";
 
 import "./styles.css";
-import { Part } from "../../../interfaces/Part";
-import { Assembly } from "../../../interfaces/Assembly";
 import { StandardInput } from "./standardinput/standardinput";
 import { Popups } from "../../../interfaces/Popups";
+import {
+  BasicPart,
+  BasicAssembly,
+  BasicPartType,
+} from "../../../generated-sources";
 
 const useStyles = makeStyles((theme) => ({
   extendedIcon: {
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const reorder = (list: Part[], startIndex: number, endIndex: number) => {
+const reorder = (list: BasicPart[], startIndex: number, endIndex: number) => {
   const [removed] = list.splice(startIndex, 1);
   list.splice(endIndex, 0, removed);
   return list;
@@ -61,14 +64,14 @@ const copy = (
   return destination;
 };
 
-const expand_first_combinatorial = (input_lists: Part[][]) => {
-  const expanded_assemblies: Part[][] = [];
+const expand_first_combinatorial = (input_lists: BasicPart[][]) => {
+  const expanded_assemblies: BasicPart[][] = [];
   input_lists.forEach((input_list) => {
     const combinatorialFirstItem = input_list.filter(
       (item) => item.combinatorial == true
     )[0];
     const combinatorialItemIndex = input_list.indexOf(combinatorialFirstItem);
-    combinatorialFirstItem.combinatorialParts?.forEach((element) => {
+    combinatorialFirstItem.combinatorialParts?.forEach((element: any) => {
       var smaller_list = input_list.filter(
         (part) => part != combinatorialFirstItem
       );
@@ -80,7 +83,7 @@ const expand_first_combinatorial = (input_lists: Part[][]) => {
   return expanded_assemblies;
 };
 
-const check_list_contains_conbinatorial = (input_lists: Part[][]) => {
+const check_list_contains_conbinatorial = (input_lists: BasicPart[][]) => {
   const mylist = input_lists[0].filter((item) => item.combinatorial === true);
   if (mylist.length >= 1) {
     return true;
@@ -90,8 +93,8 @@ const check_list_contains_conbinatorial = (input_lists: Part[][]) => {
 };
 
 interface Props {
-  currentBuild: Assembly[];
-  setCurrentBuild: React.Dispatch<React.SetStateAction<Assembly[]>>;
+  currentBuild: BasicAssembly[];
+  setCurrentBuild: React.Dispatch<React.SetStateAction<BasicAssembly[]>>;
 }
 
 export const UserInput: React.FC<Props> = ({
@@ -100,14 +103,14 @@ export const UserInput: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   //Used to add Parts to Collection Shops
-  const [value, setValue] = useState<Part | undefined>();
-  const [uploadedFile, setUploadedFile] = useState<Part>();
+  const [value, setValue] = useState<BasicPart | undefined>();
+  const [uploadedFile, setUploadedFile] = useState<BasicPart>();
   // Used to track Assembly Information
   const [assemblyID, setAssemblyID] = useState<string>("");
   // Contains Information Abou the 3 shopping bags on screen
-  const [COLLECTION, setCOLLECTION] = useState<Part[]>([]);
-  const [COLLECTION2, setCOLLECTION2] = useState<Part[]>([]);
-  const [shoppingBagItems, setShoppingBagItems] = useState<Part[]>([]);
+  const [COLLECTION, setCOLLECTION] = useState<BasicPart[]>([]);
+  const [COLLECTION2, setCOLLECTION2] = useState<BasicPart[]>([]);
+  const [shoppingBagItems, setShoppingBagItems] = useState<BasicPart[]>([]);
   //Validate Assembly Function
   const [validated, setValidated] = useState<boolean>(false);
   //AssemblyInputBoxed
@@ -121,14 +124,14 @@ export const UserInput: React.FC<Props> = ({
     pleaseValidateMessage: false,
   });
 
-  const onDeleteStandardPart = (partlabel: Part["label"]) => {
+  const onDeleteStandardPart = (partlabel: BasicPart["label"]) => {
     if (partlabel !== null) {
       let filteredArray = COLLECTION.filter((item) => item.label !== partlabel);
       setCOLLECTION(filteredArray);
     }
   };
 
-  const onDeleteCustomPart = (partlabel: Part["label"]) => {
+  const onDeleteCustomPart = (partlabel: BasicPart["label"]) => {
     if (partlabel !== null) {
       let filteredArray = COLLECTION2.filter(
         (item) => item.label !== partlabel
@@ -138,40 +141,36 @@ export const UserInput: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    if (value?.binaryString !== undefined && value.label !== undefined) {
-      const newPartStandard: Part = {
+    if (value?.label !== undefined) {
+      const newPartStandard: BasicPart = {
         id: uuid(),
         accessor: value.accessor,
         label: value?.label,
         seq: value?.seq,
         collection: value?.collection,
         description: value?.description,
-        type: "StandardInput",
-        binaryString: value?.binaryString,
+        type: BasicPartType.Collection,
       };
-      setCOLLECTION((C: Part[]) => [...C, newPartStandard]);
+      setCOLLECTION((C: BasicPart[]) => [...C, newPartStandard]);
     }
   }, [setValue, value]);
 
   useEffect(() => {
     if (uploadedFile?.label !== undefined) {
-      const newPartUser: Part = {
+      const newPartUser: BasicPart = {
         id: uuid(),
         label: uploadedFile?.label,
         seq: uploadedFile.seq,
         collection: uploadedFile?.collection,
         description: uploadedFile?.description,
         type: uploadedFile.type,
-        base64: uploadedFile.base64,
-        multiple: uploadedFile.multiple,
         index: uploadedFile.index,
-        binaryString: uploadedFile.binaryString,
       };
       setCOLLECTION2((C) => [...C, newPartUser]);
     }
   }, [uploadedFile]);
 
-  const onShopItemDelete = (itemid: Part["id"]) => {
+  const onShopItemDelete = (itemid: BasicPart["id"]) => {
     let filteredArray = shoppingBagItems.filter((item) => item.id !== itemid);
     setShoppingBagItems(filteredArray);
     setValidated(false);
@@ -181,7 +180,7 @@ export const UserInput: React.FC<Props> = ({
     if (
       shoppingBagItems.filter((item) => item.combinatorial == true).length === 0
     ) {
-      const currentAssembly: Assembly = {
+      const currentAssembly: BasicAssembly = {
         id: uuid(),
         parts: shoppingBagItems,
         name: assemblyName,
@@ -203,11 +202,11 @@ export const UserInput: React.FC<Props> = ({
         combinatorialItem
       );
       console.log(combinatorialItemIndex);
-      const new_assemblies: Part[][] = [];
-      const old_shopping: Part[] = shoppingBagItems;
+      const new_assemblies: BasicPart[][] = [];
+      const old_shopping: BasicPart[] = shoppingBagItems;
       shoppingBagItems.map((item, index) => {
         if (item.combinatorial) {
-          item.combinatorialParts?.forEach((element) => {
+          item.combinatorialParts?.forEach((element: any) => {
             var smaller_list = shoppingBagItems.filter((part) => part != item);
             smaller_list.splice(index, 0, element);
             console.log(smaller_list);
@@ -216,7 +215,7 @@ export const UserInput: React.FC<Props> = ({
         }
       });
       new_assemblies.forEach((element) => {
-        const currentAssembly: Assembly = {
+        const currentAssembly: BasicAssembly = {
           id: uuid(),
           parts: element,
           name: assemblyName,
@@ -232,14 +231,14 @@ export const UserInput: React.FC<Props> = ({
     if (
       shoppingBagItems.filter((item) => item.combinatorial == true).length > 1
     ) {
-      var expanded_result: Part[][] = expand_first_combinatorial([
+      var expanded_result: BasicPart[][] = expand_first_combinatorial([
         shoppingBagItems,
       ]);
       while (check_list_contains_conbinatorial(expanded_result)) {
         expanded_result = expand_first_combinatorial(expanded_result);
       }
       expanded_result.forEach((element) => {
-        const currentAssembly: Assembly = {
+        const currentAssembly: BasicAssembly = {
           id: uuid(),
           parts: element,
           name: assemblyName,

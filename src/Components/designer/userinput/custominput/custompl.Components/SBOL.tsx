@@ -6,12 +6,12 @@ import Grid from "@material-ui/core/Grid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
 import { ApiEndpoint } from "../../../../../Api";
-import { Part } from "../../../../../interfaces/Part";
 import { v4 as uuid } from "uuid";
+import { BasicPart, BasicPartType } from "../../../../../generated-sources";
 
 interface Props {
   addiseq: boolean;
-  setUploadedFile: React.Dispatch<React.SetStateAction<Part | undefined>>;
+  setUploadedFile: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
   setCatchError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -35,8 +35,7 @@ export const SBOL: React.FC<Props> = ({
         seq: result.seq,
         label: filename,
         collection: "",
-        type: "SBOL",
-        base64: dataString,
+        type: BasicPartType.UploadSingle,
       });
       setCatchError("");
     } else {

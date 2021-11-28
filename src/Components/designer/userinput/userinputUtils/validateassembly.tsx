@@ -13,8 +13,8 @@ import SuccessAnimation from "./successlottly";
 import FailAnimation from "./faillottly";
 import { ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { Part } from "../../../../interfaces/Part";
 import { Popups } from "../../../../interfaces/Popups";
+import { BasicPart } from "../../../../generated-sources";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(
 
 interface Props {
   setValidated: React.Dispatch<React.SetStateAction<boolean>>;
-  shoppingBagItems: Part[];
+  shoppingBagItems: BasicPart[];
   openPopups: Popups;
   setOpenPopups: React.Dispatch<React.SetStateAction<Popups>>;
 }
@@ -38,14 +38,14 @@ export const ValidateAssembly: React.FC<Props> = ({
 }) => {
   const [validation, setValidation] = useState("");
 
-  const expand_first_combinatorial = (input_lists: Part[][]) => {
-    const expanded_assemblies: Part[][] = [];
+  const expand_first_combinatorial = (input_lists: BasicPart[][]) => {
+    const expanded_assemblies: BasicPart[][] = [];
     input_lists.forEach((input_list) => {
       const combinatorialFirstItem = input_list.filter(
         (item) => item.combinatorial == true
       )[0];
       const combinatorialItemIndex = input_list.indexOf(combinatorialFirstItem);
-      combinatorialFirstItem.combinatorialParts?.forEach((element) => {
+      combinatorialFirstItem.combinatorialParts?.forEach((element: any) => {
         var smaller_list = input_list.filter(
           (part) => part != combinatorialFirstItem
         );
@@ -57,7 +57,7 @@ export const ValidateAssembly: React.FC<Props> = ({
     return expanded_assemblies;
   };
 
-  const check_list_contains_conbinatorial = (input_lists: Part[][]) => {
+  const check_list_contains_conbinatorial = (input_lists: BasicPart[][]) => {
     const mylist = input_lists[0].filter((item) => item.combinatorial === true);
     if (mylist.length >= 1) {
       return true;
@@ -80,11 +80,11 @@ export const ValidateAssembly: React.FC<Props> = ({
         combinatorialItem
       );
       console.log(combinatorialItemIndex);
-      const new_assemblies: Part[][] = [];
-      const old_shopping: Part[] = shoppingBagItems;
+      const new_assemblies: BasicPart[][] = [];
+      const old_shopping: BasicPart[] = shoppingBagItems;
       shoppingBagItems.map((item, index) => {
         if (item.combinatorial) {
-          item.combinatorialParts?.forEach((element) => {
+          item.combinatorialParts?.forEach((element: any) => {
             var smaller_list = shoppingBagItems.filter((part) => part != item);
             smaller_list.splice(index, 0, element);
             console.log(smaller_list);
@@ -155,7 +155,7 @@ export const ValidateAssembly: React.FC<Props> = ({
       console.log("more than 1 combinatorial");
       //////
       console.log("using_my_function");
-      var expanded_result: Part[][] = expand_first_combinatorial([
+      var expanded_result: BasicPart[][] = expand_first_combinatorial([
         shoppingBagItems,
       ]);
       while (check_list_contains_conbinatorial(expanded_result)) {
