@@ -770,7 +770,10 @@
           "version": { "title": "Version", "type": "string" },
           "fileId": { "title": "Fileid", "type": "string" },
           "addiseq": { "title": "Addiseq", "type": "boolean" },
-          "index": { "title": "Index", "type": "integer" }
+          "index": { "title": "Index", "type": "integer" },
+          "file": { "title": "File" },
+          "combinatorial": { "title": "Combinatorial", "type": "boolean" },
+          "combinatorialParts": { "title": "Combinatorialparts" }
         },
         "example": {
           "id": "3a1dedcb-27b3-4334-a4ea-417d2efe2c82",

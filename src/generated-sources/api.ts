@@ -93,6 +93,24 @@ export interface BasicPart {
      * @memberof BasicPart
      */
     index?: number;
+    /**
+     * 
+     * @type {any}
+     * @memberof BasicPart
+     */
+    file?: any | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BasicPart
+     */
+    combinatorial?: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof BasicPart
+     */
+    combinatorialParts?: any | null;
 }
 /**
  * An enumeration.
