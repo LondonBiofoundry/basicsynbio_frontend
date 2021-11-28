@@ -15,6 +15,7 @@ import { API, ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Popups } from "../../../../interfaces/Popups";
 import { BasicPart } from "../../../../generated-sources";
+import { returnFileFromJsonParts } from "../../../../utils/getFilesFromParts";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -133,7 +134,8 @@ export const ValidateAssembly: React.FC<Props> = ({
     ) {
       (async () => {
         const response = await API.validateAssemblyValidatePost(
-          JSON.stringify(shoppingBagItems)
+          JSON.stringify(shoppingBagItems),
+          returnFileFromJsonParts(shoppingBagItems)
         );
         const responseValue = response.data;
         if (responseValue.result) {

@@ -148,16 +148,7 @@ export const UserInput: React.FC<Props> = ({
 
   useEffect(() => {
     if (uploadedFile?.label !== undefined) {
-      const newPartUser: BasicPart = {
-        id: uuid(),
-        label: uploadedFile?.label,
-        seq: uploadedFile.seq,
-        collection: uploadedFile?.collection,
-        description: uploadedFile?.description,
-        type: uploadedFile.type,
-        index: uploadedFile.index,
-      };
-      setCOLLECTION2((C) => [...C, newPartUser]);
+      setCOLLECTION2((C) => [...C, uploadedFile]);
     }
   }, [uploadedFile]);
 
