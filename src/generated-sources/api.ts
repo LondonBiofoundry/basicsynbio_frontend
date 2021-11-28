@@ -32,7 +32,7 @@ export interface BasicPart {
      * @type {string}
      * @memberof BasicPart
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
@@ -44,7 +44,7 @@ export interface BasicPart {
      * @type {BasicPartType}
      * @memberof BasicPart
      */
-    type?: BasicPartType;
+    type: BasicPartType;
     /**
      * 
      * @type {string}

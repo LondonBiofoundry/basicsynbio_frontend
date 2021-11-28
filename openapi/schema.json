@@ -757,6 +757,7 @@
       },
       "basicPart": {
         "title": "basicPart",
+        "required": ["id", "type"],
         "type": "object",
         "properties": {
           "id": { "title": "Id", "type": "string" },
