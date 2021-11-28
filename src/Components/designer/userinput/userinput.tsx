@@ -142,16 +142,7 @@ export const UserInput: React.FC<Props> = ({
 
   useEffect(() => {
     if (value?.label !== undefined) {
-      const newPartStandard: BasicPart = {
-        id: uuid(),
-        accessor: value.accessor,
-        label: value?.label,
-        seq: value?.seq,
-        collection: value?.collection,
-        description: value?.description,
-        type: BasicPartType.Collection,
-      };
-      setCOLLECTION((C: BasicPart[]) => [...C, newPartStandard]);
+      setCOLLECTION((C: BasicPart[]) => [...C, value]);
     }
   }, [setValue, value]);
 

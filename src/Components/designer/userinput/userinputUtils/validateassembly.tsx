@@ -137,7 +137,7 @@ export const ValidateAssembly: React.FC<Props> = ({
         );
         const responseValue = response.data;
         if (responseValue.result) {
-          setValidation("Success");
+          setValidation("success");
           setValidated(true);
         } else {
           setValidation(responseValue.message ?? "Could not validate files");
