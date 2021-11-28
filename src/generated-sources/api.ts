@@ -253,6 +253,31 @@ export interface ResponseCollectionsName {
 /**
  * 
  * @export
+ * @interface ResponseMultipleFileUpload
+ */
+export interface ResponseMultipleFileUpload {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponseMultipleFileUpload
+     */
+    result: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseMultipleFileUpload
+     */
+    message?: string;
+    /**
+     * 
+     * @type {Array<BasicPart>}
+     * @memberof ResponseMultipleFileUpload
+     */
+    parts?: Array<BasicPart>;
+}
+/**
+ * 
+ * @export
  * @interface ResponseSingularFileUpload
  */
 export interface ResponseSingularFileUpload {
@@ -1250,7 +1275,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseMultipleFileUpload>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.multipleFileUploadFileuploadMultiplePost(type, addiseq, file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1451,7 +1476,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any): AxiosPromise<any> {
+        multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any): AxiosPromise<ResponseMultipleFileUpload> {
             return localVarFp.multipleFileUploadFileuploadMultiplePost(type, addiseq, file, options).then((request) => request(axios, basePath));
         },
         /**

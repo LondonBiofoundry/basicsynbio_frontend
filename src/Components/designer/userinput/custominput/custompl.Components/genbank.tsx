@@ -8,9 +8,12 @@ import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 import { v4 as uuid } from "uuid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
-import { ApiEndpoint } from "../../../../../Api";
-import { BasicPart, BasicPartType } from "../../../../../generated-sources";
-
+import { API, ApiEndpoint } from "../../../../../Api";
+import {
+  BasicPart,
+  BasicPartType,
+  FileType,
+} from "../../../../../generated-sources";
 interface Props {
   addiseq: boolean;
   multiplePartLinkers: boolean;
@@ -36,52 +39,53 @@ export const Genbank: React.FC<Props> = ({
     const form = new FormData();
     form.append("file", file);
     if (checked) {
-      const response = await fetch(
-        ApiEndpoint +
-          "fileupload/multiple?type=genbank&addiseq=" +
-          String(addiseq_ticked),
-        {
-          method: "POST",
-          body: form,
-        }
+      const response = await API.multipleFileUploadFileuploadMultiplePost(
+        FileType.Genbank,
+        addiseq_ticked,
+        file
       );
-      const result = await response.json();
-      if (result.partsarray) {
-        for (let i = 0; i < result.partsarray.length; i++) {
+      const result = response.data;
+      if (result.result) {
+        if (result.parts) {
+          const uploadedParts = result.parts;
+          for (const uploadedPart of uploadedParts) {
+            setUploadedFile({
+              ...uploadedPart,
+              file: file,
+            });
+          }
+        }
+        setCatchError("");
+      } else {
+        setCatchError(result.message ?? "Unable to upload file");
+      }
+    } else {
+      // const response = await fetch(
+      //   ApiEndpoint +
+      //     "fileupload/singular?type=genbank&addiseq=" +
+      //     String(addiseq_ticked),
+      //   {
+      //     method: "POST",
+      //     body: form,
+      //   }
+      // );
+      const response = await API.singularFileUploadFileuploadSingularPost(
+        FileType.Genbank,
+        addiseq_ticked,
+        file
+      );
+      const result = await response.data;
+      if (result.result) {
+        const uploadedPart = result.part;
+        if (uploadedPart) {
           setUploadedFile({
-            id: uuid(),
-            seq: result.partsarray[i].seq,
-            label: result.partsarray[i].label,
-            collection: "",
-            type: BasicPartType.UploadMultiple,
-            index: i,
+            ...uploadedPart,
+            file: file,
           });
         }
         setCatchError("");
       } else {
-        setCatchError(result.error);
-      }
-    } else {
-      const response = await fetch(
-        ApiEndpoint +
-          "fileupload/singular?type=genbank&addiseq=" +
-          String(addiseq_ticked),
-        {
-          method: "POST",
-          body: form,
-        }
-      );
-      const result = await response.json();
-      if (result.seq) {
-        setUploadedFile({
-          id: uuid(),
-          seq: result.seq,
-          label: file.path,
-          type: BasicPartType.UploadSingle,
-        });
-        setCatchError("");
-      } else {
-        setCatchError(result.error);
+        setCatchError(result.message ?? "Unable to upload file");
       }
     }
   }

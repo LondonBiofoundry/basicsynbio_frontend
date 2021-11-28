@@ -8,7 +8,6 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Divider from "@material-ui/core/Divider";
 
-import { SBOL } from "./custompl.Components/SBOL";
 import { Genbank } from "./custompl.Components/genbank";
 import { CustomShop } from "./custompl.Components/customShop";
 import { MultipleCheck } from "./custompl.Components/MultipleCheck";
@@ -48,7 +47,7 @@ export const CustomPartLinker: React.FC<Props> = ({
   const [addiseq, setAddiseq] = React.useState(false);
 
   const handleMethod = (event: any, newMethod: string) => {
-    if (["Genbank", "SBOL"].indexOf(newMethod) >= 0) {
+    if (["Genbank"].indexOf(newMethod) >= 0) {
       setMethod(newMethod);
     }
   };
@@ -77,21 +76,17 @@ export const CustomPartLinker: React.FC<Props> = ({
             >
               <ToggleButton value="Genbank">Genbank</ToggleButton>
               {/* <ToggleButton value="Fasta">Fasta</ToggleButton> */}
-              <ToggleButton value="SBOL">SBOL</ToggleButton>
+              {/* <ToggleButton value="SBOL">SBOL</ToggleButton> */}
             </ToggleButtonGroup>
           </Grid>
         </Grid>
         <Typography className={classes.pos} color="textSecondary">
           Upload your {method} file
         </Typography>
-        {method !== "SBOL" ? (
-          <MultipleCheck
-            multiplePartLinkers={multiplePartLinkers}
-            setMultiplePartLinkers={setMultiplePartLinkers}
-          />
-        ) : (
-          <></>
-        )}
+        <MultipleCheck
+          multiplePartLinkers={multiplePartLinkers}
+          setMultiplePartLinkers={setMultiplePartLinkers}
+        />
         <AddISeq addiseq={addiseq} setAddiseq={setAddiseq} />
         {method === "Genbank" ? (
           <Genbank
@@ -113,7 +108,7 @@ export const CustomPartLinker: React.FC<Props> = ({
         ) : (
           <div />
         )} */}
-        {method === "SBOL" ? (
+        {/* {method === "SBOL" ? (
           <SBOL
             addiseq={addiseq}
             setUploadedFile={setUploadedFile}
@@ -121,7 +116,7 @@ export const CustomPartLinker: React.FC<Props> = ({
           />
         ) : (
           <div />
-        )}
+        )} */}
         <div style={{ paddingTop: 8 }}></div>
         {catchError ? "Unable to Process : " + catchError : ""}
         <Typography

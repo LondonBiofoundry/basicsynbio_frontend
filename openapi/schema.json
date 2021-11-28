@@ -140,7 +140,13 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseMultipleFileUpload"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -909,6 +915,20 @@
             "title": "Data",
             "type": "array",
             "items": { "type": "string" }
+          }
+        }
+      },
+      "responseMultipleFileUpload": {
+        "title": "responseMultipleFileUpload",
+        "required": ["result"],
+        "type": "object",
+        "properties": {
+          "result": { "title": "Result", "type": "boolean" },
+          "message": { "title": "Message", "type": "string" },
+          "parts": {
+            "title": "Parts",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/basicPart" }
           }
         }
       },
