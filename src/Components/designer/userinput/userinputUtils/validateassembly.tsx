@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 
 import SuccessAnimation from "./successlottly";
 import FailAnimation from "./faillottly";
-import { ApiEndpoint } from "../../../../Api";
+import { API, ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Popups } from "../../../../interfaces/Popups";
 import { BasicPart } from "../../../../generated-sources";
@@ -132,19 +132,15 @@ export const ValidateAssembly: React.FC<Props> = ({
       shoppingBagItems.filter((item) => item.combinatorial == true).length === 0
     ) {
       (async () => {
-        const response = await fetch(ApiEndpoint + "validate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(shoppingBagItems),
-        });
-        const myresponse = await response.json();
-        if (String(myresponse.result) === "success") {
-          setValidation(String(myresponse.result));
+        const response = await API.validateAssemblyValidatePost(
+          JSON.stringify(shoppingBagItems)
+        );
+        const responseValue = response.data;
+        if (responseValue.result) {
+          setValidation("Success");
           setValidated(true);
         } else {
-          setValidation(String(myresponse.error));
+          setValidation(responseValue.message ?? "Could not validate files");
           setValidated(false);
         }
       })();

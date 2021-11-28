@@ -37,27 +37,20 @@ export const SearchPart: React.FC<Props> = ({
       if (clickedCollections.length === 0) {
         setOpen(false);
       }
-      const collectionsData: Collection[] = collections;
-      console.log(collectionsData);
+      const collectionsData = collections;
       var mergedArray = [];
 
       const clickedCollectionsArray = clickedCollections;
 
-      console.log("clicked collections", clickedCollectionsArray);
-
       for (let selectedCollection of collectionsData) {
-        console.log(selectedCollection.name, clickedCollectionsArray);
         if (clickedCollectionsArray.includes(selectedCollection.name)) {
-          console.log("selected collection to render", selectedCollection);
           for (let part of selectedCollection.versions[0].parts) {
-            console.log(part);
             mergedArray.push(part);
           }
         }
       }
 
       if (active) {
-        console.log("merged array", mergedArray);
         setPartOptions(mergedArray);
       }
       return () => {
