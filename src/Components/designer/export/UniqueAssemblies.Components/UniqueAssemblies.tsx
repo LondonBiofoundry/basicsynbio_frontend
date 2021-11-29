@@ -5,8 +5,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { ApiEndpoint } from "../../../../Api";
+import { API, ApiEndpoint } from "../../../../Api";
 import { BasicAssembly } from "../../../../generated-sources";
+import { returnFilesFromJsonAssemblyArray } from "../../../../utils/getFilesFromParts";
+import { saveAs } from "file-saver";
 
 const useStyles = makeStyles({
   root: {
@@ -29,22 +31,30 @@ interface Props {
 export const UniqueAssemblies: React.FC<Props> = ({ currentBuild }) => {
   const classes = useStyles();
 
-  const downloadUniqueAssemblies = () => {
-    fetch(ApiEndpoint + "builduniqueassemblies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentBuild),
-    }).then((response) => {
-      response.blob().then((blob) => {
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "Unique_Assemblies.gb";
-        a.click();
-      });
-    });
+  const downloadUniqueAssemblies = async () => {
+    const response = await API.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(
+      JSON.stringify(currentBuild),
+      returnFilesFromJsonAssemblyArray(currentBuild)
+    );
+    console.log(response);
+    console.log(response.data);
+    var blob = new Blob([response.data], { type: "chemical/seq-na-genbank" });
+    saveAs(blob, "Unique_Assemblies.gb");
+    // fetch(ApiEndpoint + "builduniqueassemblies", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(currentBuild),
+    // }).then((response) => {
+    //   response.blob().then((blob) => {
+    //     let url = window.URL.createObjectURL(blob);
+    //     let a = document.createElement("a");
+    //     a.href = url;
+    //     a.download = "Unique_Assemblies.gb";
+    //     a.click();
+    //   });
+    // });
   };
 
   return (
