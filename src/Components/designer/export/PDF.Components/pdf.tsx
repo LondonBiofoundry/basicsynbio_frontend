@@ -5,8 +5,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { ApiEndpoint } from "../../../../Api";
+import { API, ApiEndpoint } from "../../../../Api";
 import { BasicAssembly } from "../../../../generated-sources";
+import { returnFilesFromJsonAssemblyArray } from "../../../../utils/getFilesFromParts";
+import saveAs from "file-saver";
 
 const useStyles = makeStyles({
   root: {
@@ -29,22 +31,17 @@ interface Props {
 export const PdfCard: React.FC<Props> = ({ currentBuild }) => {
   const classes = useStyles();
 
-  const downloadBuildJson = () => {
-    fetch(ApiEndpoint + "build_pdf_instructions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentBuild),
-    }).then((response) => {
-      response.blob().then((blob) => {
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "my_build.pdf";
-        a.click();
-      });
+  const downloadBuildJson = async () => {
+    const response = await API.buildPdfInstructionsBuildPdfInstructionsPost(
+      JSON.stringify(currentBuild),
+      returnFilesFromJsonAssemblyArray(currentBuild)
+    );
+    console.log(response);
+    console.log(response.data);
+    var blob = new Blob([response.data], {
+      type: "application/pdf",
     });
+    saveAs(blob, "assembly-instructions.pdf");
   };
 
   return (
