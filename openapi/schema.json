@@ -482,6 +482,42 @@
         }
       }
     },
+    "/assemblySeq": {
+      "post": {
+        "summary": "Return Assembly Seq And Annotations",
+        "operationId": "return_assembly_seq_and_annotations_assemblySeq_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_return_assembly_seq_and_annotations_assemblySeq_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseViewSeqLabels"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dnafeatureviewer": {
       "post": {
         "summary": "Dnafeatureviewer",
@@ -681,6 +717,21 @@
         "type": "object",
         "properties": {
           "file": { "title": "File", "type": "string", "format": "binary" }
+        }
+      },
+      "Body_return_assembly_seq_and_annotations_assemblySeq_post": {
+        "title": "Body_return_assembly_seq_and_annotations_assemblySeq_post",
+        "required": ["Qualifier", "myPartArrayStr"],
+        "type": "object",
+        "properties": {
+          "Qualifier": { "title": "Qualifier", "type": "string" },
+          "myPartArrayStr": { "title": "Mypartarraystr", "type": "string" },
+          "files": {
+            "title": "Files",
+            "type": "array",
+            "items": { "type": "string", "format": "binary" },
+            "default": []
+          }
         }
       },
       "Body_singular_file_upload_fileupload_singular_post": {

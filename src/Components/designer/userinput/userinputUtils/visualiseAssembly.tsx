@@ -146,25 +146,18 @@ export const VisualiseAssembly: React.FC<Props> = ({
 
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(
-        ApiEndpoint +
-          "assemblySeq?qualifier=" +
-          JSON.stringify(selectedSeqQualifier),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(shoppingBagItems),
-        }
+      const assemblySeqRes = await API.returnAssemblySeqAndAnnotationsAssemblySeqPost(
+        selectedSeqQualifier,
+        JSON.stringify(shoppingBagItems),
+        returnFileFromJsonParts(shoppingBagItems)
       );
-      const result = await response.json();
-      if (!result.err) {
+      const result = assemblySeqRes.data;
+      if (result.result) {
         try {
-          var filtered = result.annotated.filter(Boolean);
+          var filtered = result.message.annotations.filter(Boolean);
           var processed = filtered.map(process);
           setAnnotationsSeqSet(processed);
-          setReturnSeq(result.seq);
+          setReturnSeq(result.message.seq);
         } catch (err) {
           console.log("error filtering", err);
         }

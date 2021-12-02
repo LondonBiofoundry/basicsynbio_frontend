@@ -97,14 +97,6 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
           returnFileFromJsonPart(item)
         );
         const responseLabelsData = responseLabels.data;
-        // const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(item),
-        // });
-        // const resultlabels = await responselabels.json();
         if (responseLabelsData.result) {
           setLabel(responseLabelsData.message);
         }

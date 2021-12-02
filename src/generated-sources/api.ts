@@ -876,6 +876,61 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * 
+         * @summary Return Assembly Seq And Annotations
+         * @param {string} qualifier 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        returnAssemblySeqAndAnnotationsAssemblySeqPost: async (qualifier: string, myPartArrayStr: string, files?: Array<any>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'qualifier' is not null or undefined
+            assertParamExists('returnAssemblySeqAndAnnotationsAssemblySeqPost', 'qualifier', qualifier)
+            // verify required parameter 'myPartArrayStr' is not null or undefined
+            assertParamExists('returnAssemblySeqAndAnnotationsAssemblySeqPost', 'myPartArrayStr', myPartArrayStr)
+            const localVarPath = `/assemblySeq`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+            if (qualifier !== undefined) { 
+                localVarFormParams.append('Qualifier', qualifier as any);
+            }
+    
+            if (myPartArrayStr !== undefined) { 
+                localVarFormParams.append('myPartArrayStr', myPartArrayStr as any);
+            }
+                if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('files', element as any);
+                })
+            }
+
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * ## API Root  Root endpoint for health check, returns basic message.
          * @summary Root Endpoint For Health Check
          * @param {*} [options] Override http request option.
@@ -1299,6 +1354,19 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @summary Return Assembly Seq And Annotations
+         * @param {string} qualifier 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier: string, myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseViewSeqLabels>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier, myPartArrayStr, files, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * ## API Root  Root endpoint for health check, returns basic message.
          * @summary Root Endpoint For Health Check
          * @param {*} [options] Override http request option.
@@ -1497,6 +1565,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any): AxiosPromise<ResponseMultipleFileUpload> {
             return localVarFp.multipleFileUploadFileuploadMultiplePost(type, addiseq, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Return Assembly Seq And Annotations
+         * @param {string} qualifier 
+         * @param {string} myPartArrayStr 
+         * @param {Array<any>} [files] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier: string, myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<ResponseViewSeqLabels> {
+            return localVarFp.returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier, myPartArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
          * ## API Root  Root endpoint for health check, returns basic message.
@@ -1712,6 +1792,20 @@ export class DefaultApi extends BaseAPI {
      */
     public multipleFileUploadFileuploadMultiplePost(type: FileType, addiseq: boolean, file: any, options?: any) {
         return DefaultApiFp(this.configuration).multipleFileUploadFileuploadMultiplePost(type, addiseq, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Return Assembly Seq And Annotations
+     * @param {string} qualifier 
+     * @param {string} myPartArrayStr 
+     * @param {Array<any>} [files] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier: string, myPartArrayStr: string, files?: Array<any>, options?: any) {
+        return DefaultApiFp(this.configuration).returnAssemblySeqAndAnnotationsAssemblySeqPost(qualifier, myPartArrayStr, files, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
