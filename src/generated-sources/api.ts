@@ -328,6 +328,25 @@ export interface ResponseValidate {
 /**
  * 
  * @export
+ * @interface ResponseViewSeqLabels
+ */
+export interface ResponseViewSeqLabels {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResponseViewSeqLabels
+     */
+    result: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof ResponseViewSeqLabels
+     */
+    message?: any | null;
+}
+/**
+ * 
+ * @export
  * @interface ValidationError
  */
 export interface ValidationError {
@@ -1170,7 +1189,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1347,7 +1366,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseViewSeqLabels>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceLabelsViewseqlabelsPost(myPartArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1380,7 +1399,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+        buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<void> {
             return localVarFp.buildEchoInstructionsBuildechoinstructionsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1542,7 +1561,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+        viewSequenceLabelsViewseqlabelsPost(myPartArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<ResponseViewSeqLabels> {
             return localVarFp.viewSequenceLabelsViewseqlabelsPost(myPartArrayStr, files, options).then((request) => request(axios, basePath));
         },
     };

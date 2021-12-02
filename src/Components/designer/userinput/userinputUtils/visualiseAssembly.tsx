@@ -16,10 +16,11 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../../Api";
+import { API, ApiEndpoint } from "../../../../Api";
 import { TransitionProps } from "@material-ui/core/transitions";
 import { Popups } from "../../../../interfaces/Popups";
 import { BasicPart } from "../../../../generated-sources";
+import { returnFileFromJsonParts } from "../../../../utils/getFilesFromParts";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -89,15 +90,20 @@ export const VisualiseAssembly: React.FC<Props> = ({
   //////
   React.useEffect(() => {
     (async () => {
-      const responselabels = await fetch(ApiEndpoint + "viewseqlabels", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(shoppingBagItems),
-      });
-      const resultlabels = await responselabels.json();
-      if (!resultlabels.error) setSeqLabel(resultlabels);
+      // const responselabels = await fetch(ApiEndpoint + "viewseqlabels", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(shoppingBagItems),
+      // });
+      // const resultlabels = await responselabels.json();
+      const labelsResponse = await API.viewSequenceLabelsViewseqlabelsPost(
+        JSON.stringify(shoppingBagItems),
+        returnFileFromJsonParts(shoppingBagItems)
+      );
+      const labelsResponseData = labelsResponse.data;
+      if (labelsResponseData.result) setSeqLabel(labelsResponseData.message);
     })();
     (async () => {
       const DnaFeatureViewer = await fetch(

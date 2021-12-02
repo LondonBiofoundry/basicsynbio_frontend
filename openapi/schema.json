@@ -238,10 +238,7 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
-          },
+          "200": { "description": "Successful Response" },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -394,7 +391,13 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseViewSeqLabels"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -942,6 +945,15 @@
           "result": { "title": "Result", "type": "boolean" },
           "message": { "title": "Message", "type": "string" },
           "assembly": { "$ref": "#/components/schemas/basicAssembly" }
+        }
+      },
+      "responseViewSeqLabels": {
+        "title": "responseViewSeqLabels",
+        "required": ["result"],
+        "type": "object",
+        "properties": {
+          "result": { "title": "Result", "type": "boolean" },
+          "message": { "title": "Message" }
         }
       }
     }

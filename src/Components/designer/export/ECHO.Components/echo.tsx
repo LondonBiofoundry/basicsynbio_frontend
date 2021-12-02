@@ -32,7 +32,7 @@ export const EchoCard: React.FC<Props> = ({ currentBuild }) => {
   const classes = useStyles();
 
   const downloadBuildJson = async () => {
-    const response = await API.buildEchoInstructionsBuildechoinstructionsPost(
+    const response: any = await API.buildEchoInstructionsBuildechoinstructionsPost(
       JSON.stringify(currentBuild),
       returnFilesFromJsonAssemblyArray(currentBuild),
       {
