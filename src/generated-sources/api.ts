@@ -1341,7 +1341,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseViewSeqLabels>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.viewPartLabelsViewpartlabelsPost(myPart, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1354,7 +1354,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseViewSeqLabels>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceAnnotationsReturnseqannPost(qualifier, myPart, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1538,7 +1538,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+        viewPartLabelsViewpartlabelsPost(myPart: string, files?: Array<any>, options?: any): AxiosPromise<ResponseViewSeqLabels> {
             return localVarFp.viewPartLabelsViewpartlabelsPost(myPart, files, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1550,7 +1550,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+        viewSequenceAnnotationsReturnseqannPost(qualifier: string, myPart: string, files?: Array<any>, options?: any): AxiosPromise<ResponseViewSeqLabels> {
             return localVarFp.viewSequenceAnnotationsReturnseqannPost(qualifier, myPart, files, options).then((request) => request(axios, basePath));
         },
         /**

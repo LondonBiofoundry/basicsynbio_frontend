@@ -90,14 +90,6 @@ export const VisualiseAssembly: React.FC<Props> = ({
   //////
   React.useEffect(() => {
     (async () => {
-      // const responselabels = await fetch(ApiEndpoint + "viewseqlabels", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(shoppingBagItems),
-      // });
-      // const resultlabels = await responselabels.json();
       const labelsResponse = await API.viewSequenceLabelsViewseqlabelsPost(
         JSON.stringify(shoppingBagItems),
         returnFileFromJsonParts(shoppingBagItems)

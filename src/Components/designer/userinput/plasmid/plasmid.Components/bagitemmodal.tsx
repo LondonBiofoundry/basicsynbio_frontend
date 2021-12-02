@@ -20,8 +20,9 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 // @ts-ignore
 import { SeqViz } from "seqviz";
-import { ApiEndpoint } from "../../../../../Api";
+import { API, ApiEndpoint } from "../../../../../Api";
 import { BasicPart } from "../../../../../generated-sources";
+import { returnFileFromJsonPart } from "../../../../../utils/getFilesFromParts";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -65,7 +66,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
   );
   const [label, setLabel] = useState([]);
   const [selectedQualifier, setSelectedQualifier] = useState("Feature");
-  const [returnedSeq, setReturnedSeq] = useState("");
+  const [returnedSeq, setReturnedSeq] = useState(item.seq);
   const [annotationsSet, setAnnotationsSet] = useState([]);
   const userWidth =
     (window.innerWidth ||
@@ -91,15 +92,22 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
       setViewType("Seqviz");
     } else {
       (async () => {
-        const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(item),
-        });
-        const resultlabels = await responselabels.json();
-        setLabel(resultlabels);
+        const responseLabels = await API.viewPartLabelsViewpartlabelsPost(
+          JSON.stringify(item),
+          returnFileFromJsonPart(item)
+        );
+        const responseLabelsData = responseLabels.data;
+        // const responselabels = await fetch(ApiEndpoint + "viewpartlabels", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify(item),
+        // });
+        // const resultlabels = await responselabels.json();
+        if (responseLabelsData.result) {
+          setLabel(responseLabelsData.message);
+        }
       })();
       (async () => {
         const DnaFeatureViewer = await fetch(ApiEndpoint + "dnafeatureviewer", {
@@ -148,24 +156,16 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
 
   React.useEffect(() => {
     (async () => {
-      const response = await fetch(
-        ApiEndpoint +
-          "returnseqann?qualifier=" +
-          JSON.stringify(selectedQualifier),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(item),
-        }
+      const seqAnnResponse = await API.viewSequenceAnnotationsReturnseqannPost(
+        selectedQualifier,
+        JSON.stringify(item),
+        returnFileFromJsonPart(item)
       );
       try {
-        const result = await response.json();
-        var filtered = result.annotated.filter(Boolean);
+        const result = seqAnnResponse.data;
+        var filtered = result.message.filter(Boolean);
         var processed = filtered.map(process);
         setAnnotationsSet(processed);
-        setReturnedSeq(result.seq);
       } catch {
         console.log("error filtering");
       }
@@ -177,7 +177,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
       return (
         <SeqViz
           name="J23100"
-          // file={item ? item.binaryString : null}
+          seq={returnedSeq}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
         />

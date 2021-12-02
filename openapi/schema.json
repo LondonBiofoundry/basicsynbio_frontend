@@ -427,7 +427,13 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseViewSeqLabels"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -457,7 +463,13 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseViewSeqLabels"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
