@@ -114,6 +114,7 @@ export default function Designer() {
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
+                    disabled={currentBuild.length ? false : true}
                   >
                     {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
