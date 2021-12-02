@@ -177,7 +177,7 @@ export const ShoppingBag: React.FC<Props> = ({
                               <CancelIcon className={classes.playIcon} />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip
+                          {/* <Tooltip
                             title="Make Combinatorial"
                             aria-label="make-combinatorial"
                           >
@@ -193,7 +193,7 @@ export const ShoppingBag: React.FC<Props> = ({
                                 className={classes.playIconGreen}
                               />
                             </IconButton>
-                          </Tooltip>
+                          </Tooltip> */}
                           <Typography
                             component="h5"
                             variant="h6"
