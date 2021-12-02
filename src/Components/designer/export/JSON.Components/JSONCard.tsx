@@ -42,21 +42,6 @@ export const JSONCard: React.FC<Props> = ({ currentBuild }) => {
       type: "application/json",
     });
     saveAs(blob, "json_basic_buils.json");
-    // fetch(ApiEndpoint + "buildjson", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(currentBuild),
-    // }).then((response) => {
-    //   response.blob().then((blob) => {
-    //     let url = window.URL.createObjectURL(blob);
-    //     let a = document.createElement("a");
-    //     a.href = url;
-    //     a.download = "my_build.json";
-    //     a.click();
-    //   });
-    // });
   };
 
   return (
