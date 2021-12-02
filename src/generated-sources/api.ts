@@ -1158,7 +1158,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.buildCsvsBuildcsvsPost(myAssemblyArrayStr, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1369,7 +1369,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<any> {
+        buildCsvsBuildcsvsPost(myAssemblyArrayStr: string, files?: Array<any>, options?: any): AxiosPromise<void> {
             return localVarFp.buildCsvsBuildcsvsPost(myAssemblyArrayStr, files, options).then((request) => request(axios, basePath));
         },
         /**

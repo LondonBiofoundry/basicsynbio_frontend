@@ -5,8 +5,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { ApiEndpoint } from "../../../../Api";
+import { API, ApiEndpoint } from "../../../../Api";
 import { BasicAssembly } from "../../../../generated-sources";
+import { returnFilesFromJsonAssemblyArray } from "../../../../utils/getFilesFromParts";
+import saveAs from "file-saver";
 
 const useStyles = makeStyles({
   root: {
@@ -29,22 +31,15 @@ interface Props {
 export const CSVCard: React.FC<Props> = ({ currentBuild }) => {
   const classes = useStyles();
 
-  const downloadBuildCSV = () => {
-    fetch(ApiEndpoint + "buildcsvs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentBuild),
-    }).then((response) => {
-      response.blob().then((blob) => {
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "csvs.zip";
-        a.click();
-      });
-    });
+  const downloadBuildCSV = async () => {
+    const response: any = await API.buildCsvsBuildcsvsPost(
+      JSON.stringify(currentBuild),
+      returnFilesFromJsonAssemblyArray(currentBuild),
+      {
+        responseType: "blob",
+      }
+    );
+    saveAs(response.data, "CSVs.zip");
   };
 
   return (
