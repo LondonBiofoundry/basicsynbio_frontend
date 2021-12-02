@@ -40,21 +40,6 @@ export const UniqueParts: React.FC<Props> = ({ currentBuild }) => {
     console.log(response.data);
     var blob = new Blob([response.data], { type: "chemical/seq-na-genbank" });
     saveAs(blob, "Unique_Parts.gb");
-    // fetch(ApiEndpoint + "builduniqueparts", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(currentBuild),
-    // }).then((response) => {
-    //   response.blob().then((blob) => {
-    //     let url = window.URL.createObjectURL(blob);
-    //     let a = document.createElement("a");
-    //     a.href = url;
-    //     a.download = "Unique_Parts.gb";
-    //     a.click();
-    //   });
-    // });
   };
 
   return (

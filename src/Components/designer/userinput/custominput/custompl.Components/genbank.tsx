@@ -8,7 +8,7 @@ import { usePromiseTracker, trackPromise } from "react-promise-tracker";
 import { v4 as uuid } from "uuid";
 import UploadIMG from "./uploadIMG";
 import { Typography } from "@material-ui/core";
-import { API, ApiEndpoint } from "../../../../../Api";
+import { API } from "../../../../../Api";
 import {
   BasicPart,
   BasicPartType,
@@ -60,15 +60,6 @@ export const Genbank: React.FC<Props> = ({
         setCatchError(result.message ?? "Unable to upload file");
       }
     } else {
-      // const response = await fetch(
-      //   ApiEndpoint +
-      //     "fileupload/singular?type=genbank&addiseq=" +
-      //     String(addiseq_ticked),
-      //   {
-      //     method: "POST",
-      //     body: form,
-      //   }
-      // );
       const response = await API.singularFileUploadFileuploadSingularPost(
         FileType.Genbank,
         addiseq_ticked,

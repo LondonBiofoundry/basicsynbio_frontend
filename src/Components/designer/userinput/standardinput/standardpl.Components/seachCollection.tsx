@@ -20,7 +20,6 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { makeStyles } from "@material-ui/core/styles";
 import fetch from "cross-fetch";
-import { ApiEndpoint } from "../../../../../Api";
 import { Collection } from "../../../../../generated-sources";
 import { Context } from "../../../../../App";
 
