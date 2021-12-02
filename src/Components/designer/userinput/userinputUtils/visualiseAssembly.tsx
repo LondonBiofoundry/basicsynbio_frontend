@@ -268,9 +268,9 @@ export const VisualiseAssembly: React.FC<Props> = ({
                   aria-label="text alignment"
                 >
                   <ToggleButton value="Seqviz">Seqviz</ToggleButton>
-                  <ToggleButton value="DnaFeatureViewer">
+                  {/* <ToggleButton value="DnaFeatureViewer">
                     DnaFeatureViewer
-                  </ToggleButton>
+                  </ToggleButton> */}
                 </ToggleButtonGroup>
               </div>
             </div>

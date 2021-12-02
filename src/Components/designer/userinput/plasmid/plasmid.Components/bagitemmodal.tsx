@@ -256,7 +256,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
                   aria-label="text alignment"
                 >
                   <ToggleButton value="Seqviz">Seqviz</ToggleButton>
-                  {item.collection !== "BASIC_BIOLEGIO_LINKERS" ? (
+                  {/* {item.collection !== "BASIC_BIOLEGIO_LINKERS" ? (
                     <ToggleButton value="DnaFeatureViewer">
                       DnaFeatureViewer
                     </ToggleButton>
@@ -264,7 +264,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
                     <ToggleButton disabled value="DnaFeatureViewer">
                       DnaFeatureViewer
                     </ToggleButton>
-                  )}
+                  )} */}
                 </ToggleButtonGroup>
               </div>
             </div>
