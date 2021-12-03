@@ -1,15 +1,5 @@
 import React, { useContext, useState } from "react";
 import {
-  Checkbox,
-  TextField,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  InputLabel,
-  Input,
   FormControl,
   Select,
   MenuItem,
@@ -25,50 +15,35 @@ interface Props {
   setSelectedCollection: React.Dispatch<
     React.SetStateAction<Collection["name"]>
   >;
+  selectedVersion: string;
   setSelectedVersion: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const SearchCollection: React.FC<Props> = ({
+export const SearchVersion: React.FC<Props> = ({
   selectedCollection,
   setSelectedCollection,
+  selectedVersion,
   setSelectedVersion,
 }) => {
   const { names, collections } = useContext(Context);
+  console.log(collections);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedCollection(event.target.value as string);
-    setSelectedVersion(
-      getCollectionFromName(event.target.value as string, collections)
-        .availableVersions[0]
-    );
+    setSelectedVersion(event.target.value as string);
   };
 
-  const getBasicPartNames = (names: string[]) => {
-    console.log(names);
-    const basicParts = names.filter(
-      (name: string) => name !== "BASIC_BIOLEGIO_LINKERS"
-    );
-    console.log(basicParts);
-    return basicParts;
-  };
-
-  const getBasicLinkerNames = (names: string[]) => {
-    return names.filter((name: string) => name === "BASIC_BIOLEGIO_LINKERS");
+  const getVersions = (name: string) => {
+    return getCollectionFromName(name, collections)?.availableVersions;
   };
 
   return (
     <FormControl variant="outlined" style={{ width: "100%" }}>
       <Select
         id="grouped-select"
-        value={selectedCollection}
+        value={selectedVersion}
         onChange={handleChange}
       >
-        <ListSubheader>Basic Parts</ListSubheader>
-        {getBasicPartNames(names).map((name, i) => (
-          <MenuItem value={name}>{name}</MenuItem>
-        ))}
-        <ListSubheader>Basic Linkers</ListSubheader>
-        {getBasicLinkerNames(names).map((name, i) => (
+        {getVersions(selectedCollection)?.map((name, i) => (
           <MenuItem value={name}>{name}</MenuItem>
         ))}
       </Select>

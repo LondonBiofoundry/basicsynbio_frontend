@@ -4,9 +4,11 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Context } from "../../../../../App";
 import { Collection, BasicPart } from "../../../../../generated-sources";
+import { getVersionedCollectionFromName } from "../../../../../utils/getCollectionFromName";
 
 interface Props {
   value: BasicPart | undefined;
+  selectedVersion: string;
   onChangeValue: React.Dispatch<React.SetStateAction<BasicPart | undefined>>;
   clickedCollections: Collection["name"][];
   partOptions: BasicPart[];
@@ -15,6 +17,7 @@ interface Props {
 
 export const SearchPart: React.FC<Props> = ({
   value,
+  selectedVersion,
   onChangeValue,
   clickedCollections,
   partOptions,
@@ -42,7 +45,11 @@ export const SearchPart: React.FC<Props> = ({
 
       for (let selectedCollection of collectionsData) {
         if (clickedCollectionsArray.includes(selectedCollection.name)) {
-          for (let part of selectedCollection.versions[0].parts) {
+          for (let part of getVersionedCollectionFromName(
+            selectedCollection.name,
+            selectedVersion,
+            collections
+          )?.parts) {
             mergedArray.push(part);
           }
         }
@@ -91,7 +98,6 @@ export const SearchPart: React.FC<Props> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Select Part"
           variant="outlined"
           InputProps={{
             ...params.InputProps,
