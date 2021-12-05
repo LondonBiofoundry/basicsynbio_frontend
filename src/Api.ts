@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 
 // export const ApiEndpoint = "http://127.0.0.1:8000/";
-export const ApiEndpoint = "https://app-basicsynbio.co.uk/";
+export const ApiEndpoint = "https://basic-syn-bio.herokuapp.com/";
 
 const ConfigParams: ConfigurationParameters = {
   basePath: ApiEndpoint.slice(0, -1),
