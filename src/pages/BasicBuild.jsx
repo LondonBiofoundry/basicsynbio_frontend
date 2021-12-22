@@ -180,7 +180,7 @@ export default function BasicBuild() {
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>
-                  {space12}"Part mass for 30 μL clip reaction (ng)"
+                  {space12}"part mass for 30 μL clip reaction (ng)"
                 </span>
                 : <span style={{ color: "#1b7fff" }}>Int</span>,
               </div>
