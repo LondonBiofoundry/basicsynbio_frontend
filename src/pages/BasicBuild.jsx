@@ -408,7 +408,7 @@ export default function BasicBuild() {
         <Grid item xs={12}>
           <Typography variant="body1">
             An example BasicBuild JSON object can be found in the github
-            repository for basicsynbio:{" "}
+            repository for basicsynbio :{" "}
             <a href="https://github.com/LondonBiofoundry/basicsynbio/blob/master/json_files/test_build.json">
               https://github.com/LondonBiofoundry/basicsynbio/blob/master/json_files/test_build.json
             </a>
