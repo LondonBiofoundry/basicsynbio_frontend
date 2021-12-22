@@ -388,6 +388,16 @@ export default function BasicBuild() {
                 {space4}
                 {"}"}
               </div>
+              <div style={{ paddingTop: "10px" }}>
+                <span style={{ color: "#dd1244" }}>
+                  {space4}"__BasicBuild__"
+                </span>
+                : <span style={{ color: "#1b7fff" }}>true</span>,
+              </div>
+              <div style={{ paddingTop: "10px" }}>
+                <span style={{ color: "#dd1244" }}>{space4}"__version__"</span>:{" "}
+                <span style={{ color: "#1b7fff" }}>String</span>,
+              </div>
               {"}"}
             </div>
           </Paper>
