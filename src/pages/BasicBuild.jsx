@@ -180,13 +180,7 @@ export default function BasicBuild() {
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>
-                  {space12}"suggested stock concentration (ng/µL)"
-                </span>
-                : <span style={{ color: "#1b7fff" }}>Float</span>,
-              </div>
-              <div style={{ paddingTop: "10px" }}>
-                <span style={{ color: "#dd1244" }}>
-                  {space12}"stock per 30 µL clip (µL)"
+                  {space12}"Part mass for 30 μL clip reaction (ng)"
                 </span>
                 : <span style={{ color: "#1b7fff" }}>Int</span>,
               </div>
@@ -234,6 +228,10 @@ export default function BasicBuild() {
                 ,
               </div>
               <div style={{ paddingTop: "10px" }}>
+                <span style={{ color: "#dd1244" }}>{space12}"name"</span>:{" "}
+                <span style={{ color: "#1b7fff" }}>String</span>,
+              </div>
+              <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>{space12}"sequence"</span>:{" "}
                 <span style={{ color: "#1b7fff" }}>DNA-String</span>,
               </div>
@@ -244,6 +242,12 @@ export default function BasicBuild() {
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>{space12}"suffix_id"</span>:{" "}
                 <span style={{ color: "#1b7fff" }}>String</span>,
+              </div>
+              <div style={{ paddingTop: "10px" }}>
+                <span style={{ color: "#dd1244" }}>
+                  {space12}"overhang_slice_params"?
+                </span>
+                : <span style={{ color: "#1b7fff" }}>Array[Int,Int]</span>,
               </div>
               <div style={{ paddingTop: "10px" }}>
                 <span style={{ color: "#dd1244" }}>
