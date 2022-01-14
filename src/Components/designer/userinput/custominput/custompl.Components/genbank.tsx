@@ -14,6 +14,7 @@ import {
   BasicPartType,
   FileType,
 } from "../../../../../generated-sources";
+import path from "path";
 interface Props {
   addiseq: boolean;
   multiplePartLinkers: boolean;
@@ -51,6 +52,7 @@ export const Genbank: React.FC<Props> = ({
           for (const uploadedPart of uploadedParts) {
             setUploadedFile({
               ...uploadedPart,
+              label: file.name,
               file: file,
             });
           }
@@ -71,6 +73,7 @@ export const Genbank: React.FC<Props> = ({
         if (uploadedPart) {
           setUploadedFile({
             ...uploadedPart,
+            label: file.name,
             file: file,
           });
         }

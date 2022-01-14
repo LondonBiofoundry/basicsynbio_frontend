@@ -148,7 +148,13 @@ export const UserInput: React.FC<Props> = ({
 
   useEffect(() => {
     if (uploadedFile?.label !== undefined) {
-      setCOLLECTION2((C) => [...C, uploadedFile]);
+      if (!COLLECTION2.map((item) => item.label).includes(uploadedFile.label)) {
+        setCOLLECTION2((C) => [...C, uploadedFile]);
+      } else {
+        alert(
+          "Unable to add part, a part with the same name has already been uploaded, try renaming your file and uploading again"
+        );
+      }
     }
   }, [uploadedFile]);
 
