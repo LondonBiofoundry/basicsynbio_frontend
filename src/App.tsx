@@ -10,6 +10,7 @@ import BasicBuild from "./pages/BasicBuild.jsx";
 
 import NavBar from "./components/navbar/navbar";
 import { getCollectionData, getCollectionNames } from "./ContextInitialisation";
+import Tutorial from "./pages/Tutorial";
 
 type ContextType = {
   collections: Collection[];
@@ -50,6 +51,7 @@ export const App: React.FC = () => {
             <Route path="/basicbuild-standard" component={BasicBuild} />
             <Route path="/about" component={About} />
             <Route path="/designer" component={Designer} />
+            <Route path="/tutorial" component={Tutorial} />
           </Switch>
         </div>
       </Router>
