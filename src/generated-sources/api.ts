@@ -1568,11 +1568,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.buildCsvsBuildcsvsPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.buildCsvsBuildcsvsPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1595,11 +1596,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.buildEchoInstructionsBuildechoinstructionsPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.buildEchoInstructionsBuildechoinstructionsPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1622,11 +1624,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.buildJsonBuildjsonPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.buildJsonBuildjsonPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1649,11 +1652,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.buildPdfInstructionsBuildPdfInstructionsPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.buildPdfInstructionsBuildPdfInstructionsPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1676,11 +1680,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.buildUniquePartsAsGenbankBuilduniquepartsPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.buildUniquePartsAsGenbankBuilduniquepartsPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1703,11 +1708,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(
-        myAssemblyArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(
+          myAssemblyArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1730,11 +1736,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(
-        myPartArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(
+          myPartArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1757,11 +1764,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.dnafeatureviewerDnafeatureviewerPost(
-        myPart,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.dnafeatureviewerDnafeatureviewerPost(
+          myPart,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1783,9 +1791,10 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseCollectionsData>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getCollectionDataCollectionsDataGet(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getCollectionDataCollectionsDataGet(
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1807,9 +1816,10 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseCollectionsName>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getCollectionNamesCollectionsNamesGet(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getCollectionNamesCollectionsNamesGet(
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1837,12 +1847,13 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseMultipleFileUpload>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.multipleFileUploadFileuploadMultiplePost(
-        type,
-        addiseq,
-        file,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.multipleFileUploadFileuploadMultiplePost(
+          type,
+          addiseq,
+          file,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1870,12 +1881,13 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseViewSeqLabels>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.returnAssemblySeqAndAnnotationsAssemblySeqPost(
-        qualifier,
-        myPartArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.returnAssemblySeqAndAnnotationsAssemblySeqPost(
+          qualifier,
+          myPartArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1894,9 +1906,8 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.rootEndpointForHealthCheckGet(
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.rootEndpointForHealthCheckGet(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1924,12 +1935,13 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseSingularFileUpload>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.singularFileUploadFileuploadSingularPost(
-        type,
-        addiseq,
-        file,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.singularFileUploadFileuploadSingularPost(
+          type,
+          addiseq,
+          file,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1955,11 +1967,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseValidate>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.validateAssemblyValidatePost(
-        myPartArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.validateAssemblyValidatePost(
+          myPartArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1985,11 +1998,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseViewSeqLabels>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.viewPartLabelsViewpartlabelsPost(
-        myPart,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.viewPartLabelsViewpartlabelsPost(
+          myPart,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2017,12 +2031,13 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseViewSeqLabels>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceAnnotationsReturnseqannPost(
-        qualifier,
-        myPart,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.viewSequenceAnnotationsReturnseqannPost(
+          qualifier,
+          myPart,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -2048,11 +2063,12 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<ResponseViewSeqLabels>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.viewSequenceLabelsViewseqlabelsPost(
-        myPartArrayStr,
-        files,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.viewSequenceLabelsViewseqlabelsPost(
+          myPartArrayStr,
+          files,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,

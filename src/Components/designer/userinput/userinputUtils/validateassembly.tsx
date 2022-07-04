@@ -77,9 +77,8 @@ export const ValidateAssembly: React.FC<Props> = ({
       const combinatorialItem = shoppingBagItems.filter(
         (item) => item.combinatorial == true
       )[0];
-      const combinatorialItemIndex = shoppingBagItems.indexOf(
-        combinatorialItem
-      );
+      const combinatorialItemIndex =
+        shoppingBagItems.indexOf(combinatorialItem);
       console.log(combinatorialItemIndex);
       const new_assemblies: BasicPart[][] = [];
       const old_shopping: BasicPart[] = shoppingBagItems;

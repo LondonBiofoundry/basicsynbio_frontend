@@ -146,11 +146,12 @@ export const VisualiseAssembly: React.FC<Props> = ({
 
   React.useEffect(() => {
     (async () => {
-      const assemblySeqRes = await API.returnAssemblySeqAndAnnotationsAssemblySeqPost(
-        selectedSeqQualifier,
-        JSON.stringify(shoppingBagItems),
-        returnFileFromJsonParts(shoppingBagItems)
-      );
+      const assemblySeqRes =
+        await API.returnAssemblySeqAndAnnotationsAssemblySeqPost(
+          selectedSeqQualifier,
+          JSON.stringify(shoppingBagItems),
+          returnFileFromJsonParts(shoppingBagItems)
+        );
       const result = assemblySeqRes.data;
       if (result.result) {
         try {

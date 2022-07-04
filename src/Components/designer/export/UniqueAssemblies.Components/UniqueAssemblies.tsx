@@ -32,10 +32,11 @@ export const UniqueAssemblies: React.FC<Props> = ({ currentBuild }) => {
   const classes = useStyles();
 
   const downloadUniqueAssemblies = async () => {
-    const response = await API.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(
-      JSON.stringify(currentBuild),
-      returnFilesFromJsonAssemblyArray(currentBuild)
-    );
+    const response =
+      await API.builsUniqueAssembliesAsGenbankBuilduniqueassembliesPost(
+        JSON.stringify(currentBuild),
+        returnFilesFromJsonAssemblyArray(currentBuild)
+      );
     console.log(response);
     console.log(response.data);
     var blob = new Blob([response.data], { type: "chemical/seq-na-genbank" });

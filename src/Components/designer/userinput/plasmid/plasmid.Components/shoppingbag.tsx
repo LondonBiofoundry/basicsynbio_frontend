@@ -89,14 +89,12 @@ export const ShoppingBag: React.FC<Props> = ({
   openDialog,
 }) => {
   const classes = useStyles();
-  const [
-    combinatorialClickedPart,
-    setCombinatorialClickedPart,
-  ] = React.useState<BasicPart>({
-    id: "31321312",
-    label: "unchanged",
-    type: BasicPartType.Collection,
-  });
+  const [combinatorialClickedPart, setCombinatorialClickedPart] =
+    React.useState<BasicPart>({
+      id: "31321312",
+      label: "unchanged",
+      type: BasicPartType.Collection,
+    });
 
   const [combinatorialOpen, setCombinatorialOpen] = React.useState(false);
 

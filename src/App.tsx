@@ -25,9 +25,8 @@ const initialContext: ContextType = {
 export const Context = React.createContext(initialContext);
 
 export const App: React.FC = () => {
-  const [ContextData, setContextData] = React.useState<ContextType>(
-    initialContext
-  );
+  const [ContextData, setContextData] =
+    React.useState<ContextType>(initialContext);
 
   useEffect(() => {
     async function fetchData() {
