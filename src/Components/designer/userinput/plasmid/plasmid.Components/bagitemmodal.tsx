@@ -172,6 +172,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
           seq={returnedSeq}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
+          showAnnotations={false}
         />
       );
     } else {
@@ -180,6 +181,7 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
           name="item"
           seq={returnedSeq}
           annotations={annotationsSet}
+          showAnnotations={!!annotationsSet}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
         />

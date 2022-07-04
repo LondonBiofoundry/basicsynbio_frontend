@@ -180,6 +180,7 @@ export const VisualiseAssembly: React.FC<Props> = ({
           name="J23100"
           seq={returnSeq}
           annotations={annotationsSeqSet}
+          showAnnotations={!!annotationsSeqSet}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
         />
@@ -190,6 +191,7 @@ export const VisualiseAssembly: React.FC<Props> = ({
           name="item"
           seq={returnSeq}
           annotations={annotationsSeqSet}
+          showAnnotations={!!annotationsSeqSet}
           viewer="linear"
           style={{ height: userHeight, width: userWidth }}
         />
