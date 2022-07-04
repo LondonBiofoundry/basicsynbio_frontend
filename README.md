@@ -13,7 +13,7 @@ This repository uses unittest using the [Jest](https://jestjs.io) and [Enzyme](h
 The unit tests themselves are stored within the `src/__tests__` folder and can be tested with the following command:
 
 ```bash
-$ npm run test
+$ yarn run test
 ```
 
 ## Code Formatting
@@ -25,13 +25,13 @@ This repository uses [prettier](https://prettier.io) code formatting.
 To check if you code is prettier compliant run:
 
 ```bash
-$ npx prettier --check .
+$ yarn prettier --check .
 ```
 
 To allow prettier to rewrite your code to be prettier compliant run:
 
 ```bash
-$ npx prettier --write .
+$ yarn prettier --write .
 ```
 
 # Installation
@@ -51,13 +51,13 @@ $ cd basicsynbio_frontend
 Install frontend dependencies located in package.json
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 Start app in Development mode
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 This causes the frontend to run locally to view it, Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
