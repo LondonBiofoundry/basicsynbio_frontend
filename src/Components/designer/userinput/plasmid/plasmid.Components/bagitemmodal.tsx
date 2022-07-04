@@ -102,16 +102,16 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
         }
       })();
       (async () => {
-        const DnaFeatureViewer = await fetch(ApiEndpoint + "dnafeatureviewer", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(item),
-        });
-        const dnafeatureviewer_response = await DnaFeatureViewer.json();
-        setDnaViewerString(dnafeatureviewer_response.base64image);
-        console.log(dnafeatureviewer_response);
+        const DnaFeatureViewer = await API.dnafeatureviewerDnafeatureviewerPost(
+          JSON.stringify(item),
+          returnFileFromJsonPart(item)
+        );
+        console.log(DnaFeatureViewer.data);
+        const dnafeatureviewer_response = DnaFeatureViewer.data;
+        if (dnafeatureviewer_response.result) {
+          setDnaViewerString(dnafeatureviewer_response.base64image);
+        }
+        console.log(dnafeatureviewer_response.message);
       })();
     }
   }, [open]);
@@ -258,15 +258,9 @@ export const BagItemModal: React.FC<Props> = ({ open, handleClose, item }) => {
                   aria-label="text alignment"
                 >
                   <ToggleButton value="Seqviz">Seqviz</ToggleButton>
-                  {/* {item.collection !== "BASIC_BIOLEGIO_LINKERS" ? (
-                    <ToggleButton value="DnaFeatureViewer">
-                      DnaFeatureViewer
-                    </ToggleButton>
-                  ) : (
-                    <ToggleButton disabled value="DnaFeatureViewer">
-                      DnaFeatureViewer
-                    </ToggleButton>
-                  )} */}
+                  <ToggleButton value="DnaFeatureViewer">
+                    DnaFeatureViewer
+                  </ToggleButton>
                 </ToggleButtonGroup>
               </div>
             </div>
