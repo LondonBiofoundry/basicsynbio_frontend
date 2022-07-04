@@ -24,5 +24,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npx prettier --check .
+      - run: yarn install --frozen-lockfile
+      - run: yarn prettier --check .
