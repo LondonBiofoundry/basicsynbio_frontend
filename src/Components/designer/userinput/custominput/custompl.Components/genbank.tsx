@@ -87,7 +87,6 @@ export const Genbank: React.FC<Props> = ({
   const onDrop = useCallback(
     (acceptedFiles) => {
       acceptedFiles.forEach((file: Blob) => {
-        console.log("file-preload", file);
         const reader = new FileReader();
 
         reader.onabort = () => console.log("file reading was aborted");
@@ -101,7 +100,6 @@ export const Genbank: React.FC<Props> = ({
             const uint8 = new Uint8Array(binaryStr);
             const dataString = JSON.stringify(Array.from(uint8));
             const b64string = btoa(dataString);
-            console.log("data", dataString);
             trackPromise(
               ValidateFileUpload(
                 b64string,

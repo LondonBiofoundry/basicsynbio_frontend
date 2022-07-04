@@ -44,11 +44,9 @@ export const SearchCollection: React.FC<Props> = ({
   };
 
   const getBasicPartNames = (names: string[]) => {
-    console.log(names);
     const basicParts = names.filter(
       (name: string) => name !== "BASIC_BIOLEGIO_LINKERS"
     );
-    console.log(basicParts);
     return basicParts;
   };
 

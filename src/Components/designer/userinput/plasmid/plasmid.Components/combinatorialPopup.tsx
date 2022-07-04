@@ -96,7 +96,6 @@ export const CustomizedDialogs: React.FC<Props> = ({
         (item: any) => item.label
       );
       if (returnitem) {
-        console.log(returnitem);
         return returnitem;
       } else {
         return [item.label];
@@ -106,9 +105,6 @@ export const CustomizedDialogs: React.FC<Props> = ({
     }
   };
   const [checked, setChecked] = React.useState(list_of_original_checked);
-
-  console.log(item);
-  console.log(item?.combinatorialParts?.map((item: any) => item.label));
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);

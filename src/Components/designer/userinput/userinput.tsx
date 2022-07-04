@@ -76,7 +76,6 @@ const expand_first_combinatorial = (input_lists: BasicPart[][]) => {
         (part) => part != combinatorialFirstItem
       );
       smaller_list.splice(combinatorialItemIndex, 0, element);
-      console.log(smaller_list);
       expanded_assemblies.push(smaller_list);
     });
   });
@@ -188,7 +187,6 @@ export const UserInput: React.FC<Props> = ({
       )[0];
       const combinatorialItemIndex =
         shoppingBagItems.indexOf(combinatorialItem);
-      console.log(combinatorialItemIndex);
       const new_assemblies: BasicPart[][] = [];
       const old_shopping: BasicPart[] = shoppingBagItems;
       shoppingBagItems.map((item, index) => {
@@ -196,7 +194,6 @@ export const UserInput: React.FC<Props> = ({
           item.combinatorialParts?.forEach((element: any) => {
             var smaller_list = shoppingBagItems.filter((part) => part != item);
             smaller_list.splice(index, 0, element);
-            console.log(smaller_list);
             new_assemblies.push(smaller_list);
           });
         }

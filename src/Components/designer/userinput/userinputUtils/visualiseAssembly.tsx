@@ -97,21 +97,19 @@ export const VisualiseAssembly: React.FC<Props> = ({
       const labelsResponseData = labelsResponse.data;
       if (labelsResponseData.result) setSeqLabel(labelsResponseData.message);
     })();
-    // (async () => {
-    //   const DnaFeatureViewer = await fetch(
-    //     ApiEndpoint + "dnafeatureviewer_assembly",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(shoppingBagItems),
-    //     }
-    //   );
-    //   const dnafeatureviewer_response = await DnaFeatureViewer.json();
-    //   setDnaViewerString(dnafeatureviewer_response.base64image);
-    //   console.log(dnafeatureviewer_response);
-    // })();
+    (async () => {
+      const DnaFeatureViewer =
+        API.dnafeaturesviewerForAssembliesDnafeatureviewerAssemblyPost(
+          JSON.stringify(shoppingBagItems),
+          returnFileFromJsonParts(shoppingBagItems)
+        );
+      const response = (await DnaFeatureViewer).data;
+      if (response.success) {
+        setDnaViewerString(response.base64image);
+      } else {
+        console.log(response.message);
+      }
+    })();
   }, [openPopups.viewAssembly]);
 
   function random_color() {
@@ -271,9 +269,9 @@ export const VisualiseAssembly: React.FC<Props> = ({
                   aria-label="text alignment"
                 >
                   <ToggleButton value="Seqviz">Seqviz</ToggleButton>
-                  {/* <ToggleButton value="DnaFeatureViewer">
+                  <ToggleButton value="DnaFeatureViewer">
                     DnaFeatureViewer
-                  </ToggleButton> */}
+                  </ToggleButton>
                 </ToggleButtonGroup>
               </div>
             </div>

@@ -36,8 +36,6 @@ export const JSONCard: React.FC<Props> = ({ currentBuild }) => {
       JSON.stringify(currentBuild),
       returnFilesFromJsonAssemblyArray(currentBuild)
     );
-    console.log(response);
-    console.log(response.data);
     var blob = new Blob([JSON.stringify(response.data)], {
       type: "application/json",
     });

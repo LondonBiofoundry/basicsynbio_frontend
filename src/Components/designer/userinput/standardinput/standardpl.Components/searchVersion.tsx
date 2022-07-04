@@ -26,7 +26,6 @@ export const SearchVersion: React.FC<Props> = ({
   setSelectedVersion,
 }) => {
   const { names, collections } = useContext(Context);
-  console.log(collections);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedVersion(event.target.value as string);

@@ -36,8 +36,6 @@ export const PdfCard: React.FC<Props> = ({ currentBuild }) => {
       JSON.stringify(currentBuild),
       returnFilesFromJsonAssemblyArray(currentBuild)
     );
-    console.log(response);
-    console.log(response.data);
     var blob = new Blob([response.data], {
       type: "application/pdf",
     });
